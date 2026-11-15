@@ -1,0 +1,190 @@
+{
+  "zh": {
+    "title": "Sage 2.1 Flash ｜ 以推理探索，以行动求证",
+    "opening": [
+      "今天，我们正式发布 **书生 Sage 2.1 Flash**，一款面向高难度科学研究的前沿科学多模态智能体模型。模型采用 **3200 亿参数 MoE 架构**，将科学多模态理解与通用智能体能力相结合，支持科学深度研究、科学编程及专业科研软件操作。",
+      "书生-S2.1 将分子图、晶体结构、蛋白质序列与三维结构、DNA序列、RNA序列，以及光谱、质谱、X 射线衍射、心电、脑电和光变曲线等十余类科学输入纳入统一模型，并依托大规模可验证环境训练，强化搜索、编程、工具调用与多步骤任务执行能力。通过视觉反馈，模型能够根据软件状态与中间结果检验判断、调整策略，在专业科研环境中持续推进复杂任务。"
+    ],
+    "intro": "科学研究需要在数据、代码与专业工具之间反复开展分析、操作和检查。以下演示展示 Sage 2.1 Flash 如何处理科学数据、操作专业软件，并利用中间结果调整执行过程，输出可供研究者复核的成果。",
+    "cases": [
+      {
+        "title": "CT 三维重建",
+        "description": "从 12,487 张来源混杂、顺序打乱且朝向不一的 CT 图像中，筛出同一次扫描的 139 张切片，校正朝向并恢复层序。模型根据一致性检查调整排序策略，在 3D Slicer 中完成三维骨骼重建，并回查原始切面复核局部细节。",
+        "label": "视频演示｜CT 三维重建",
+        "src": "/cases/sage/ct.mp4",
+        "caption": "从 12,487 张混杂 CT 图像中找出同一次扫描的 139 张目标切片，恢复层序，并在 3D Slicer 中重建可交互查看的三维骨骼。",
+        "poster": "/cases/sage/thumbnails/ct.jpg"
+      },
+      {
+        "title": "三维建模",
+        "description": "根据参考图，在 Blender 与 CAD 软件中完成建筑、航天发动机和汽车底盘的三维建模，结合渲染预览或装配检查复核结果，输出可编辑模型与展示视频。",
+        "src": "/cases/sage/architecture.mp4",
+        "label": "",
+        "medias": [
+          {
+            "type": "video",
+            "src": "/cases/sage/architecture.mp4",
+            "label": "建筑三维重建",
+            "description": "根据浦江大楼的多角度参考图，在 Blender 中完成三维建模、材质灯光与相机动画，输出展示视频和可编辑工程。",
+            "caption": "根据浦江大楼的多角度参考图片，在 Blender 中搭建三维建筑、制作材质灯光与相机动画，输出建筑展示视频和可编辑工程",
+            "poster": "/cases/sage/thumbnails/architecture.jpg"
+          },
+          {
+            "type": "video",
+            "src": "/cases/sage/engine.mp4",
+            "label": "航天发动机",
+            "description": "根据参考图识别发动机总体构型、外部轮廓与零件布局，在 CAD 软件中完成参数化建模与整机装配，逐对检查零件干涉，输出可编辑模型与渲染图，为结构复核和后续设计迭代提供依据。",
+            "caption": "根据参考图构建工业航天发动机和汽车底盘 cad",
+            "poster": "/cases/sage/thumbnails/engine.jpg"
+          },
+          {
+            "type": "video",
+            "src": "/cases/sage/chassis.mp4",
+            "label": "汽车底盘",
+            "description": "根据参考图构建汽车底盘的参数化 CAD 模型，完成车架、悬架与动力系统装配，检查零件干涉，输出 STEP 装配体、零件清单与渲染图。",
+            "caption": "根据参考图构建工业航天发动机和汽车底盘 cad",
+            "poster": "/cases/sage/thumbnails/chassis.jpg"
+          }
+        ]
+      },
+      {
+        "title": "科研软件分析",
+        "description": "",
+        "src": "/cases/sage/microscopy.mp4",
+        "medias": [
+          {
+            "type": "video",
+            "src": "/cases/sage/microscopy.mp4",
+            "label": "显微图分析",
+            "description": "从荧光显微图出发，在 Fiji 中调整分割阈值、分离粘连细胞核，将轮廓叠回原图检查，并导出 ROI 与测量结果，便于复核和后续分析。",
+            "caption": "在 Fiji 软件中分割显微图中的生物细胞核，检查相邻区域，并保存可复核的轮廓与测量结果。",
+            "poster": "/cases/sage/thumbnails/microscopy.jpg"
+          },
+          {
+            "type": "video",
+            "src": "/cases/sage/eeg.mp4",
+            "label": "脑电信号处理",
+            "description": "在 EEGLAB 中结合独立成分的时间曲线、头皮分布与频谱特征，识别并移除眨眼相关成分。模型在同一时间窗、同一幅值尺度下比较处理前后的波形，复查其他片段，并保存处理后的数据、成分记录与对比图。",
+            "caption": "在 EEGLAB 中识别并移除眨眼相关成分，对比验证伪迹减弱效果，并保存可复核的处理结果。",
+            "poster": "/cases/sage/thumbnails/eeg.jpg"
+          },
+          {
+            "type": "video",
+            "src": "/cases/sage/satellite.mp4",
+            "label": "卫星影像分析",
+            "description": "在 QGIS 中对照两期卫星影像，利用多光谱数据提取鄱阳湖候选水域，将结果叠回原图检查浅水、湿滩与岸线边界。模型在共同有效的研究区内统计水域面积变化，导出变化地图、面积表和可重新打开的 QGIS 工程。",
+            "caption": "对比两期鄱阳湖卫星影像，在 QGIS 中定位水域变化、提取并复核水体边界，导出变化地图与面积统计。",
+            "poster": "/cases/sage/thumbnails/satellite.jpg"
+          }
+        ]
+      },
+      {
+        "title": "光的记忆",
+        "description": "围绕晶体量子存储中的效率损失，模型检索原始文献、提取实验参数，并通过参数扫描比较腔耦合、原子失步与损耗的影响。交互页面可调节反射率、吸收强度和存储时间，观察光脉冲与回波的变化，并追溯对应的文献与研究记录。",
+        "label": "交互演示｜光的记忆",
+        "src": "/cases/sage/light-memory.html",
+        "type": "iframe",
+        "caption": "将腔增强原子频率梳量子存储的科学deep research问题转化为可交互的html页面，交互过程中显示机制来源文献"
+      }
+    ],
+    "ending": [
+      "Sage 2.1 Flash 面向科学推理与智能体任务执行，支持结合科学数据、检索、编程与专业软件开展分析。",
+      "欢迎通过 API 体验模型能力，探索其在科研数据处理、专业软件操作与多步任务执行中的应用。"
+    ],
+    "api": "试用 Sage 2.1 Flash API →"
+  },
+  "en": {
+    "title": "Sage 2.1 Flash | Explore through reasoning. Verify through action.",
+    "opening": [
+      "Today, we introduce **Sage 2.1 Flash**, a frontier scientific multimodal agent model for demanding scientific research. Built on a **320-billion-parameter MoE architecture**, it combines scientific multimodal understanding with general agent capabilities, supporting scientific deep research, scientific programming and the operation of professional research software.",
+      "Sage 2.1 Flash incorporates more than ten types of scientific input into a unified model, including molecular graphs, crystal structures, protein sequences and three-dimensional structures, DNA and RNA sequences, spectra, mass spectra, X-ray diffraction, electrocardiograms, electroencephalograms and light curves. Large-scale training in verifiable environments strengthens its capabilities in search, programming, tool use and multistep task execution. Through visual feedback, the model can check its judgments against software states and intermediate results, adjust its strategy and advance complex tasks in professional research environments."
+    ],
+    "intro": "Scientific research requires repeated analysis, operation and inspection across data, code and professional tools. The following demonstrations show how Sage 2.1 Flash processes scientific data, operates professional software and uses intermediate results to adjust its execution, producing outputs that researchers can review.",
+    "cases": [
+      {
+        "title": "CT Reconstruction",
+        "description": "From 12,487 CT images with mixed sources, shuffled order and inconsistent orientations, the model identifies 139 slices from a single scan, corrects their orientation and restores the sequence. It revises its ordering strategy based on consistency checks, reconstructs three-dimensional bony structures in 3D Slicer, and returns to the source slices to verify local details.",
+        "label": "Video Demo | CT Reconstruction",
+        "src": "/cases/sage/ct.mp4",
+        "caption": "Identify 139 target slices from a single scan among 12,487 mixed CT images, restore their order, and reconstruct an interactive 3D skeleton in 3D Slicer.",
+        "poster": "/cases/sage/thumbnails/ct.jpg"
+      },
+      {
+        "title": "3D Modeling",
+        "description": "Using reference images, the model builds architectural, aerospace engine and truck chassis models in Blender and CAD software. It reviews the results through render previews or assembly checks and delivers editable models and presentation videos.",
+        "src": "/cases/sage/architecture.mp4",
+        "label": "",
+        "medias": [
+          {
+            "type": "video",
+            "src": "/cases/sage/architecture.mp4",
+            "label": "Architecture",
+            "description": "Using multi-view reference images of the Pujiang building, the model creates a 3D model, materials, lighting and camera animation in Blender, delivering a presentation video and an editable project.",
+            "caption": "Use multi-view reference images of the Pujiang building to construct a 3D building, materials, lighting and camera animation in Blender, delivering a presentation video and an editable project.",
+            "poster": "/cases/sage/thumbnails/architecture.jpg"
+          },
+          {
+            "type": "video",
+            "src": "/cases/sage/engine.mp4",
+            "label": "Aerospace Engine",
+            "description": "Using reference images, the model identifies the overall engine configuration, external contours and component layout. It completes parametric modeling and assembly in CAD software, checks interference between pairs of parts, and delivers an editable model and rendered images for structural review and subsequent design iterations.",
+            "caption": "Build industrial aerospace engine and truck chassis CAD models from reference images.",
+            "poster": "/cases/sage/thumbnails/engine.jpg"
+          },
+          {
+            "type": "video",
+            "src": "/cases/sage/chassis.mp4",
+            "label": "Truck Chassis",
+            "description": "The model builds a parametric truck chassis from reference images, assembles the frame, suspension and powertrain, checks interference, and exports a STEP assembly, bill of materials and rendered views.",
+            "caption": "Build industrial aerospace engine and truck chassis CAD models from reference images.",
+            "poster": "/cases/sage/thumbnails/chassis.jpg"
+          }
+        ]
+      },
+      {
+        "title": "Scientific Software Analysis",
+        "description": "",
+        "src": "/cases/sage/microscopy.mp4",
+        "medias": [
+          {
+            "type": "video",
+            "src": "/cases/sage/microscopy.mp4",
+            "label": "Microscopy Analysis",
+            "description": "Starting from a fluorescence microscopy image, the model adjusts segmentation thresholds in Fiji, separates touching nuclei and overlays the contours on the source image for inspection. It exports ROIs and measurements for review and further analysis.",
+            "caption": "Segment cell nuclei in a microscopy image using Fiji, inspect adjacent regions, and save reviewable contours and measurements.",
+            "poster": "/cases/sage/thumbnails/microscopy.jpg"
+          },
+          {
+            "type": "video",
+            "src": "/cases/sage/eeg.mp4",
+            "label": "EEG Signal Processing",
+            "description": "In EEGLAB, the model combines independent-component time courses, scalp distributions and spectral features to identify and remove blink-related components. It compares waveforms before and after processing within the same time window and amplitude scale, reviews additional segments, and saves the processed data, component records and comparison figures.",
+            "caption": "Identify and remove blink-related components in EEGLAB, compare the results to verify artifact reduction, and save reviewable outputs.",
+            "poster": "/cases/sage/thumbnails/eeg.jpg"
+          },
+          {
+            "type": "video",
+            "src": "/cases/sage/satellite.mp4",
+            "label": "Satellite Imagery Analysis",
+            "description": "In QGIS, the model compares two satellite observations and extracts candidate water regions of Poyang Lake from multispectral data. It overlays the results on the original imagery to inspect shallow water, wet sediment and shoreline boundaries. Within the study area valid in both observations, it measures changes in water area and exports a change map, an area table and a QGIS project that can be reopened.",
+            "caption": "Compare two satellite observations of Poyang Lake in QGIS, locate changes in water area, extract and review water boundaries, and export a change map and area statistics.",
+            "poster": "/cases/sage/thumbnails/satellite.jpg"
+          }
+        ]
+      },
+      {
+        "title": "The Memory of Light",
+        "description": "The model investigates efficiency losses in crystal quantum memories by reviewing primary papers, extracting experimental parameters and comparing cavity coupling, atomic dephasing and losses through parameter sweeps. The interactive page lets visitors adjust reflectivity, absorption and storage time, observe pulses and echoes, and trace the evidence to papers and research records.",
+        "label": "Interactive Demo | The Memory of Light",
+        "src": "/cases/sage/light-memory.html",
+        "type": "iframe",
+        "caption": "Turn a scientific deep research question about cavity-enhanced atomic frequency comb quantum memory into an interactive HTML page that presents source literature during exploration."
+      }
+    ],
+    "ending": [
+      "Sage 2.1 Flash is designed for scientific reasoning and agentic task execution, supporting analysis that combines scientific data, retrieval, programming and professional software.",
+      "Try the model through its API and explore its applications in research data processing, professional software operation and multistep task execution."
+    ],
+    "api": "Try the Sage 2.1 Flash API →"
+  }
+}

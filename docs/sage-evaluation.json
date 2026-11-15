@@ -1,0 +1,521 @@
+{
+  "columns": [
+    "评测项目",
+    "Sage 2.1 Flash",
+    "GLM-5.3-Flash",
+    "GLM-5.3",
+    "DS-V4.1-Flash-1017",
+    "Qwen3.8-Max",
+    "GPT-5.6 Sol",
+    "Claude Opus 5",
+    "GPT-6 Astra",
+    "GPT-6.1 Sol",
+    "Claude Opus 5.5"
+  ],
+  "rows": [
+    [
+      "Terminal-Bench 2.1",
+      "87.4",
+      "84.3",
+      "86",
+      "87.6",
+      "89.6",
+      "86.2",
+      "90.2",
+      "87.4",
+      "—",
+      "87.6"
+    ],
+    [
+      "DeepSWE",
+      "66.8",
+      "63.7",
+      "67.3",
+      "73.9",
+      "67",
+      "70.6",
+      "72.6",
+      "74.1",
+      "75.2",
+      "74.2"
+    ],
+    [
+      "Terminal-Bench 4.0",
+      "—",
+      "33.3",
+      "41.8",
+      "40.9",
+      "27",
+      "37.3",
+      "53.9",
+      "58.2",
+      "58.2",
+      "64.8"
+    ],
+    [
+      "NL2Repo-Bench",
+      "—",
+      "53",
+      "54.8",
+      "62.7",
+      "63.2",
+      "60.7",
+      "79.9",
+      "—",
+      "—",
+      "—"
+    ],
+    [
+      "ALE-CLI",
+      "32.4",
+      "28.1",
+      "28.5",
+      "35.4",
+      "24.8",
+      "28.6",
+      "29.5",
+      "33.3",
+      "29.5",
+      "34.3"
+    ],
+    [
+      "SpreadsheetBench 2",
+      "35.5",
+      "32.4",
+      "32.1",
+      "35.8",
+      "34.9",
+      "32.7",
+      "33.6",
+      "—",
+      "32",
+      "35.1"
+    ],
+    [
+      "APEX-Agents",
+      "64.6",
+      "50.8",
+      "57.5",
+      "69.2",
+      "66.3",
+      "55.4",
+      "61.3",
+      "64.7",
+      "60",
+      "73.5"
+    ],
+    [
+      "Workspace-Bench-Lite",
+      "63.8",
+      "65.1",
+      "66.7",
+      "66.8",
+      "67.4",
+      "57.4",
+      "68.1",
+      "—",
+      "—",
+      "—"
+    ],
+    [
+      "GDPval（win rate）",
+      "—",
+      "67.7",
+      "71.8",
+      "77.6",
+      "79.6",
+      "69.6",
+      "80",
+      "—",
+      "—",
+      "—"
+    ],
+    [
+      "GDPval（Elo）",
+      "—",
+      "—",
+      "1667",
+      "—",
+      "1735",
+      "1635",
+      "1738",
+      "—",
+      "—",
+      "—"
+    ],
+    [
+      "Harvey LAB",
+      "25",
+      "20",
+      "22.5",
+      "11.7",
+      "24.2",
+      "5",
+      "22.7",
+      "—",
+      "—",
+      "—"
+    ],
+    [
+      "BFCL V4",
+      "76.2",
+      "71.7",
+      "74.1",
+      "71.4",
+      "66.8",
+      "68.8",
+      "80.6",
+      "—",
+      "—",
+      "—"
+    ],
+    [
+      "OfficeQA Pro",
+      "67.7",
+      "64.7",
+      "65.8",
+      "69.7",
+      "66.2",
+      "66.4",
+      "67.2",
+      "54.4",
+      "70",
+      "62.2"
+    ],
+    [
+      "AutomationBench",
+      "50.8",
+      "48.3",
+      "52.5",
+      "57.8",
+      "49.7",
+      "45.7",
+      "49.4",
+      "41.4",
+      "49.3",
+      "58"
+    ],
+    [
+      "SkillsBench",
+      "61.1",
+      "58.3",
+      "63.3",
+      "52.8",
+      "66.7",
+      "62.5",
+      "63.7",
+      "—",
+      "72.6",
+      "71.8"
+    ],
+    [
+      "CyberGym",
+      "—",
+      "82.3",
+      "84.5",
+      "—",
+      "73.8",
+      "83.6",
+      "—",
+      "—",
+      "—",
+      "—"
+    ],
+    [
+      "ExploitGym",
+      "—",
+      "7.1",
+      "15",
+      "11.7",
+      "3",
+      "33.7",
+      "—",
+      "42.4",
+      "—",
+      "34.5"
+    ],
+    [
+      "PostTrainBench",
+      "37",
+      "36.8",
+      "34.5",
+      "—",
+      "—",
+      "31",
+      "35.7",
+      "41.9",
+      "38.8",
+      "43.8"
+    ],
+    [
+      "MLE-bench",
+      "87.9",
+      "84.3",
+      "84.8",
+      "89.2",
+      "82.2",
+      "80.7",
+      "88",
+      "—",
+      "—",
+      "—"
+    ],
+    [
+      "PaperBench",
+      "86.4",
+      "83",
+      "85.2",
+      "88.6",
+      "95.1",
+      "94.3",
+      "86.9",
+      "—",
+      "—",
+      "—"
+    ],
+    [
+      "DeepResearch Bench II",
+      "54.8",
+      "51.9",
+      "52.7",
+      "55.1",
+      "49.2",
+      "50.7",
+      "54.1",
+      "—",
+      "—",
+      "—"
+    ],
+    [
+      "BrowseComp-VL",
+      "58.6",
+      "61",
+      "—",
+      "60.6",
+      "—",
+      "—",
+      "—",
+      "—",
+      "—",
+      "—"
+    ],
+    [
+      "BrowseComp",
+      "89.5",
+      "88.3",
+      "89.6",
+      "93.8",
+      "—",
+      "92.2",
+      "90.8",
+      "91.5",
+      "87.5",
+      "90.8"
+    ],
+    [
+      "WideSearch",
+      "80.9",
+      "77.2",
+      "82.7",
+      "86.3",
+      "81.9",
+      "83.3",
+      "84",
+      "—",
+      "—",
+      "—"
+    ],
+    [
+      "OSWorld-Verified",
+      "85.6",
+      "83.5",
+      "—",
+      "78.5",
+      "84.3",
+      "—",
+      "—",
+      "—",
+      "—",
+      "—"
+    ],
+    [
+      "WebArena",
+      "68.4",
+      "65",
+      "—",
+      "60.9",
+      "64.9",
+      "66.6",
+      "69.1",
+      "—",
+      "—",
+      "—"
+    ]
+  ],
+  "notes": {
+    "zh": [
+      [
+        "Terminal-Bench 2.1",
+        "采用 Claude Code 独立运行 4 次，取平均结果。任务时限设为官方时限的 12 倍，最长 12 小时。验证器时限设为官方时限的 3 倍。"
+      ],
+      [
+        "DeepSWE",
+        "采用 v1.1 和 mini-swe-agent，每项任务限时 9 小时。"
+      ],
+      [
+        "ALE-CLI",
+        "采用 v1.0，在 Claude Code 中运行。"
+      ],
+      [
+        "SpreadsheetBench 2",
+        "采用 Claude Code，每项任务限时 3 小时。可视化任务由 Qwen3.7-plus 评分，其余任务由基于规则的验证器评分。最终报告 321 项任务的加权准确率。"
+      ],
+      [
+        "APEX-Agents",
+        "采用 v1.1，使用自研评测框架。"
+      ],
+      [
+        "Workspace-Bench-Lite",
+        "采用英文 Lite 子集，在 Claude Code 中运行。每项任务限时 2 小时，交付物由 Doubao Seed 2.0 Lite 评分。"
+      ],
+      [
+        "Harvey LAB",
+        "从 1,200 项任务中按比例抽取 120 项，由 GLM-5.2 评分。交付物须满足全部评分标准，该任务才计为通过。"
+      ],
+      [
+        "BFCL V4",
+        "网页搜索任务使用 Serper。API 调用失败的样例计为错误。"
+      ],
+      [
+        "OfficeQA Pro",
+        "采用 OfficeQA Pro V2，使用基于该基准技术报告搭建的评测框架，覆盖全部 90 项任务。"
+      ],
+      [
+        "AutomationBench",
+        "采用 v1.0.6 进行评测。"
+      ],
+      [
+        "SkillsBench",
+        "采用包含 79 项任务的纯文本子集，在 OpenHands 中运行 3 次，取平均结果。"
+      ],
+      [
+        "PostTrainBench",
+        "采用 v1.2，报告 4 个基础模型在 6 个评测集上的加权平均结果。"
+      ],
+      [
+        "MLE-bench",
+        "采用 Claude Code，运行时限为 12 小时，报告 HumanRank 指标。"
+      ],
+      [
+        "PaperBench",
+        "采用 Code-Dev 设置，在 Claude Code 中运行。每项任务限时 12 小时，允许访问互联网，评测环境无 GPU。"
+      ],
+      [
+        "DeepResearch Bench II",
+        "采用配备搜索工具的 Claude Code，每项任务限时 4 小时，取 3 次评分的平均值。"
+      ],
+      [
+        "BrowseComp-VL",
+        "采用 ReAct 智能体，提供搜索、网页访问和 Python 执行工具。最多执行 500 步，上下文窗口为 256K，单次生成的输出上限为 64K，采用 discard-all 上下文管理策略。"
+      ],
+      [
+        "BrowseComp",
+        "采用 ReAct 智能体，提供搜索、网页访问和 Python 执行工具。最多执行 500 步，上下文窗口为 256K，单次生成的输出上限为 64K，采用 discard-all 上下文管理策略。"
+      ],
+      [
+        "WideSearch",
+        "采用 ReAct 智能体，提供搜索、网页访问和 Python 执行工具。最多执行 500 步，上下文窗口为 256K，单次生成的输出上限为 64K，采用 discard-all 上下文管理策略。"
+      ],
+      [
+        "OSWorld-Verified",
+        "使用自研评测框架。"
+      ],
+      [
+        "WebArena",
+        "使用自研评测框架。"
+      ]
+    ],
+    "en": [
+      [
+        "Terminal-Bench 2.1",
+        "Run independently four times with Claude Code; report the mean. Task time limits are 12 times the official limits, capped at 12 hours. Verifier time limits are three times the official limits."
+      ],
+      [
+        "DeepSWE",
+        "Version 1.1 with mini-swe-agent; nine hours per task."
+      ],
+      [
+        "ALE-CLI",
+        "Version 1.0, run in Claude Code."
+      ],
+      [
+        "SpreadsheetBench 2",
+        "Claude Code with three hours per task. Qwen3.7-plus scores visualization tasks; rule-based verifiers score the others. Report weighted accuracy across 321 tasks."
+      ],
+      [
+        "APEX-Agents",
+        "Version 1.1 with an in-house evaluation harness."
+      ],
+      [
+        "Workspace-Bench-Lite",
+        "The English Lite subset, run in Claude Code with two hours per task. Doubao Seed 2.0 Lite scores the deliverables."
+      ],
+      [
+        "Harvey LAB",
+        "A proportional sample of 120 out of 1,200 tasks, scored by GLM-5.2. A task passes only if its deliverable satisfies every rubric criterion."
+      ],
+      [
+        "BFCL V4",
+        "Web-search tasks use Serper. Failed API calls count as incorrect samples."
+      ],
+      [
+        "OfficeQA Pro",
+        "OfficeQA Pro V2 with a harness based on its technical report, covering all 90 tasks."
+      ],
+      [
+        "AutomationBench",
+        "Evaluated with version 1.0.6."
+      ],
+      [
+        "SkillsBench",
+        "The text-only subset of 79 tasks, run three times in OpenHands; report the mean."
+      ],
+      [
+        "PostTrainBench",
+        "Version 1.2; report the weighted mean of four base models across six evaluation sets."
+      ],
+      [
+        "MLE-bench",
+        "Claude Code with a 12-hour runtime limit; report HumanRank."
+      ],
+      [
+        "PaperBench",
+        "The Code-Dev setting in Claude Code. Each task has 12 hours and internet access; no GPU is available."
+      ],
+      [
+        "DeepResearch Bench II",
+        "Claude Code with search tools, four hours per task; average three scoring runs."
+      ],
+      [
+        "BrowseComp-VL",
+        "A ReAct agent with search, webpage access and Python tools. Up to 500 steps, a 256K context window and 64K maximum output per generation; discard-all context management."
+      ],
+      [
+        "BrowseComp",
+        "A ReAct agent with search, webpage access and Python tools. Up to 500 steps, a 256K context window and 64K maximum output per generation; discard-all context management."
+      ],
+      [
+        "WideSearch",
+        "A ReAct agent with search, webpage access and Python tools. Up to 500 steps, a 256K context window and 64K maximum output per generation; discard-all context management."
+      ],
+      [
+        "OSWorld-Verified",
+        "An in-house evaluation harness."
+      ],
+      [
+        "WebArena",
+        "An in-house evaluation harness."
+      ]
+    ]
+  }
+}

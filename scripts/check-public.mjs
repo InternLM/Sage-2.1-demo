@@ -1,0 +1,18 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {spawnSync} from 'node:child_process';
+const read=p=>fs.readFileSync(p,'utf8');
+const html=read('dist/index.html');
+const bundle=html.match(/src="\/assets\/([^" ]+\.js)"/)[1];
+assert.equal(spawnSync(process.execPath,['--check','dist/assets/'+bundle]).status,0);
+const article=JSON.parse(read('docs/sage-article.json'));
+const media=lang=>article[lang].cases.flatMap(c=>c.medias||[c]);
+assert.equal(article.zh.cases.length,4);assert.equal(media('zh').length,8);
+assert.deepEqual(media('zh').map(m=>m.src),media('en').map(m=>m.src));
+for(const m of media('zh'))for(const k of ['src','poster'])if(m[k])assert.ok(fs.existsSync('dist'+m[k]),m[k]);
+for(const [,ref] of html.matchAll(/(?:src|href)="(\/[^"?]+)/g))assert.ok(fs.existsSync('dist'+ref),ref);
+const results=JSON.parse(read('docs/sage-evaluation.json'));
+const tsv=read('docs/sage-benchmarks.tsv').trim().split('\n').map(l=>l.split('\t'));
+assert.deepEqual(results.columns,tsv[0]);assert.deepEqual(results.rows,tsv.slice(1));
+assert.equal(results.rows.length,26);assert.ok(results.rows.every(r=>r.length===11));
+console.log('PASS: JS syntax, bilingual demos, local assets, and all 260 benchmark values.');
