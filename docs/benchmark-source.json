@@ -1,0 +1,12 @@
+{
+  "source": "modelcard(1).html",
+  "sha256": "e7e6453e62b77ec5af68d8c13d75c3e701d2dbdba557bd17b64daa58964ab49b",
+  "benchmarks": 34,
+  "models": 9,
+  "chartBenchmarks": 15,
+  "notesPerLanguage": 35,
+  "securityBenchmarks": [
+    "CyberGym"
+  ],
+  "modelName": "Sage 2.1 Flash"
+}
