@@ -7,6 +7,7 @@
     "build": "node embed-content.mjs && node scripts/build-sage.mjs",
     "build:pages": "npm run build && node scripts/build-pages.mjs",
     "check": "node scripts/check-public.mjs",
-    "preview": "python3 scripts/serve-local.py"
+    "preview": "python3 scripts/serve-local.py",
+    "prepare:pages": "npm run build:pages && npm run check && node scripts/prepare-pages.mjs"
   }
 }

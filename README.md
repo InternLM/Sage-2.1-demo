@@ -18,7 +18,9 @@ Content: `CONTENT.md`, `CONTENT.en.md`, and `docs/sage-article.json`. Evaluation
 
 ## GitHub Pages
 
-The Pages workflow builds `_site/` with the repository base path and publishes it on pushes to `main`. Videos and the interactive HTML demo are hosted alongside the site; no object storage is required.
+GitHub Pages deploys directly from the root of the `ghpages` branch. The `main` branch contains the model card and technical report. Website source and local demo media are maintained here on `ghpages`.
+
+After editing the website, run `npm run prepare:pages`, commit the source and generated root files (`index.html`, `assets/`, `cases/`, `.nojekyll`), and push `ghpages`. This command builds the repository base path and checks the website before copying the generated files to the deployment root. No object storage is required.
 
 ## Included demos
 
