@@ -1,6 +1,6 @@
 # Sage S2.1 Flash
 
-[**Introduction**](#introduction) · [**Model Downloads**](#model-downloads) · [**Evaluation**](#evaluation-results) · [**Deployment**](#deployment) · [**License**](#license) · [**Online Access**](https://discovery.intern-ai.org.cn/)
+[**Official Website**](https://internlm.github.io/Sage-S2.1-Flash/) · [**Introduction**](#introduction) · [**Model Downloads**](#model-downloads) · [**Evaluation**](#evaluation-results) · [**Deployment**](#deployment) · [**License**](#license)
 
 ## Introduction
 
