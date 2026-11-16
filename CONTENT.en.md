@@ -2,10 +2,10 @@
 brand: Sage 2.1 Flash
 hero:
   links:
-    - label: "GitHub"
-      href: "https://github.com/namespace-ERI/sage-2.1-demo"
+    - label: "ModelScope"
+      href: "https://www.modelscope.cn/models/Shanghai_AI_Laboratory/Sage-S2.1-Flash"
     - label: "Hugging Face"
-      href: ""
+      href: "https://huggingface.co/internlm/Sage-S2.1-Flash"
     - label: "Try the API"
       href: "https://discovery.intern-ai.org.cn/"
     - label: "Intern AI"
