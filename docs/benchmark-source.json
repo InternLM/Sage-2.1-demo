@@ -1,6 +1,6 @@
 {
-  "source": "modelcard(1).html",
-  "sha256": "e7e6453e62b77ec5af68d8c13d75c3e701d2dbdba557bd17b64daa58964ab49b",
+  "source": "modelcard(4).html",
+  "sha256": "3a64077e48373c0f210c069349bcbaf36e675b6e9b40af40331d16e2888ba5e6",
   "benchmarks": 33,
   "models": 6,
   "chartBenchmarks": 15,
@@ -8,8 +8,8 @@
   "securityBenchmarks": [],
   "modelName": "Sage S2.1 Flash",
   "tableSource": {
-    "source": "modelcard(3).html",
-    "sha256": "87c3c7bd2903e9623b093e93f66f863c48b1e6a5e12de7057544833bddb28e31",
+    "source": "modelcard(4).html",
+    "sha256": "3a64077e48373c0f210c069349bcbaf36e675b6e9b40af40331d16e2888ba5e6",
     "variant": "Six-model results",
     "benchmarks": 33,
     "models": 6

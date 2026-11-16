@@ -39,8 +39,8 @@
     [
       "SWE-bench Pro",
       "60.6",
-      "59.2",
-      "64.7",
+      "60.3",
+      "61.8",
       "65.3",
       "59.8",
       "76.5"
@@ -100,7 +100,7 @@
       "62.0"
     ],
     [
-      "OfficeQA Pro V2",
+      "OfficeQA Pro",
       "72.2",
       "64.7",
       "69.7",
@@ -493,8 +493,8 @@
         "采用英文 Full 数据集。GPT 系列模型使用 Codex，其余模型使用 Claude Code。每个任务分配 2 个 CPU 和 8 GiB 内存，限时 2 小时。评分采用 doubao-seed-2-1-lite-260915 作为 LLM judge。"
       ],
       [
-        "OfficeQA Pro V2",
-        "采用基于官方技术报告构建的 harness，评测 OfficeQA Pro V2 的 90 个任务。temperature 设为 0，并发数为 40。单次请求限时 180 秒，单任务限时 900 秒，最多执行 200 步。模型仅可访问 source_files 指定的文档；搜索最多返回 8 条结果，工具输出最多为 18,000 个字符。官方评估器的容差为 0.05，无有效提交的任务最多重试 3 轮。"
+        "OfficeQA Pro",
+        "OfficeQA Pro 的 133 个任务使用 Claude Code 作为评测 harness，允许联网。单次模型请求限时 1,800 秒，每次任务尝试限时 3,600 秒，超时后最多重试两次，步数上限为 200。答案提取和评分采用 EvalScope 的 OfficeQA 评分逻辑，容差设为 0。最终成绩按全部 133 个任务统计，没有有效结果的任务计为错误。"
       ],
       [
         "Harvey LAB",
@@ -627,8 +627,8 @@
         "Evaluations use the English Full dataset. GPT models use Codex, while all other models use Claude Code. Each task receives 2 CPUs and 8 GiB of memory and has a two-hour time limit. The LLM judge is doubao-seed-2-1-lite-260915."
       ],
       [
-        "OfficeQA Pro V2",
-        "The 90 tasks of OfficeQA Pro V2 are evaluated using a harness built from the official technical report. Temperature is set to 0, and evaluations run with 40 concurrent workers. Each request has a 180-second timeout, and each task has a 900-second timeout and a limit of 200 steps. Models may access only the documents specified by source_files. Search results contain at most 8 entries, and tool output is limited to 18,000 characters. The official evaluator uses a tolerance of 0.05. Tasks without valid submissions may be retried for up to 3 rounds."
+        "OfficeQA Pro",
+        "The 133 tasks in OfficeQA Pro are evaluated using Claude Code as the harness, with network access enabled. Each model request has a 1,800-second timeout, and each task attempt has a 3,600-second timeout, with up to two retries on timeout and a limit of 200 steps. Answers are extracted and scored using EvalScope’s OfficeQA scoring logic with zero tolerance. Tasks without a valid result are counted as incorrect in the overall score across all 133 tasks."
       ],
       [
         "Harvey LAB",

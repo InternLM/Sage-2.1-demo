@@ -1,4 +1,4 @@
-function SageOverviewChart(){const {language}=q.useContext(SiteLanguageContext);return x.jsxs('figure',{className:'sage-overview-chart',children:[x.jsx('img',{src:'/cases/sage/benchmarks.svg?v=92fb9052c7',alt:language==='zh'?'书生 S2.1 Flash 与五个基线模型的十五项评测结果对比':'Sage S2.1 Flash and five baselines on 15 benchmarks',width:1440,height:741.924}),x.jsx('figcaption',{className:'sage-chart-caption',children:sageEvaluation.chartIntro[language]})]})}
+function SageOverviewChart(){const {language}=q.useContext(SiteLanguageContext);return x.jsxs('figure',{className:'sage-overview-chart',children:[x.jsx('img',{src:'/cases/sage/benchmarks.svg?v=351bd27dce',alt:language==='zh'?'书生 S2.1 Flash 与五个基线模型的十五项评测结果对比':'Sage S2.1 Flash and five baselines on 15 benchmarks',width:1440,height:741.924}),x.jsx('figcaption',{className:'sage-chart-caption',children:sageEvaluation.chartIntro[language]})]})}
 function SageEvaluation(){
  const {language}=q.useContext(SiteLanguageContext);const zh=language==='zh';
  const external=c=>sageEvaluation.externalColumns.includes(c);
