@@ -51,6 +51,8 @@ block=svg[match.start():end]
 x,y=re.search(r'translate\(([-\d.]+) ([-\d.]+)\)',block).groups()
 svg=svg[:match.start()]+f'<g id="{match.group(1)}"><text x="{x}" y="{y}" fill="#333333" font-family="DejaVu Sans,Arial,sans-serif" font-size="12" font-weight="700">Sage 2.1 Flash</text></g>'+svg[end:]
 chart_intro={lang:normalized(next(n for n in parser.root.all('p') if lang in n.attrs.get('class','').split()).text()) for lang in notes}
+chart_intro['zh']=chart_intro['zh'].replace('下表展示 Sage 2.1 Flash 与各 baseline 的成绩。','').strip()
+chart_intro['en']=chart_intro['en'].replace('The table reports Sage 2.1 Flash and baseline scores.','').strip()
 assert len(rows)==34 and all(len(r)==10 for r in rows)
 assert len(notes['zh'])==len(notes['en'])==35
 security=next(i for i,g in enumerate(groups) if g['en']=='Cybersecurity')

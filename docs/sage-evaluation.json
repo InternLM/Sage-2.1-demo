@@ -573,8 +573,8 @@
     9
   ],
   "chartIntro": {
-    "zh": "图中展示 Sage 2.1 Flash 在 15 项 benchmark 上的成绩。图中展示我们与 5 个 baseline；按这 6 个模型中的名次排序，同名次按相对 GLM-5.3-Flash 的绝对提分降序排列。下表展示 Sage 2.1 Flash 与各 baseline 的成绩。",
-    "en": "The chart shows Sage 2.1 Flash on 15 benchmarks. The chart compares our model with five baselines, ordered by rank among these six models, then by absolute gain over GLM-5.3-Flash in descending order. The table reports Sage 2.1 Flash and baseline scores."
+    "zh": "图中展示 Sage 2.1 Flash 在 15 项 benchmark 上的成绩。图中展示我们与 5 个 baseline；按这 6 个模型中的名次排序，同名次按相对 GLM-5.3-Flash 的绝对提分降序排列。",
+    "en": "The chart shows Sage 2.1 Flash on 15 benchmarks. The chart compares our model with five baselines, ordered by rank among these six models, then by absolute gain over GLM-5.3-Flash in descending order."
   },
   "notes": {
     "zh": [
