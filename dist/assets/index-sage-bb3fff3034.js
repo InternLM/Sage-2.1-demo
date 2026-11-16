@@ -563,7 +563,7 @@ const sageEvaluation = {
   ],
   "externalColumns": [],
   "chartIntro": {
-    "zh": "图中展示 Sage S2.1 Flash 在 15 项 benchmark 上的成绩。图中展示我们与 5 个 baseline；按这 6 个模型中的名次排序。",
+    "zh": "图中展示 书生 S2.1 Flash 在 15 项 benchmark 上的成绩。图中展示我们与 5 个 baseline；按这 6 个模型中的名次排序。",
     "en": "The chart shows Sage S2.1 Flash on 15 benchmarks. The chart compares our model with five baselines, ordered by rank among these six models."
   },
   "notes": {
@@ -578,11 +578,11 @@ const sageEvaluation = {
       ],
       [
         "NL2Repo-Bench",
-        "DeepSeek-V4.1-Flash-1017、GLM-5.3-Flash、Claude Opus 5 和 Sage S2.1 Flash 采用 Claude Code，其余模型采用 OpenHands（v0.56.0）。每个任务限时 6 小时，最多 500 步；报告 104 个任务的平均测试通过率。"
+        "DeepSeek-V4.1-Flash-1017、GLM-5.3-Flash、Claude Opus 5 和 书生 S2.1 Flash 采用 Claude Code，其余模型采用 OpenHands（v0.56.0）。每个任务限时 6 小时，最多 500 步；报告 104 个任务的平均测试通过率。"
       ],
       [
         "SWE-bench Pro",
-        "SWE-bench Pro 中，Sage S2.1 Flash、GLM-5.3-Flash、DeepSeek-V4.1-Flash-1017 和 Claude Opus 5 使用 Claude Code，其余模型使用 OpenHands。题面采用官方 V2 locked 协议的提示词外壳，题集为 v1 的 731 个任务。每个任务分配 4 个 CPU 与 16 GiB 内存，单任务限时 4.5 小时，最多 250 轮。单次输出上限为 64K，thinking effort 设为 max。评测环境禁用外网（仅放行模型端点），并删除 base commit 之后的 Git 历史，以防止信息泄露或评测污染。禁用图片/PDF 读取及 WebSearch、WebFetch 工具。补丁在 Agent 结束后由 git diff 收取，在独立沙盒中运行官方测试判分。"
+        "SWE-bench Pro 中，书生 S2.1 Flash、GLM-5.3-Flash、DeepSeek-V4.1-Flash-1017 和 Claude Opus 5 使用 Claude Code，其余模型使用 OpenHands。题面采用官方 V2 locked 协议的提示词外壳，题集为 v1 的 731 个任务。每个任务分配 4 个 CPU 与 16 GiB 内存，单任务限时 4.5 小时，最多 250 轮。单次输出上限为 64K，thinking effort 设为 max。评测环境禁用外网（仅放行模型端点），并删除 base commit 之后的 Git 历史，以防止信息泄露或评测污染。禁用图片/PDF 读取及 WebSearch、WebFetch 工具。补丁在 Agent 结束后由 git diff 收取，在独立沙盒中运行官方测试判分。"
       ],
       [
         "SpreadsheetBench 2",
@@ -642,7 +642,7 @@ const sageEvaluation = {
       ],
       [
         "PostTrainBench",
-        "采用 v1.2。GLM-5.3-Flash、GPT-5.6 Sol 和 Claude Opus 5 的成绩引自 posttrainbench.com 官方榜单，为 6 个评测集与 4 个基座模型组成的 24 项结果的加权平均。Sage S2.1 Flash 为我们按相同口径自测的 24 项加权平均成绩。"
+        "采用 v1.2。GLM-5.3-Flash、GPT-5.6 Sol 和 Claude Opus 5 的成绩引自 posttrainbench.com 官方榜单，为 6 个评测集与 4 个基座模型组成的 24 项结果的加权平均。书生 S2.1 Flash 为我们按相同口径自测的 24 项加权平均成绩。"
       ],
       [
         "PaperBench",
@@ -840,12 +840,12 @@ const sageEvaluation = {
 ;
 const sageArticle = {
   "zh": {
-    "title": "Sage S2.1 Flash ｜ 以推理探索，以行动求证",
+    "title": "书生 S2.1 Flash ｜ 以推理探索，以行动求证",
     "opening": [
-      "今天，我们正式发布 **书生 Sage S2.1 Flash**，一款面向高难度科学研究的前沿科学多模态智能体模型。模型采用 **3200 亿参数 MoE 架构**，将科学多模态理解与通用智能体能力相结合，支持科学深度研究、科学编程及专业科研软件操作。",
+      "今天，我们正式发布 **书生 S2.1 Flash**，一款面向高难度科学研究的前沿科学多模态智能体模型。模型采用 **3200 亿参数 MoE 架构**，将科学多模态理解与通用智能体能力相结合，支持科学深度研究、科学编程及专业科研软件操作。",
       "书生-S2.1 将分子图、晶体结构、蛋白质序列与三维结构、DNA序列、RNA序列，以及光谱、质谱、X 射线衍射、心电、脑电和光变曲线等十余类科学输入纳入统一模型，并依托大规模可验证环境训练，强化搜索、编程、工具调用与多步骤任务执行能力。通过视觉反馈，模型能够根据软件状态与中间结果检验判断、调整策略，在专业科研环境中持续推进复杂任务。"
     ],
-    "intro": "科学研究需要在数据、代码与专业工具之间反复开展分析、操作和检查。以下演示展示 Sage S2.1 Flash 如何处理科学数据、操作专业软件，并利用中间结果调整执行过程，输出可供研究者复核的成果。",
+    "intro": "科学研究需要在数据、代码与专业工具之间反复开展分析、操作和检查。以下演示展示 书生 S2.1 Flash 如何处理科学数据、操作专业软件，并利用中间结果调整执行过程，输出可供研究者复核的成果。",
     "cases": [
       {
         "title": "CT 三维重建",
@@ -955,10 +955,10 @@ const sageArticle = {
       }
     ],
     "ending": [
-      "Sage S2.1 Flash 面向科学推理与智能体任务执行，支持结合科学数据、检索、编程与专业软件开展分析。",
+      "书生 S2.1 Flash 面向科学推理与智能体任务执行，支持结合科学数据、检索、编程与专业软件开展分析。",
       "欢迎通过 API 体验模型能力，探索其在科研数据处理、专业软件操作与多步任务执行中的应用。"
     ],
-    "api": "试用 Sage S2.1 Flash API →"
+    "api": "试用 书生 S2.1 Flash API →"
   },
   "en": {
     "title": "Sage S2.1 Flash | Explore through reasoning. Verify through action.",
@@ -1111,7 +1111,7 @@ function SageArticle(){
   ]}),x.jsx(SageEvaluation,{})
  ]});
 }
-function SageOverviewChart(){const {language}=q.useContext(SiteLanguageContext);return x.jsxs('figure',{className:'sage-overview-chart',children:[x.jsx('img',{src:'/cases/sage/benchmarks.svg?v=92fb9052c7',alt:language==='zh'?'Sage S2.1 Flash 与五个基线模型的十五项评测结果对比':'Sage S2.1 Flash and five baselines on 15 benchmarks',width:1440,height:741.924}),x.jsx('figcaption',{className:'sage-chart-caption',children:sageEvaluation.chartIntro[language]})]})}
+function SageOverviewChart(){const {language}=q.useContext(SiteLanguageContext);return x.jsxs('figure',{className:'sage-overview-chart',children:[x.jsx('img',{src:'/cases/sage/benchmarks.svg?v=92fb9052c7',alt:language==='zh'?'书生 S2.1 Flash 与五个基线模型的十五项评测结果对比':'Sage S2.1 Flash and five baselines on 15 benchmarks',width:1440,height:741.924}),x.jsx('figcaption',{className:'sage-chart-caption',children:sageEvaluation.chartIntro[language]})]})}
 function SageEvaluation(){
  const {language}=q.useContext(SiteLanguageContext);const zh=language==='zh';
  const external=c=>sageEvaluation.externalColumns.includes(c);
@@ -1137,7 +1137,7 @@ function P0({hero={}}) {
     x.jsxs('div',{className:'sage-hero__composition',children:[
     x.jsx('div',{className:'sage-logo-drawing','aria-hidden':true,dangerouslySetInnerHTML:{__html:sageLogoSvg}}),
     x.jsxs('div',{className:'sage-hero__copy',children:[
-      x.jsx('h1',{className:'sage-title',children:'Sage S2.1 Flash'}),
+      x.jsx('h1',{className:'sage-title',children:zh?'书生 S2.1 Flash':'Sage S2.1 Flash'}),
       x.jsx('p',{className:'sage-tagline',children:zh?'以推理探索，以行动求证':'Explore through reasoning. Verify through action.'}),
       x.jsx('p',{className:'sage-description',children:zh?'面向高难度科学研究的前沿科学多模态智能体模型。':'A frontier scientific multimodal agent model for demanding research.'}),
       x.jsxs('div',{className:'sage-actions',children:[x.jsxs('a',{className:'sage-button',href:'#cases',children:[zh?'探索能力与案例':'Explore the demos',x.jsx('span',{'aria-hidden':true,children:'↗'})]}),x.jsx('a',{className:'sage-link',href:'https://discovery.intern-ai.org.cn/',target:'_blank',rel:'noreferrer',children:zh?'体验 API ↗':'Try the API ↗'})]})
@@ -1770,7 +1770,7 @@ Please report this to https://github.com/markedjs/marked.`,e){let r="<p>An error
 }
 function parseOriginalContent(e){const t=e.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/),n=t?Fy(t[1])||{}:{},r=t?t[2]:e,i=Vv(n.weatherUrl),l=r.split(`
 `),s=[];let o=null,a=null,u=[],c=[],h=[],f=[],d=!1,E=null,N=!1;const p=()=>c.filter(Boolean).map(g=>Or(g)).join("<br/>"),v=()=>{a&&(a.text=p(),f.length?a.medias=f:h.length>1?(a.stack=h,d&&(a.row=!0)):h.length===1&&(a.media=h[0]),o.cases.push(a),a=null,c=[],h=[],f=[],d=!1)},k=()=>{o&&(v(),o.intro=u.filter(Boolean).map(g=>Or(g)).join("<br/>"),E&&(o.media=E),N&&(o.benchmarkPlaceholder=!0),s.push(o),o=null,u=[],E=null,N=!1)};for(let g=0;g<l.length;g++){const y=l[g].trim();let w=y.match(/^##\s+(.*)$/),S=y.match(/^###\s+(.*)$/);if(S){v();const I=S[1].split(" · "),L=I.shift().trim(),j=I.join(" · ").trim();a={title:L},j&&(a.subtitle=j);continue}if(w&&!S){k();const I=w[1].split(" · ").map(L=>L.trim());o={cases:[]},I.length>=3&&/^\d+$/.test(I[0])?(o.num=I[0],o.en=I[1],o.name=I.slice(2).join(" · ")):o.name=I.join(" · ");continue}if(!o)continue;if(y.startsWith("@media-caption ")&&a&&f.length){f[f.length-1].hint=y.slice(15).trim();continue}if(y.startsWith("@caption ")){const I=y.slice(9).trim();if(a)a.hint=I;else if(E)E.hint=I;continue}if(y==="@benchmark"&&!a){N=!0;continue}if(y==="@row"){a&&(d=!0);continue}if(y==="@weather"){a&&h.push(xs("@weather","",i));continue}if(y==="@sqlchart"){a&&h.push(xs("@sqlchart"));continue}const _=y.match(/^[-*]\s+\[([^\]]*)\]\(([^)]+)\)\s*$/);if(_&&a){const I=_[2].trim(),L=_[1].trim();f.push(I.startsWith("@")?xs(I,L,i):Lc(I,L));continue}const T=y.match(/^!\[([^\]]*)\]\(([^)]+)\)\s*$/),A=y.match(/^\[([^\]]*)\]\(([^)]+)\)\s*$/);if(T||A){const I=T||A,L=Lc(I[2].trim(),I[1].trim());a?h.push(L):E=L;continue}y&&(a?c.push(y):u.push(y))}return k(),{brand:n.brand||"Sage S2.1 Flash",weatherUrl:i,hero:n.hero||{},overview:qv(n.overview),casesHeader:n.cases||{},availability:n.availability||{},references:n.references||[],benchmarkTable:n.benchmarkTable||{},benchmarkNotes:n.benchmarkNotes||{},themes:s}}function qv(e={}){return{kicker:e.kicker||"",title:e.title?Or(e.title):"",lede:e.lede?Or(e.lede):"",body:(e.body||[]).map(t=>Or(t))}}const Hv=`---
-brand: Sage S2.1 Flash
+brand: 书生 S2.1 Flash
 hero:
   links:
     - label: "ModelScope"
@@ -1787,15 +1787,15 @@ overview:
   body: []
 ---
 
-# Sage S2.1 Flash ｜ 以推理探索，以行动求证
+# 书生 S2.1 Flash ｜ 以推理探索，以行动求证
 
-今天，我们正式发布 **书生 Sage S2.1 Flash**，一款面向高难度科学研究的前沿科学多模态智能体模型。模型采用 **3200 亿参数 MoE 架构**，将科学多模态理解与通用智能体能力相结合，支持科学深度研究、科学编程及专业科研软件操作。
+今天，我们正式发布 **书生 S2.1 Flash**，一款面向高难度科学研究的前沿科学多模态智能体模型。模型采用 **3200 亿参数 MoE 架构**，将科学多模态理解与通用智能体能力相结合，支持科学深度研究、科学编程及专业科研软件操作。
 
 书生-S2.1 将分子图、晶体结构、蛋白质序列与三维结构、DNA序列、RNA序列，以及光谱、质谱、X 射线衍射、心电、脑电和光变曲线等十余类科学输入纳入统一模型，并依托大规模可验证环境训练，强化搜索、编程、工具调用与多步骤任务执行能力。通过视觉反馈，模型能够根据软件状态与中间结果检验判断、调整策略，在专业科研环境中持续推进复杂任务。
 
 ![](/cases/sage/benchmarks.svg)
 
-科学研究需要在数据、代码与专业工具之间反复开展分析、操作和检查。以下演示展示 Sage S2.1 Flash 如何处理科学数据、操作专业软件，并利用中间结果调整执行过程，输出可供研究者复核的成果。
+科学研究需要在数据、代码与专业工具之间反复开展分析、操作和检查。以下演示展示 书生 S2.1 Flash 如何处理科学数据、操作专业软件，并利用中间结果调整执行过程，输出可供研究者复核的成果。
 
 ## Demo
 
@@ -1829,11 +1829,11 @@ overview:
 - [光的记忆](/cases/sage/light-memory.html)
 - [晶体结构可视化](/cases/sage/crystal-structures.html)
 
-Sage S2.1 Flash 面向科学推理与智能体任务执行，支持结合科学数据、检索、编程与专业软件开展分析。
+书生 S2.1 Flash 面向科学推理与智能体任务执行，支持结合科学数据、检索、编程与专业软件开展分析。
 
 欢迎通过 API 体验模型能力，探索其在科研数据处理、专业软件操作与多步任务执行中的应用。
 
-[试用 Sage S2.1 Flash API →](https://discovery.intern-ai.org.cn/)`,En=Wv(Hv);function Qv({content=En}){return x.jsxs(x.Fragment,{children:[x.jsx(Xg,{links:content.hero.links}),x.jsx(Zg,{}),x.jsx(P0,{hero:content.hero}),x.jsx(SageArticle,{})]})}
+[试用 书生 S2.1 Flash API →](https://discovery.intern-ai.org.cn/)`,En=Wv(Hv);function Qv({content=En}){return x.jsxs(x.Fragment,{children:[x.jsx(Xg,{links:content.hero.links}),x.jsx(Zg,{}),x.jsx(P0,{hero:content.hero}),x.jsx(SageArticle,{})]})}
 const siteLanguageStart = true;
 const siteEnglishContent = Wv("---\nbrand: Sage S2.1 Flash\nhero:\n  links:\n    - label: \"ModelScope\"\n      href: \"https://www.modelscope.cn/models/Shanghai_AI_Laboratory/Sage-S2.1-Flash\"\n    - label: \"Hugging Face\"\n      href: \"https://huggingface.co/internlm/Sage-S2.1-Flash\"\n    - label: \"Try the API\"\n      href: \"https://discovery.intern-ai.org.cn/\"\n    - label: \"Intern AI\"\n      href: \"https://intern-ai.org.cn/home\"\noverview:\n  title: \"\"\n  lede: \"\"\n  body: []\n---\n\n# Sage S2.1 Flash | Explore through reasoning. Verify through action.\n\nToday, we introduce **Sage S2.1 Flash**, a frontier scientific multimodal agent model for demanding scientific research. Built on a **320-billion-parameter MoE architecture**, it combines scientific multimodal understanding with general agent capabilities, supporting scientific deep research, scientific programming and the operation of professional research software.\n\nSage S2.1 Flash incorporates more than ten types of scientific input into a unified model, including molecular graphs, crystal structures, protein sequences and three-dimensional structures, DNA and RNA sequences, spectra, mass spectra, X-ray diffraction, electrocardiograms, electroencephalograms and light curves. Large-scale training in verifiable environments strengthens its capabilities in search, programming, tool use and multistep task execution. Through visual feedback, the model can check its judgments against software states and intermediate results, adjust its strategy and advance complex tasks in professional research environments.\n\n![](/cases/sage/benchmarks.svg)\n\nScientific research requires repeated analysis, operation and inspection across data, code and professional tools. The following demonstrations show how Sage S2.1 Flash processes scientific data, operates professional software and uses intermediate results to adjust its execution, producing outputs that researchers can review.\n\n## Demo\n\n### CT Reconstruction\n\nFrom 12,487 CT images with mixed sources, shuffled order and inconsistent orientations, the model identifies 139 slices from a single scan, corrects their orientation and restores the sequence. It revises its ordering strategy based on consistency checks, reconstructs three-dimensional bony structures in 3D Slicer, and returns to the source slices to verify local details.\n\n- [Video Demo | CT Reconstruction](/cases/sage/ct.mp4)\n\n### 3D Modeling\n\nUsing reference images, the model builds architectural, aerospace engine and truck chassis models in Blender and CAD software. It reviews the results through render previews or assembly checks and delivers editable models and presentation videos.\n\n- [Architecture](/cases/sage/architecture.mp4)\n- [Aerospace Engine](/cases/sage/engine.mp4)\n- [Truck Chassis](/cases/sage/chassis.mp4)\n\n### Scientific Analysis\n\nStarting from a fluorescence microscopy image, the model adjusts segmentation thresholds in Fiji, separates touching nuclei and overlays the contours on the source image for inspection. It exports ROIs and measurements for review and further analysis.\n\n- [Microscopy Analysis](/cases/sage/microscopy.mp4)\n- [EEG Signal Processing](/cases/sage/eeg-v2.mp4)\n- [Satellite Imagery Analysis](/cases/sage/satellite.mp4)\n- [Scientific Multimodal Understanding](/cases/sage/scientific-understanding.mp4)\n\n### Interactive Scientific Visualization\n\nThe model investigates efficiency losses in crystal quantum memories by reviewing primary papers, extracting experimental parameters and comparing cavity coupling, atomic dephasing and losses through parameter sweeps. The interactive page lets visitors adjust reflectivity, absorption and storage time, observe pulses and echoes, and trace the evidence to papers and research records.\n\n- [The Memory of Light](/cases/sage/light-memory.html)\n- [Crystal Structure Visualization](/cases/sage/crystal-structures.html)\n\nSage S2.1 Flash is designed for scientific reasoning and agentic task execution, supporting analysis that combines scientific data, retrieval, programming and professional software.\n\nTry the model through its API and explore its applications in research data processing, professional software operation and multistep task execution.\n\n[Try the Sage S2.1 Flash API →](https://discovery.intern-ai.org.cn/)");
 const siteCitationBibtex = "% Citation will be added with the technical report release.";
@@ -1858,7 +1858,7 @@ const siteMessages = {
     copyCitation: "复制 BibTeX",
     copiedCitation: "已复制",
     citationCopyFailed: "请选中下方引用并手动复制。",
-    pageTitle: "Sage S2.1 Flash",
+    pageTitle: "书生 S2.1 Flash",
     pageDescription: "以推理探索，以行动求证。",
   },
   en: {
@@ -2000,7 +2000,7 @@ function SiteApp() {
         x.jsxs("footer", {
           className: "site-footer wrap",
           children: [
-            x.jsx("span", { children: "书生 · Sage S2.1 Flash" }),
+            x.jsx("span", { children: siteMessages[language].pageTitle }),
             x.jsx("a", { href: "https://intern-ai.org.cn/home", children: "Intern AI ↗", target: "_blank", rel: "noreferrer" }),
           ],
         }),

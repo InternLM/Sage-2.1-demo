@@ -18,7 +18,7 @@ bundle=bundle.replace('function xs(e,t,n){','function xs(e,t,n){if(e.startsWith(
 const hash=createHash('sha256').update(bundle).digest('hex').slice(0,10);
 const asset=`index-sage-${hash}.js`;
 fs.writeFileSync(new URL('dist/assets/'+asset,root),bundle);
-html=html.replace('/assets/'+original,'/assets/'+asset).replace(/Atria Dawn(?: Preview)?/g,'书生 · Sage S2.1 Flash').replace(/<html lang="[^"]*">/,'<html lang="zh-CN">');
+html=html.replace('/assets/'+original,'/assets/'+asset).replace(/Atria Dawn(?: Preview)?/g,'书生 S2.1 Flash').replace(/<html lang="[^"]*">/,'<html lang="zh-CN">');
 html=html.replaceAll('Build More. Together.','Explore through reasoning. Verify through action.').replaceAll('Build More. 一起创造更多。','以推理探索，以行动求证。');
 html=html.replace(/<link rel="canonical"[^>]*>\s*/g,'').replace(/<meta (?:property|name)="(?:og:url|twitter:url|og:image|twitter:image)"[^>]*>\s*/g,'').replace(/<link rel="icon"[^>]*>/,'<link rel="icon" type="image/png" href="/assets/brand/intern-icon.png">');
 html=html.replace(/\s*<link[^>]*href="\/assets\/sage-theme.css"[^>]*>/g,'').replace('</head>','  <link rel="stylesheet" href="/assets/sage-theme.css">\n</head>');
