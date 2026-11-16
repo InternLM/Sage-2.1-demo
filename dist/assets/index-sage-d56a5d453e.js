@@ -122,10 +122,7 @@ const sageEvaluation = {
     "DeepSeek-V4.1-Flash-1017",
     "Qwen3.8-Max",
     "GPT-5.6 Sol",
-    "Claude Opus 5",
-    "GPT-6 Astra",
-    "GPT-6.1 Sol",
-    "Claude Opus 5.5"
+    "Claude Opus 5"
   ],
   "rows": [
     [
@@ -135,10 +132,7 @@ const sageEvaluation = {
       "87.6",
       "89.6",
       "86.2",
-      "90.2",
-      "87.4",
-      "-",
-      "87.6"
+      "90.2"
     ],
     [
       "DeepSWE",
@@ -147,10 +141,7 @@ const sageEvaluation = {
       "73.9",
       "67.0",
       "70.6",
-      "72.6",
-      "74.1",
-      "75.2",
-      "74.2"
+      "72.6"
     ],
     [
       "NL2Repo-Bench",
@@ -159,10 +150,7 @@ const sageEvaluation = {
       "62.7",
       "63.2",
       "60.7",
-      "79.9",
-      "-",
-      "-",
-      "-"
+      "79.9"
     ],
     [
       "SWE-bench Pro",
@@ -171,10 +159,7 @@ const sageEvaluation = {
       "64.7",
       "65.3",
       "59.8",
-      "76.5",
-      "-",
-      "-",
-      "89.9"
+      "76.5"
     ],
     [
       "SpreadsheetBench 2",
@@ -183,10 +168,7 @@ const sageEvaluation = {
       "35.8",
       "34.9",
       "32.7",
-      "33.6",
-      "-",
-      "32.0",
-      "35.1"
+      "33.6"
     ],
     [
       "ALE-CLI",
@@ -195,10 +177,7 @@ const sageEvaluation = {
       "35.4",
       "24.8",
       "28.6",
-      "29.5",
-      "33.3",
-      "29.5",
-      "34.3"
+      "29.5"
     ],
     [
       "APEX-Agents",
@@ -207,10 +186,7 @@ const sageEvaluation = {
       "69.2",
       "66.3",
       "55.4",
-      "61.3",
-      "64.7",
-      "60.0",
-      "73.5"
+      "61.3"
     ],
     [
       "GDPval",
@@ -219,10 +195,7 @@ const sageEvaluation = {
       "77.6",
       "79.6",
       "69.6",
-      "80.0",
-      "-",
-      "-",
-      "-"
+      "80.0"
     ],
     [
       "Workspace-Bench-Lite",
@@ -231,10 +204,7 @@ const sageEvaluation = {
       "66.8",
       "67.4",
       "57.4",
-      "68.1",
-      "-",
-      "-",
-      "-"
+      "68.1"
     ],
     [
       "Workspace-Bench",
@@ -243,10 +213,7 @@ const sageEvaluation = {
       "63.0",
       "63.9",
       "50.9",
-      "62.0",
-      "-",
-      "-",
-      "-"
+      "62.0"
     ],
     [
       "OfficeQA Pro V2",
@@ -255,10 +222,7 @@ const sageEvaluation = {
       "69.7",
       "66.2",
       "66.4",
-      "67.2",
-      "54.4",
-      "70.0",
-      "62.2"
+      "67.2"
     ],
     [
       "Harvey LAB",
@@ -267,10 +231,7 @@ const sageEvaluation = {
       "11.7",
       "24.2",
       "5.0",
-      "22.7",
-      "-",
-      "-",
-      "-"
+      "22.7"
     ],
     [
       "AutomationBench",
@@ -279,10 +240,7 @@ const sageEvaluation = {
       "57.8",
       "49.7",
       "45.7",
-      "49.4",
-      "41.4",
-      "49.3",
-      "58.0"
+      "49.4"
     ],
     [
       "BFCL V4",
@@ -291,10 +249,7 @@ const sageEvaluation = {
       "71.4",
       "66.8",
       "68.8",
-      "80.6",
-      "-",
-      "-",
-      "-"
+      "80.6"
     ],
     [
       "JobBench",
@@ -303,10 +258,7 @@ const sageEvaluation = {
       "58.5",
       "52.7",
       "45.4",
-      "68.0",
-      "50.4",
-      "-",
-      "-"
+      "68.0"
     ],
     [
       "SkillsBench",
@@ -315,10 +267,7 @@ const sageEvaluation = {
       "52.8",
       "66.7",
       "62.5",
-      "63.7",
-      "-",
-      "72.6",
-      "71.8"
+      "63.7"
     ],
     [
       "τ³-bench Banking",
@@ -327,22 +276,7 @@ const sageEvaluation = {
       "47.4",
       "55.2",
       "46.9",
-      "48.7",
-      "-",
-      "-",
-      "-"
-    ],
-    [
-      "CyberGym",
-      "84.3",
-      "86.0",
-      "88.8",
-      "73.8",
-      "83.6",
-      "-",
-      "-",
-      "-",
-      "-"
+      "48.7"
     ],
     [
       "MLE-bench Lite",
@@ -351,10 +285,7 @@ const sageEvaluation = {
       "89.2",
       "82.2",
       "80.7",
-      "88.0",
-      "-",
-      "-",
-      "-"
+      "88.0"
     ],
     [
       "PostTrainBench",
@@ -363,10 +294,7 @@ const sageEvaluation = {
       "-",
       "-",
       "31.0",
-      "35.7",
-      "41.9",
-      "38.8",
-      "43.8"
+      "35.7"
     ],
     [
       "PaperBench",
@@ -375,10 +303,7 @@ const sageEvaluation = {
       "88.6",
       "95.1",
       "94.3",
-      "86.9",
-      "-",
-      "-",
-      "-"
+      "86.9"
     ],
     [
       "MLS-Bench",
@@ -387,10 +312,7 @@ const sageEvaluation = {
       "44.3",
       "41.0",
       "46.2",
-      "49.8",
-      "50.0",
-      "-",
-      "-"
+      "49.8"
     ],
     [
       "DeepResearch Bench II",
@@ -399,10 +321,7 @@ const sageEvaluation = {
       "55.1",
       "49.2",
       "50.7",
-      "54.1",
-      "-",
-      "-",
-      "-"
+      "54.1"
     ],
     [
       "DeepSearchQA",
@@ -411,9 +330,6 @@ const sageEvaluation = {
       "95.3",
       "-",
       "93.2",
-      "-",
-      "-",
-      "-",
       "-"
     ],
     [
@@ -421,9 +337,6 @@ const sageEvaluation = {
       "60.5",
       "61.0",
       "60.6",
-      "-",
-      "-",
-      "-",
       "-",
       "-",
       "-"
@@ -435,10 +348,7 @@ const sageEvaluation = {
       "86.3",
       "81.9",
       "83.3",
-      "84.0",
-      "-",
-      "-",
-      "-"
+      "84.0"
     ],
     [
       "BrowseComp",
@@ -447,9 +357,6 @@ const sageEvaluation = {
       "93.8",
       "-",
       "92.2",
-      "90.8",
-      "91.5",
-      "87.5",
       "90.8"
     ],
     [
@@ -459,10 +366,7 @@ const sageEvaluation = {
       "70.1",
       "66.4",
       "70.4",
-      "74.0",
-      "75.8",
-      "75.2",
-      "81.8"
+      "74.0"
     ],
     [
       "OSWorld-Verified",
@@ -471,10 +375,7 @@ const sageEvaluation = {
       "78.5",
       "84.3",
       "82.2",
-      "86.4",
-      "-",
-      "-",
-      "-"
+      "86.4"
     ],
     [
       "WebArena-Verified",
@@ -483,10 +384,7 @@ const sageEvaluation = {
       "60.7",
       "64.9",
       "66.6",
-      "69.1",
-      "-",
-      "-",
-      "-"
+      "69.1"
     ],
     [
       "Vision2Web",
@@ -495,10 +393,7 @@ const sageEvaluation = {
       "-",
       "75.2",
       "73.5",
-      "80.2",
-      "-",
-      "-",
-      "-"
+      "80.2"
     ],
     [
       "WeaveBench",
@@ -507,10 +402,7 @@ const sageEvaluation = {
       "-",
       "71.9",
       "79.6",
-      "86.4",
-      "-",
-      "-",
-      "-"
+      "86.4"
     ],
     [
       "OSWorld-G",
@@ -519,10 +411,7 @@ const sageEvaluation = {
       "61.4",
       "88.6",
       "77.7",
-      "76.8",
-      "-",
-      "-",
-      "-"
+      "76.8"
     ],
     [
       "BabyVision",
@@ -531,10 +420,7 @@ const sageEvaluation = {
       "58.0",
       "83.8",
       "80.7",
-      "63.1",
-      "-",
-      "-",
-      "-"
+      "63.1"
     ]
   ],
   "groups": [
@@ -555,26 +441,21 @@ const sageEvaluation = {
     },
     {
       "start": 17,
-      "zh": "网络安全",
-      "en": "Cybersecurity"
-    },
-    {
-      "start": 18,
       "zh": "机器学习工程",
       "en": "ML Engineering"
     },
     {
-      "start": 22,
+      "start": 21,
       "zh": "深度研究",
       "en": "Deep Research"
     },
     {
-      "start": 23,
+      "start": 22,
       "zh": "搜索",
       "en": "Search"
     },
     {
-      "start": 27,
+      "start": 26,
       "zh": "视觉",
       "en": "Vision"
     }
@@ -632,9 +513,6 @@ const sageEvaluation = {
       4
     ],
     [
-      3
-    ],
-    [
       1
     ],
     [
@@ -683,11 +561,7 @@ const sageEvaluation = {
       4
     ]
   ],
-  "externalColumns": [
-    7,
-    8,
-    9
-  ],
+  "externalColumns": [],
   "chartIntro": {
     "zh": "图中展示 Sage 2.1 Flash 在 15 项 benchmark 上的成绩。图中展示我们与 5 个 baseline；按这 6 个模型中的名次排序，同名次按相对 GLM-5.3-Flash 的绝对提分降序排列。",
     "en": "The chart shows Sage 2.1 Flash on 15 benchmarks. The chart compares our model with five baselines, ordered by rank among these six models, then by absolute gain over GLM-5.3-Flash in descending order."
@@ -696,7 +570,7 @@ const sageEvaluation = {
     "zh": [
       [
         "Terminal-Bench 2.1",
-        "Terminal-Bench 2.1 采用 Claude Code作为评测 harness。任务采用 12× 超时倍率（上限 12 小时），验证阶段采用 3× 超时倍率，并使用离线依赖。最多执行 1,000 个交互步骤，上下文窗口为 512K，单次输出上限为 64K，thinking effort 设为 max。资源配置遵循各任务规格，Agent 可经镜像服务访问网络资源，禁用图片/PDF 读取。评测集共 89 个任务，出错的任务计 0 分。每个模型独立评测 4 次，取平均通过率。GPT-6 Astra 的引用成绩来自官方榜单。"
+        "Terminal-Bench 2.1 采用 Claude Code作为评测 harness。任务采用 12× 超时倍率（上限 12 小时），验证阶段采用 3× 超时倍率，并使用离线依赖。最多执行 1,000 个交互步骤，上下文窗口为 512K，单次输出上限为 64K，thinking effort 设为 max。资源配置遵循各任务规格，Agent 可经镜像服务访问网络资源，禁用图片/PDF 读取。评测集共 89 个任务，出错的任务计 0 分。每个模型独立评测 4 次，取平均通过率。"
       ],
       [
         "DeepSWE",
@@ -763,10 +637,6 @@ const sageEvaluation = {
         "采用包含 97 道题的 Banking Knowledge 任务集，以及 Tau2 commit a2c0247。用户模拟器和 judge 均使用 GPT-5.2，推理强度设为 low，随机种子设为 300。alltools 提供 BM25 检索、基于 text-embedding-3-large 的 dense top-10 检索，以及只读知识库 shell；知识库包含 698 篇文档。单次模型请求限时 180 秒，最多重试 3 次。模拟限时 1,800 秒，外层任务限时 2,400 秒，最多执行 200 个交互步骤。"
       ],
       [
-        "CyberGym",
-        "采用 Claude Code，thinking effort 设为 max。每个任务分配 2 个 CPU 和 4 GB 内存，限时 4 小时 10 分钟。禁用网络访问，并删除相关 Git 历史。"
-      ],
-      [
         "MLE-bench Lite",
         "采用 Lite 数据集和 Claude Code harness，单次评测限时 12 小时；报告 HumanRank 指标，计算方式见 Frontis-MA1 论文。"
       ],
@@ -829,16 +699,12 @@ const sageEvaluation = {
       [
         "BabyVision",
         "使用 LANCZOS 等比例放大图片，使短边至少达到 1500 像素；已满足条件的图片保持原尺寸，不缩小。"
-      ],
-      [
-        "GPT-6 Astra、GPT-6.1 Sol、Claude Opus 5.5",
-        "这三列不是我们自测，引自公开来源：各家官方报告、Vals AI 榜单，以及 Kimi K3.1 Pro、Hy4、ERNIE 5.5 Flash Preview 的发布表。评测设置与本表其他列不完全一致，仅供参考，不参与每行最高分的标注。"
       ]
     ],
     "en": [
       [
         "Terminal-Bench 2.1",
-        "Evaluations use Claude Code on 89 tasks. Task timeouts are multiplied by 12, capped at 12 hours; verifier timeouts are multiplied by 3. The verifier uses offline dependencies. Runs allow up to 1,000 interaction steps, a 512K context window, 64K output per generation and max thinking effort. Resources follow each task specification; agents can access network resources through mirrors, while image/PDF reading is disabled. Errors score zero. Each model is evaluated in four independent runs and the mean pass rate is reported. The GPT-6 Astra reference score is taken from the official leaderboard."
+        "Evaluations use Claude Code on 89 tasks. Task timeouts are multiplied by 12, capped at 12 hours; verifier timeouts are multiplied by 3. The verifier uses offline dependencies. Runs allow up to 1,000 interaction steps, a 512K context window, 64K output per generation and max thinking effort. Resources follow each task specification; agents can access network resources through mirrors, while image/PDF reading is disabled. Errors score zero. Each model is evaluated in four independent runs and the mean pass rate is reported."
       ],
       [
         "DeepSWE",
@@ -905,10 +771,6 @@ const sageEvaluation = {
         "Evaluations use the 97 Banking Knowledge tasks and Tau2 commit a2c0247. Both the user simulator and the judge use GPT-5.2 with low reasoning effort, and the random seed is 300. The alltools configuration provides BM25 search, dense retrieval using text-embedding-3-large with the top 10 results, and a read-only knowledge-base shell. The knowledge base contains 698 documents. Each model request has a 180-second timeout and allows up to 3 retries. Simulations have a 1,800-second timeout, while the outer task timeout is 2,400 seconds. Each task allows at most 200 interaction steps."
       ],
       [
-        "CyberGym",
-        "Evaluations use Claude Code with max thinking effort. Each task receives 2 CPUs and 4 GB of memory and has a time limit of 4 hours and 10 minutes. Network access is disabled, and the relevant Git history is removed."
-      ],
-      [
         "MLE-bench Lite",
         "Evaluations use the Lite dataset and the Claude Code harness, with a 12-hour time limit per run. The reported metric is HumanRank, calculated using the methodology described in the Frontis-MA1 paper."
       ],
@@ -971,10 +833,6 @@ const sageEvaluation = {
       [
         "BabyVision",
         "Images are upscaled with LANCZOS while preserving their aspect ratio so that the shorter side is at least 1,500 pixels. Images that already meet this requirement retain their original dimensions and are not downscaled."
-      ],
-      [
-        "GPT-6 Astra, GPT-6.1 Sol, Claude Opus 5.5",
-        "These three columns are not our own runs. They are taken from public sources: the vendors' official reports, the Vals AI leaderboard, and the launch tables of Kimi K3.1 Pro, Hy4 and ERNIE 5.5 Flash Preview. Their evaluation settings differ from the other columns, so they are for reference only and are not counted when the best score in each row is highlighted."
       ]
     ]
   }

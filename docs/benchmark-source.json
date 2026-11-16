@@ -1,16 +1,17 @@
 {
   "source": "modelcard(1).html",
   "sha256": "e7e6453e62b77ec5af68d8c13d75c3e701d2dbdba557bd17b64daa58964ab49b",
-  "benchmarks": 34,
-  "models": 9,
+  "benchmarks": 33,
+  "models": 6,
   "chartBenchmarks": 15,
-  "notesPerLanguage": 35,
-  "securityBenchmarks": [
-    "CyberGym"
-  ],
+  "notesPerLanguage": 33,
+  "securityBenchmarks": [],
   "modelName": "Sage 2.1 Flash",
   "tableSource": {
-    "source": "modelcard(2).html",
-    "sha256": "9706547853344054e81798ae92ce924d3665f90ede8017c1369d6adfc59c5159"
+    "source": "modelcard(3).html",
+    "sha256": "87c3c7bd2903e9623b093e93f66f863c48b1e6a5e12de7057544833bddb28e31",
+    "variant": "Six-model results",
+    "benchmarks": 33,
+    "models": 6
   }
 }
