@@ -13,6 +13,9 @@ if(appStart<0 || appEnd<0) throw Error('App renderer boundary missing');
 bundle=bundle.slice(0,appStart)+`function Qv({content=En}){return x.jsxs(x.Fragment,{children:[x.jsx(Xg,{links:content.hero.links}),x.jsx(Zg,{}),x.jsx(P0,{hero:content.hero}),x.jsx(SageArticle,{})]})}`+bundle.slice(appEnd);
 // Replace template chrome, without changing historical media or research records.
 bundle=bundle.replaceAll('"Atria Dawn"','"Sage S2.1 Flash"').replaceAll('"Atria Dawn Preview"','"Sage S2.1 Flash"');
+const navStart=bundle.indexOf('function Xg('),navEnd=bundle.indexOf('function Zg(',navStart);
+if(navStart<0 || navEnd<0) throw Error('Navigation renderer boundary missing');
+bundle=bundle.slice(0,navStart)+bundle.slice(navStart,navEnd).replaceAll('"Sage S2.1 Flash"','siteLabels.pageTitle')+bundle.slice(navEnd);
 bundle=bundle.replace('function Lc(e,t){','function Lc(e,t){if(e.includes("/cases/sage/")&&e.split("?")[0].endsWith(".html"))return {type:"iframe",src:e,label:t,designW:1280,designH:850};');
 bundle=bundle.replace('function xs(e,t,n){','function xs(e,t,n){if(e.startsWith("/cases/sage/")&&e.endsWith(".html"))return Lc(e,t);');
 const hash=createHash('sha256').update(bundle).digest('hex').slice(0,10);
