@@ -19,7 +19,7 @@ const siteMessages = {
     copyCitation: "复制 BibTeX",
     copiedCitation: "已复制",
     citationCopyFailed: "请选中下方引用并手动复制。",
-    pageTitle: "Sage 2.1 Flash",
+    pageTitle: "Sage S2.1 Flash",
     pageDescription: "以推理探索，以行动求证。",
   },
   en: {
@@ -41,7 +41,7 @@ const siteMessages = {
     copyCitation: "Copy BibTeX",
     copiedCitation: "Copied",
     citationCopyFailed: "Select the citation below to copy it manually.",
-    pageTitle: "Sage 2.1 Flash",
+    pageTitle: "Sage S2.1 Flash",
     pageDescription: "Explore through reasoning. Verify through action.",
   },
 };
@@ -125,7 +125,7 @@ function SiteCitation() {
       }),
       x.jsx("p", {
         className: "site-citation__paper",
-        children: x.jsx("a", { href: "https://arxiv.org/abs/2609.15818", children: "Sage 2.1 Flash: The Dawn of Agentic Superintelligence" }),
+        children: x.jsx("a", { href: "https://arxiv.org/abs/2609.15818", children: "Sage S2.1 Flash: The Dawn of Agentic Superintelligence" }),
       }),
       x.jsx("pre", {
         className: "site-citation__code",
@@ -161,7 +161,7 @@ function SiteApp() {
         x.jsxs("footer", {
           className: "site-footer wrap",
           children: [
-            x.jsx("span", { children: "书生 · Sage 2.1 Flash" }),
+            x.jsx("span", { children: "书生 · Sage S2.1 Flash" }),
             x.jsx("a", { href: "https://intern-ai.org.cn/home", children: "Intern AI ↗", target: "_blank", rel: "noreferrer" }),
           ],
         }),

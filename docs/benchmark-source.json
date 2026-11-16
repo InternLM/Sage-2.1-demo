@@ -6,7 +6,7 @@
   "chartBenchmarks": 15,
   "notesPerLanguage": 33,
   "securityBenchmarks": [],
-  "modelName": "Sage 2.1 Flash",
+  "modelName": "Sage S2.1 Flash",
   "tableSource": {
     "source": "modelcard(3).html",
     "sha256": "87c3c7bd2903e9623b093e93f66f863c48b1e6a5e12de7057544833bddb28e31",

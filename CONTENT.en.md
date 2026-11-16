@@ -1,5 +1,5 @@
 ---
-brand: Sage 2.1 Flash
+brand: Sage S2.1 Flash
 hero:
   links:
     - label: "ModelScope"
@@ -16,15 +16,15 @@ overview:
   body: []
 ---
 
-# Sage 2.1 Flash | Explore through reasoning. Verify through action.
+# Sage S2.1 Flash | Explore through reasoning. Verify through action.
 
-Today, we introduce **Sage 2.1 Flash**, a frontier scientific multimodal agent model for demanding scientific research. Built on a **320-billion-parameter MoE architecture**, it combines scientific multimodal understanding with general agent capabilities, supporting scientific deep research, scientific programming and the operation of professional research software.
+Today, we introduce **Sage S2.1 Flash**, a frontier scientific multimodal agent model for demanding scientific research. Built on a **320-billion-parameter MoE architecture**, it combines scientific multimodal understanding with general agent capabilities, supporting scientific deep research, scientific programming and the operation of professional research software.
 
-Sage 2.1 Flash incorporates more than ten types of scientific input into a unified model, including molecular graphs, crystal structures, protein sequences and three-dimensional structures, DNA and RNA sequences, spectra, mass spectra, X-ray diffraction, electrocardiograms, electroencephalograms and light curves. Large-scale training in verifiable environments strengthens its capabilities in search, programming, tool use and multistep task execution. Through visual feedback, the model can check its judgments against software states and intermediate results, adjust its strategy and advance complex tasks in professional research environments.
+Sage S2.1 Flash incorporates more than ten types of scientific input into a unified model, including molecular graphs, crystal structures, protein sequences and three-dimensional structures, DNA and RNA sequences, spectra, mass spectra, X-ray diffraction, electrocardiograms, electroencephalograms and light curves. Large-scale training in verifiable environments strengthens its capabilities in search, programming, tool use and multistep task execution. Through visual feedback, the model can check its judgments against software states and intermediate results, adjust its strategy and advance complex tasks in professional research environments.
 
 ![](/cases/sage/benchmarks.svg)
 
-Scientific research requires repeated analysis, operation and inspection across data, code and professional tools. The following demonstrations show how Sage 2.1 Flash processes scientific data, operates professional software and uses intermediate results to adjust its execution, producing outputs that researchers can review.
+Scientific research requires repeated analysis, operation and inspection across data, code and professional tools. The following demonstrations show how Sage S2.1 Flash processes scientific data, operates professional software and uses intermediate results to adjust its execution, producing outputs that researchers can review.
 
 ## Demo
 
@@ -58,8 +58,8 @@ The model investigates efficiency losses in crystal quantum memories by reviewin
 - [The Memory of Light](/cases/sage/light-memory.html)
 - [Crystal Structure Visualization](/cases/sage/crystal-structures.html)
 
-Sage 2.1 Flash is designed for scientific reasoning and agentic task execution, supporting analysis that combines scientific data, retrieval, programming and professional software.
+Sage S2.1 Flash is designed for scientific reasoning and agentic task execution, supporting analysis that combines scientific data, retrieval, programming and professional software.
 
 Try the model through its API and explore its applications in research data processing, professional software operation and multistep task execution.
 
-[Try the Sage 2.1 Flash API →](https://discovery.intern-ai.org.cn/)
+[Try the Sage S2.1 Flash API →](https://discovery.intern-ai.org.cn/)

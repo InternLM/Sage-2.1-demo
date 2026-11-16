@@ -25,6 +25,6 @@ assert.equal(results.groups.length,7);
 assert.ok(!JSON.stringify(results).includes('CyberGym'));
 assert.ok(!JSON.stringify(results).includes('ExploitGym'));
 results.rows.forEach((row,r)=>{const scored=row.slice(1,7).map(v=>v==='-'?-Infinity:Number(v));const max=Math.max(...scored);assert.deepEqual(results.best[r],scored.flatMap((v,c)=>v===max?[c+1]:[]));});
-assert.ok(read('dist/cases/sage/benchmarks.svg').includes('Sage 2.1 Flash'));
-assert.ok(!read('dist/cases/sage/benchmarks.svg').includes('Sage S2.1 Flash'));
+assert.ok(read('dist/cases/sage/benchmarks.svg').includes('Sage S2.1 Flash'));
+assert.ok(!read('dist/cases/sage/benchmarks.svg').includes('Sage 2.1 Flash'));
 console.log('PASS: JS syntax, bilingual demos, local assets, and all 198 benchmark values, 33 bilingual notes, and six-model source highlights.');

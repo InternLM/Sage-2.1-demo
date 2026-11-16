@@ -1,7 +1,7 @@
 {
   "columns": [
     "Benchmark",
-    "Sage 2.1 Flash",
+    "Sage S2.1 Flash",
     "GLM-5.3-Flash",
     "DeepSeek-V4.1-Flash-1017",
     "Qwen3.8-Max",
@@ -447,8 +447,8 @@
   ],
   "externalColumns": [],
   "chartIntro": {
-    "zh": "图中展示 Sage 2.1 Flash 在 15 项 benchmark 上的成绩。图中展示我们与 5 个 baseline；按这 6 个模型中的名次排序，同名次按相对 GLM-5.3-Flash 的绝对提分降序排列。",
-    "en": "The chart shows Sage 2.1 Flash on 15 benchmarks. The chart compares our model with five baselines, ordered by rank among these six models, then by absolute gain over GLM-5.3-Flash in descending order."
+    "zh": "图中展示 Sage S2.1 Flash 在 15 项 benchmark 上的成绩。图中展示我们与 5 个 baseline；按这 6 个模型中的名次排序。",
+    "en": "The chart shows Sage S2.1 Flash on 15 benchmarks. The chart compares our model with five baselines, ordered by rank among these six models."
   },
   "notes": {
     "zh": [
@@ -462,11 +462,11 @@
       ],
       [
         "NL2Repo-Bench",
-        "DeepSeek-V4.1-Flash-1017、GLM-5.3-Flash、Claude Opus 5 和 Sage 2.1 Flash 采用 Claude Code，其余模型采用 OpenHands（v0.56.0）。每个任务限时 6 小时，最多 500 步；报告 104 个任务的平均测试通过率。"
+        "DeepSeek-V4.1-Flash-1017、GLM-5.3-Flash、Claude Opus 5 和 Sage S2.1 Flash 采用 Claude Code，其余模型采用 OpenHands（v0.56.0）。每个任务限时 6 小时，最多 500 步；报告 104 个任务的平均测试通过率。"
       ],
       [
         "SWE-bench Pro",
-        "SWE-bench Pro 中，Sage 2.1 Flash、GLM-5.3-Flash、DeepSeek-V4.1-Flash-1017 和 Claude Opus 5 使用 Claude Code，其余模型使用 OpenHands。题面采用官方 V2 locked 协议的提示词外壳，题集为 v1 的 731 个任务。每个任务分配 4 个 CPU 与 16 GiB 内存，单任务限时 4.5 小时，最多 250 轮。单次输出上限为 64K，thinking effort 设为 max。评测环境禁用外网（仅放行模型端点），并删除 base commit 之后的 Git 历史，以防止信息泄露或评测污染。禁用图片/PDF 读取及 WebSearch、WebFetch 工具。补丁在 Agent 结束后由 git diff 收取，在独立沙盒中运行官方测试判分。"
+        "SWE-bench Pro 中，Sage S2.1 Flash、GLM-5.3-Flash、DeepSeek-V4.1-Flash-1017 和 Claude Opus 5 使用 Claude Code，其余模型使用 OpenHands。题面采用官方 V2 locked 协议的提示词外壳，题集为 v1 的 731 个任务。每个任务分配 4 个 CPU 与 16 GiB 内存，单任务限时 4.5 小时，最多 250 轮。单次输出上限为 64K，thinking effort 设为 max。评测环境禁用外网（仅放行模型端点），并删除 base commit 之后的 Git 历史，以防止信息泄露或评测污染。禁用图片/PDF 读取及 WebSearch、WebFetch 工具。补丁在 Agent 结束后由 git diff 收取，在独立沙盒中运行官方测试判分。"
       ],
       [
         "SpreadsheetBench 2",
@@ -526,7 +526,7 @@
       ],
       [
         "PostTrainBench",
-        "采用 v1.2。GLM-5.3-Flash、GPT-5.6 Sol 和 Claude Opus 5 的成绩引自 posttrainbench.com 官方榜单，为 6 个评测集与 4 个基座模型组成的 24 项结果的加权平均。Sage 2.1 Flash 为我们按相同口径自测的 24 项加权平均成绩。"
+        "采用 v1.2。GLM-5.3-Flash、GPT-5.6 Sol 和 Claude Opus 5 的成绩引自 posttrainbench.com 官方榜单，为 6 个评测集与 4 个基座模型组成的 24 项结果的加权平均。Sage S2.1 Flash 为我们按相同口径自测的 24 项加权平均成绩。"
       ],
       [
         "PaperBench",
@@ -596,11 +596,11 @@
       ],
       [
         "NL2Repo-Bench",
-        "DeepSeek-V4.1-Flash-1017, GLM-5.3-Flash, Claude Opus 5 and Sage 2.1 Flash are run with Claude Code, and the other models with OpenHands (v0.56.0). Each task has a 6-hour limit and at most 500 steps. The score is the average test pass rate over 104 tasks."
+        "DeepSeek-V4.1-Flash-1017, GLM-5.3-Flash, Claude Opus 5 and Sage S2.1 Flash are run with Claude Code, and the other models with OpenHands (v0.56.0). Each task has a 6-hour limit and at most 500 steps. The score is the average test pass rate over 104 tasks."
       ],
       [
         "SWE-bench Pro",
-        "For SWE-bench Pro, Sage 2.1 Flash, GLM-5.3-Flash, DeepSeek-V4.1-Flash-1017 and Claude Opus 5 use Claude Code, while all other models use OpenHands. The evaluation uses the official V2 locked-protocol prompt wrapper and the v1 task set of 731 tasks. Each task receives 4 CPUs and 16 GiB of memory, a 4.5-hour time limit and at most 250 turns. Output is capped at 64K tokens and thinking effort is set to max. External network access is disabled except for model endpoints, and Git history after the base commit is removed to prevent information leakage or benchmark contamination. Image/PDF reading, WebSearch and WebFetch are disabled. Patches are collected using git diff after the agent finishes and graded with official tests in an isolated sandbox."
+        "For SWE-bench Pro, Sage S2.1 Flash, GLM-5.3-Flash, DeepSeek-V4.1-Flash-1017 and Claude Opus 5 use Claude Code, while all other models use OpenHands. The evaluation uses the official V2 locked-protocol prompt wrapper and the v1 task set of 731 tasks. Each task receives 4 CPUs and 16 GiB of memory, a 4.5-hour time limit and at most 250 turns. Output is capped at 64K tokens and thinking effort is set to max. External network access is disabled except for model endpoints, and Git history after the base commit is removed to prevent information leakage or benchmark contamination. Image/PDF reading, WebSearch and WebFetch are disabled. Patches are collected using git diff after the agent finishes and graded with official tests in an isolated sandbox."
       ],
       [
         "SpreadsheetBench 2",
@@ -660,7 +660,7 @@
       ],
       [
         "PostTrainBench",
-        "Evaluations use v1.2. Scores for GLM-5.3-Flash, GPT-5.6 Sol and Claude Opus 5 are taken from the official leaderboard at posttrainbench.com, a weighted average over 24 benchmark–base-model combinations (6 benchmarks × 4 base models). The score for Sage 2.1 Flash comes from our own evaluations and uses the same weighted average over the 24 benchmark–base-model combinations."
+        "Evaluations use v1.2. Scores for GLM-5.3-Flash, GPT-5.6 Sol and Claude Opus 5 are taken from the official leaderboard at posttrainbench.com, a weighted average over 24 benchmark–base-model combinations (6 benchmarks × 4 base models). The score for Sage S2.1 Flash comes from our own evaluations and uses the same weighted average over the 24 benchmark–base-model combinations."
       ],
       [
         "PaperBench",

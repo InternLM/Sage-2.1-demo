@@ -21,7 +21,7 @@ class Parser(HTMLParser):
             if self.stack[i].tag==tag:self.stack=self.stack[:i];break
     def handle_data(self,data):self.stack[-1].children.append(data)
 
-def normalized(s): return s.strip().replace('Sage S2.1 Flash','Sage 2.1 Flash')
+def normalized(s): return s.strip().replace('Sage 2.1 Flash','Sage S2.1 Flash')
 source=Path(sys.argv[1]);root=Path(__file__).resolve().parent.parent
 raw=source.read_text();parser=Parser();parser.feed(raw)
 table=next(parser.root.all('table'));head=next(table.all('thead'))
@@ -49,10 +49,10 @@ assert match
 end=svg.index('\n   </g>',match.end())+len('\n   </g>')
 block=svg[match.start():end]
 x,y=re.search(r'translate\(([-\d.]+) ([-\d.]+)\)',block).groups()
-svg=svg[:match.start()]+f'<g id="{match.group(1)}"><text x="{x}" y="{y}" fill="#333333" font-family="DejaVu Sans,Arial,sans-serif" font-size="12" font-weight="700">Sage 2.1 Flash</text></g>'+svg[end:]
+svg=svg[:match.start()]+f'<g id="{match.group(1)}"><text x="{x}" y="{y}" fill="#333333" font-family="DejaVu Sans,Arial,sans-serif" font-size="12" font-weight="700">Sage S2.1 Flash</text></g>'+svg[end:]
 chart_intro={lang:normalized(next(n for n in parser.root.all('p') if lang in n.attrs.get('class','').split()).text()) for lang in notes}
-chart_intro['zh']=chart_intro['zh'].replace('下表展示 Sage 2.1 Flash 与各 baseline 的成绩。','').strip()
-chart_intro['en']=chart_intro['en'].replace('The table reports Sage 2.1 Flash and baseline scores.','').strip()
+chart_intro['zh']=chart_intro['zh'].replace('下表展示 Sage S2.1 Flash 与各 baseline 的成绩。','').strip()
+chart_intro['en']=chart_intro['en'].replace('The table reports Sage S2.1 Flash and baseline scores.','').strip()
 assert len(rows)==34 and all(len(r)==10 for r in rows)
 assert len(notes['zh'])==len(notes['en'])==35
 security=next(i for i,g in enumerate(groups) if g['en']=='Cybersecurity')
@@ -62,5 +62,5 @@ data={'columns':columns,'rows':rows,'groups':groups,'best':best,'externalColumns
 (root/'docs/sage-evaluation.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
 (root/'docs/sage-benchmarks.tsv').write_text('\n'.join('\t'.join(r) for r in [columns,*rows])+'\n')
 (root/'dist/cases/sage/benchmarks.svg').write_text('\n'.join(line.rstrip() for line in svg.splitlines())+'\n')
-(root/'docs/benchmark-source.json').write_text(json.dumps({'source':source.name,'sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'benchmarks':34,'models':9,'chartBenchmarks':15,'notesPerLanguage':35,'securityBenchmarks':['CyberGym'],'modelName':'Sage 2.1 Flash'},ensure_ascii=False,indent=2)+'\n')
+(root/'docs/benchmark-source.json').write_text(json.dumps({'source':source.name,'sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'benchmarks':34,'models':9,'chartBenchmarks':15,'notesPerLanguage':35,'securityBenchmarks':['CyberGym'],'modelName':'Sage S2.1 Flash'},ensure_ascii=False,indent=2)+'\n')
 print(f'Imported {len(rows)} benchmarks, {len(columns)-1} models, {len(groups)} groups and {len(notes["en"])} notes per language.')

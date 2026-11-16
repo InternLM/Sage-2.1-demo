@@ -12,16 +12,16 @@ const appStart=bundle.indexOf('function Qv('),appEnd=bundle.indexOf('\nconst sit
 if(appStart<0 || appEnd<0) throw Error('App renderer boundary missing');
 bundle=bundle.slice(0,appStart)+`function Qv({content=En}){return x.jsxs(x.Fragment,{children:[x.jsx(Xg,{links:content.hero.links}),x.jsx(Zg,{}),x.jsx(P0,{hero:content.hero}),x.jsx(SageArticle,{})]})}`+bundle.slice(appEnd);
 // Replace template chrome, without changing historical media or research records.
-bundle=bundle.replaceAll('"Atria Dawn"','"Sage 2.1 Flash"').replaceAll('"Atria Dawn Preview"','"Sage 2.1 Flash"');
+bundle=bundle.replaceAll('"Atria Dawn"','"Sage S2.1 Flash"').replaceAll('"Atria Dawn Preview"','"Sage S2.1 Flash"');
 bundle=bundle.replace('function Lc(e,t){','function Lc(e,t){if(e.includes("/cases/sage/")&&e.split("?")[0].endsWith(".html"))return {type:"iframe",src:e,label:t,designW:1280,designH:850};');
 bundle=bundle.replace('function xs(e,t,n){','function xs(e,t,n){if(e.startsWith("/cases/sage/")&&e.endsWith(".html"))return Lc(e,t);');
 const hash=createHash('sha256').update(bundle).digest('hex').slice(0,10);
 const asset=`index-sage-${hash}.js`;
 fs.writeFileSync(new URL('dist/assets/'+asset,root),bundle);
-html=html.replace('/assets/'+original,'/assets/'+asset).replace(/Atria Dawn(?: Preview)?/g,'书生 · Sage 2.1 Flash').replace(/<html lang="[^"]*">/,'<html lang="zh-CN">');
+html=html.replace('/assets/'+original,'/assets/'+asset).replace(/Atria Dawn(?: Preview)?/g,'书生 · Sage S2.1 Flash').replace(/<html lang="[^"]*">/,'<html lang="zh-CN">');
 html=html.replaceAll('Build More. Together.','Explore through reasoning. Verify through action.').replaceAll('Build More. 一起创造更多。','以推理探索，以行动求证。');
 html=html.replace(/<link rel="canonical"[^>]*>\s*/g,'').replace(/<meta (?:property|name)="(?:og:url|twitter:url|og:image|twitter:image)"[^>]*>\s*/g,'').replace(/<link rel="icon"[^>]*>/,'<link rel="icon" type="image/png" href="/assets/brand/intern-icon.png">');
 html=html.replace(/\s*<link[^>]*href="\/assets\/sage-theme.css"[^>]*>/g,'').replace('</head>','  <link rel="stylesheet" href="/assets/sage-theme.css">\n</head>');
 fs.writeFileSync(new URL('dist/index.html',root),html);
 fs.copyFileSync(new URL('frontend/sage-theme.css',root),new URL('dist/assets/sage-theme.css',root));
-console.log('Sage 2.1 Flash built:',asset);
+console.log('Sage S2.1 Flash built:',asset);

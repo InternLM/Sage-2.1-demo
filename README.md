@@ -1,4 +1,4 @@
-# 书生 · Sage 2.1 Flash
+# 书生 · Sage S2.1 Flash
 
 Bilingual release website with local demo media, interactive examples, and evaluation results.
 
