@@ -2,7 +2,7 @@
 
 Bilingual release website with local demo media, interactive examples, and evaluation results.
 
-Website: https://namespace-eri.github.io/sage-2.1-demo/
+Website: https://internlm.github.io/Sage-S2.1-Flash/
 
 ## Preview and build
 

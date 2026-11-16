@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-const base = '/' + (process.env.GITHUB_REPOSITORY?.split('/')[1] || 'sage-2.1-demo') + '/';
+const base = '/' + (process.env.GITHUB_REPOSITORY?.split('/')[1] || 'Sage-S2.1-Flash') + '/';
 const out = '_site';
 fs.rmSync(out,{recursive:true,force:true});
 fs.cpSync('dist',out,{recursive:true});
