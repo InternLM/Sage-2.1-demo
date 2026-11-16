@@ -8,5 +8,9 @@
   "securityBenchmarks": [
     "CyberGym"
   ],
-  "modelName": "Sage 2.1 Flash"
+  "modelName": "Sage 2.1 Flash",
+  "tableSource": {
+    "source": "modelcard(2).html",
+    "sha256": "9706547853344054e81798ae92ce924d3665f90ede8017c1369d6adfc59c5159"
+  }
 }
