@@ -42,19 +42,21 @@ Using reference images, the model builds architectural, aerospace engine and tru
 - [Aerospace Engine](/cases/sage/engine.mp4)
 - [Truck Chassis](/cases/sage/chassis.mp4)
 
-### Scientific Software Analysis
+### Scientific Analysis
 
 Starting from a fluorescence microscopy image, the model adjusts segmentation thresholds in Fiji, separates touching nuclei and overlays the contours on the source image for inspection. It exports ROIs and measurements for review and further analysis.
 
 - [Microscopy Analysis](/cases/sage/microscopy.mp4)
-- [EEG Signal Processing](/cases/sage/eeg.mp4)
+- [EEG Signal Processing](/cases/sage/eeg-v2.mp4)
 - [Satellite Imagery Analysis](/cases/sage/satellite.mp4)
+- [Scientific Multimodal Understanding](/cases/sage/scientific-understanding.mp4)
 
-### The Memory of Light
+### Interactive Scientific Visualization
 
 The model investigates efficiency losses in crystal quantum memories by reviewing primary papers, extracting experimental parameters and comparing cavity coupling, atomic dephasing and losses through parameter sweeps. The interactive page lets visitors adjust reflectivity, absorption and storage time, observe pulses and echoes, and trace the evidence to papers and research records.
 
-- [Interactive Demo | The Memory of Light](/cases/sage/light-memory.html)
+- [The Memory of Light](/cases/sage/light-memory.html)
+- [Crystal Structure Visualization](/cases/sage/crystal-structures.html)
 
 Sage 2.1 Flash is designed for scientific reasoning and agentic task execution, supporting analysis that combines scientific data, retrieval, programming and professional software.
 

@@ -42,19 +42,21 @@ overview:
 - [航天发动机](/cases/sage/engine.mp4)
 - [汽车底盘](/cases/sage/chassis.mp4)
 
-### 科研软件分析
+### 科研分析
 
 从荧光显微图出发，在 Fiji 中调整分割阈值、分离粘连细胞核，将轮廓叠回原图检查，并导出 ROI 与测量结果，便于复核和后续分析。
 
 - [显微图分析](/cases/sage/microscopy.mp4)
-- [脑电信号处理](/cases/sage/eeg.mp4)
+- [脑电信号处理](/cases/sage/eeg-v2.mp4)
 - [卫星影像分析](/cases/sage/satellite.mp4)
+- [科学多模态理解](/cases/sage/scientific-understanding.mp4)
 
-### 光的记忆
+### 科学交互可视化
 
 围绕晶体量子存储中的效率损失，模型检索原始文献、提取实验参数，并通过参数扫描比较腔耦合、原子失步与损耗的影响。交互页面可调节反射率、吸收强度和存储时间，观察光脉冲与回波的变化，并追溯对应的文献与研究记录。
 
-- [交互演示｜光的记忆](/cases/sage/light-memory.html)
+- [光的记忆](/cases/sage/light-memory.html)
+- [晶体结构可视化](/cases/sage/crystal-structures.html)
 
 Sage 2.1 Flash 面向科学推理与智能体任务执行，支持结合科学数据、检索、编程与专业软件开展分析。
 

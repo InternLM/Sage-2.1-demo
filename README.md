@@ -24,7 +24,7 @@ The Pages workflow builds `_site/` with the repository base path and publishes i
 
 - CT reconstruction
 - 3D modeling: architecture, turbofan engine, truck chassis
-- Scientific software: microscopy, EEG, satellite imagery
-- The Memory of Light interactive HTML
+- Scientific analysis: microscopy, EEG, satellite imagery, scientific multimodal understanding
+- Interactive scientific visualization: The Memory of Light and crystal structures
 
 The page renderer is adapted from AtomInnoLab/atria_demo. Branding assets come from the Intern official website. Demo media and evaluation data were supplied for this release. Font license notices are retained in `dist/assets/fonts/`.

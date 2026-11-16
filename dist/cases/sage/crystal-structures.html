@@ -1,0 +1,2365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crystal Structures · From Perovskite to Coordination Geometry</title>
+<meta name="description" content="Interactive 3D crystal structures: SrTiO₃ perovskite 2×2×2 supercell, NaCl and CsCl structure types, and the radius-ratio rule">
+<style>
+/* ============================================================
+   Crystal structure visualization — dark tech style
+   ============================================================ */
+:root{
+  --bg:#060a13;
+  --bg2:#090f1c;
+  --txt:#e8eef7;
+  --mut:#8fa1b8;
+  --dim:#5d6f86;
+  --line:rgba(148,180,220,.14);
+  --line-soft:rgba(148,180,220,.08);
+  --panel:rgba(120,160,210,.045);
+  --panel-hi:rgba(120,160,210,.08);
+  --cyan:#3fd4f0;
+  --cyan-soft:rgba(63,212,240,.14);
+  --amber:#ffb454;
+  --amber-soft:rgba(255,180,84,.13);
+  --green:#3ddc97;
+  --red:#ff6b6b;
+  --violet:#a78bfa;
+  --mono:'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace;
+  --sans:'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',-apple-system,sans-serif;
+  --rad:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--txt);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background-image:
+    radial-gradient(1100px 620px at 78% -8%, rgba(63,212,240,.055), transparent 62%),
+    radial-gradient(900px 560px at 6% 32%, rgba(167,139,250,.045), transparent 60%),
+    radial-gradient(800px 600px at 88% 78%, rgba(255,180,84,.03), transparent 60%);
+}
+/* 细网格背景 */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(148,180,220,.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148,180,220,.028) 1px, transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(1300px 900px at 50% 28%, #000 25%, transparent 92%);
+  -webkit-mask-image:radial-gradient(1300px 900px at 50% 28%, #000 25%, transparent 92%);
+}
+::selection{background:rgba(63,212,240,.28)}
+main,header.site,footer.site{position:relative;z-index:1}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+
+/* ---------- 顶部 ---------- */
+header.site{padding:54px 0 8px;overflow:hidden}
+#heroCanvas{
+  position:absolute;top:0;bottom:0;left:38%;width:62%;height:100%;display:block;opacity:.85;pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 34%,#000 90%,transparent);
+          mask-image:linear-gradient(90deg,transparent 0%,#000 34%,#000 90%,transparent);
+}
+.hero-wrap{position:relative;z-index:1}
+.kicker{
+  font-family:var(--mono);font-size:11px;letter-spacing:.34em;color:var(--cyan);
+  display:flex;align-items:center;gap:12px;font-weight:600;
+}
+.kicker::before{content:'';width:34px;height:1px;background:linear-gradient(90deg,var(--cyan),transparent)}
+.kicker .kz{white-space:nowrap;font-weight:inherit}
+h1.title{
+  margin-top:16px;font-size:clamp(30px,4.4vw,50px);font-weight:700;letter-spacing:-.02em;line-height:1.12;
+  background:linear-gradient(105deg,#f2f6fc 30%,#9fc4e8 75%,#5fa8d8);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+h1.title .thin{font-weight:300;color:transparent}
+.subtitle{margin-top:14px;color:var(--mut);font-size:15px;line-height:1.9;max-width:760px}
+.subtitle b{color:#c8d6e8;font-weight:600}
+.subtitle .mono{font-family:var(--mono);font-size:13px;color:var(--cyan)}
+.ops-hint{
+  margin-top:16px;display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.08em;
+  border:1px solid var(--line-soft);border-radius:99px;padding:7px 14px;background:rgba(255,255,255,.015);
+}
+.ops-hint svg{width:14px;height:14px;stroke:var(--cyan);fill:none;stroke-width:1.6;opacity:.9}
+.scroll-hint{
+  position:relative;z-index:1;margin:34px auto 0;width:max-content;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.26em;color:var(--dim);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.scroll-hint span{
+  width:1px;height:44px;display:block;
+  background:linear-gradient(180deg,var(--cyan),transparent);
+  animation:hintDrop 2.2s ease-in-out infinite;
+}
+@keyframes hintDrop{0%,100%{transform:scaleY(.35);opacity:.3}50%{transform:scaleY(1);opacity:1}}
+
+/* ---------- 通用 section 头 ---------- */
+section.block{padding:72px 0 8px}
+.sec-head{margin-bottom:30px}
+.sec-kicker{font-family:var(--mono);font-size:10px;letter-spacing:.32em;color:var(--cyan);font-weight:600}
+h2.sec-title{margin-top:10px;font-size:clamp(22px,2.8vw,30px);font-weight:700;letter-spacing:-.01em}
+h2.sec-title .num{font-family:var(--mono);font-size:.55em;color:var(--dim);font-weight:400;margin-right:14px;vertical-align:2px}
+.sec-lead{margin-top:12px;color:var(--mut);font-size:14px;line-height:2;max-width:860px}
+.sec-lead b{color:#cdd9e8}
+
+/* ---------- 主舞台 ---------- */
+.stage{
+  position:relative;border:1px solid var(--line);border-radius:var(--rad);overflow:hidden;
+  min-height:600px;
+  background:
+    radial-gradient(900px 520px at 62% 38%, rgba(63,212,240,.05), transparent 65%),
+    linear-gradient(180deg,#0a1120 0%,#070c17 100%);
+  box-shadow:0 24px 70px -30px rgba(0,0,0,.8), inset 0 0 90px rgba(20,60,90,.06);
+}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+.stage canvas:active{cursor:grabbing}
+/* HUD 四角 */
+.stage::before,.stage::after{
+  content:'';position:absolute;width:20px;height:20px;z-index:4;pointer-events:none;
+  border:1px solid rgba(63,212,240,.45);
+}
+.stage::before{top:9px;left:9px;border-right:0;border-bottom:0}
+.stage::after{bottom:9px;right:9px;border-left:0;border-top:0}
+.stage-badge{
+  position:absolute;top:14px;left:16px;z-index:5;pointer-events:none;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;color:var(--cyan);
+  display:flex;align-items:center;gap:8px;
+}
+.stage-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.stage-hint{
+  position:absolute;top:14px;right:16px;z-index:5;pointer-events:none;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--dim);
+}
+.legend{
+  position:absolute;left:16px;bottom:14px;z-index:5;pointer-events:none;
+  display:flex;flex-direction:column;gap:7px;padding:11px 14px;
+  background:rgba(7,12,23,.72);border:1px solid var(--line-soft);border-radius:10px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.legend .lg-title{font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:var(--dim);margin-bottom:2px}
+.legend .lg{display:flex;align-items:center;gap:9px;font-size:11.5px;color:#b9c8da}
+.legend .sw{width:11px;height:11px;border-radius:50%;flex:none;box-shadow:0 0 6px currentColor}
+.legend .sw.ring{background:transparent!important;border:1.5px solid;width:9px;height:9px}
+/* 3D 标签 */
+.tag3d{
+  position:absolute;z-index:6;pointer-events:none;transform:translate(-50%,-130%);
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;white-space:nowrap;
+  color:#cfe9f5;padding:5px 9px;border-radius:6px;
+  background:rgba(8,15,28,.78);border:1px solid rgba(63,212,240,.35);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+.tag3d::after{
+  content:'';position:absolute;left:50%;bottom:-7px;width:1px;height:7px;
+  background:linear-gradient(rgba(63,212,240,.7),transparent);
+}
+.tag3d .td{font-size:12px;margin-right:4px}
+/* 测量标签（键长等实测值，琥珀色以区别于青色配位标签） */
+.tag3d.measure{
+  font-size:9.5px;letter-spacing:.06em;color:#ffd9a3;padding:4px 8px;
+  background:rgba(22,15,6,.82);border-color:rgba(255,180,84,.42);
+}
+.tag3d.measure::after{background:linear-gradient(rgba(255,180,84,.65),transparent)}
+.tag3d.measure .td{color:var(--amber);font-size:10px}
+/* 晶轴指示（舞台右下角小罗盘）。用 .stage>.axw 提高优先级，压过 .stage canvas 的 inset:0 全尺寸规则 */
+.stage>.axw,.cc-stage>.axw{
+  position:absolute;right:14px;bottom:14px;top:auto;left:auto;width:46px;height:46px;z-index:5;
+  pointer-events:none;opacity:.92;
+}
+/* 晶胞参数列（工作台 HUD） */
+.stage-data{
+  position:absolute;left:16px;top:54px;z-index:5;pointer-events:none;
+  display:flex;flex-direction:column;min-width:178px;
+  padding:10px 13px 8px;
+  background:rgba(7,12,23,.72);border:1px solid var(--line-soft);border-radius:10px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.sd-title{font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:var(--dim);margin-bottom:5px}
+.sd-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;line-height:1.95}
+.sd-row i{font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--dim)}
+.sd-row b{font-family:var(--mono);font-size:10px;font-weight:500;color:#b9cce0;white-space:nowrap}
+.sd-row b span{color:var(--dim);font-weight:400}
+/* 电影字框（叙事舞台）：上下压边 + 取景角标 + HUD 行 */
+.cine{position:absolute;inset:0;z-index:4;pointer-events:none}
+.cine .cb{position:absolute;left:0;right:0;height:46px;display:block}
+.cine .cb-t{top:0;background:linear-gradient(180deg,rgba(2,5,10,.92) 0%,rgba(2,5,10,.55) 62%,rgba(2,5,10,0) 100%)}
+.cine .cb-b{bottom:0;background:linear-gradient(0deg,rgba(2,5,10,.92) 0%,rgba(2,5,10,.55) 62%,rgba(2,5,10,0) 100%)}
+.cine .cb-t::after,.cine .cb-b::after{content:'';position:absolute;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent 4%,rgba(63,212,240,.20) 30%,rgba(63,212,240,.20) 70%,transparent 96%)}
+.cine .cb-t::after{bottom:0}
+.cine .cb-b::after{top:0}
+.cine .cc{position:absolute;width:20px;height:20px;border:1px solid rgba(63,212,240,.45);display:block}
+.cine .cc-tr{top:9px;right:9px;border-left:0;border-bottom:0}
+.cine .cc-bl{bottom:9px;left:9px;border-right:0;border-top:0}
+.cine .ct{position:absolute;left:20px;bottom:15px;font-family:var(--mono);font-size:8px;
+  letter-spacing:.26em;color:rgba(110,170,200,.42)}
+/* 标题流光 */
+@keyframes tshine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+h1.title{background-size:190% 100%;animation:tshine 8.5s ease-in-out infinite,riseIn 1.1s cubic-bezier(.16,1,.3,1) .10s backwards}
+@keyframes riseIn{from{opacity:0;transform:translateY(26px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.kicker{animation:riseIn .9s cubic-bezier(.16,1,.3,1) 0s backwards}
+.subtitle{animation:riseIn 1.1s cubic-bezier(.16,1,.3,1) .28s backwards}
+.ops-hint{animation:riseIn 1.1s cubic-bezier(.16,1,.3,1) .46s backwards}
+
+/* ---------- 滚动叙事（SrTiO3 主场景） ---------- */
+.story{position:relative;height:420vh}
+.story-stage{
+  position:sticky;top:0;height:100vh;min-height:0;
+  border-left:0;border-right:0;border-radius:0;
+}
+.story-notes{
+  position:absolute;inset:0;z-index:7;pointer-events:none;
+  display:grid;place-items:center;
+}
+.note{
+  grid-area:1/1;justify-self:end;margin-right:5vw;
+  width:min(430px,88vw);pointer-events:auto;
+  padding:22px 24px 18px;border:1px solid var(--line);border-radius:14px;
+  background:linear-gradient(160deg,rgba(10,18,32,.82),rgba(7,12,23,.68));
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  box-shadow:0 24px 60px -30px rgba(0,0,0,.85);
+  opacity:0;visibility:hidden;transform:translateY(20px) scale(.985);
+  transition:opacity .55s ease,transform .55s ease,visibility 0s linear .55s;
+}
+.note.active{opacity:1;visibility:visible;transform:none;transition:opacity .55s ease,transform .55s ease}
+.note-k{font-family:var(--mono);font-size:9px;letter-spacing:.26em;color:var(--cyan)}
+.note h3{margin-top:9px;font-size:22px;font-weight:700;letter-spacing:-.01em}
+.note p{margin-top:10px;color:var(--mut);font-size:13px;line-height:2.05}
+.note p b{color:#d3dee9;font-weight:600}
+.note-data{
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);
+  display:flex;gap:18px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:10.5px;color:#9fd8e8;letter-spacing:.04em;
+}
+.note-data span{display:flex;align-items:center;gap:6px}
+.note-data span::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--cyan);box-shadow:0 0 6px var(--cyan)}
+
+/* ---------- 双结构卡片 ---------- */
+.pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.crystal-card{
+  border:1px solid var(--line);border-radius:var(--rad);background:var(--panel);overflow:hidden;
+  display:flex;flex-direction:column;transition:border-color .3s, transform .3s;
+}
+.crystal-card:hover{border-color:rgba(63,212,240,.32);transform:translateY(-2px)}
+.cc-head{padding:22px 24px 16px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.cc-head h3{font-size:19px;font-weight:700}
+.cc-head h3 .f{font-family:var(--mono);color:var(--cyan);font-size:16px}
+.cc-head .sub{margin-top:5px;font-size:11.5px;color:var(--mut);letter-spacing:.02em}
+.badge{
+  flex:none;font-family:var(--mono);font-size:10px;letter-spacing:.12em;white-space:nowrap;
+  color:var(--amber);border:1px solid rgba(255,180,84,.4);border-radius:99px;padding:6px 11px;
+  background:var(--amber-soft);
+}
+.cc-stage{
+  position:relative;height:380px;margin:0 14px;border:1px solid var(--line-soft);border-radius:10px;overflow:hidden;
+  background:radial-gradient(560px 320px at 55% 42%, rgba(63,212,240,.045), transparent 65%),#080d18;
+}
+.cc-stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+.cc-stage canvas:active{cursor:grabbing}
+.cc-stage .stage-hint{top:10px;right:12px}
+.cc-stage .legend{left:12px;bottom:11px;padding:9px 12px;gap:5px}
+.cc-body{padding:16px 24px 22px}
+.cc-body p{color:var(--mut);font-size:12.5px;line-height:2.02}
+.cc-body p b{color:#d3dee9;font-weight:600}
+.cc-body p .f{font-family:var(--mono);color:#a8d8ec;font-size:11.5px}
+.cc-data{
+  margin-top:14px;padding-top:13px;border-top:1px solid var(--line-soft);
+  display:flex;flex-wrap:wrap;gap:6px 22px;
+}
+.cc-data span{font-family:var(--mono);font-size:10.5px;color:var(--dim)}
+.cc-data span b{color:#b9cce0;font-weight:500}
+
+/* ---------- 半径比 ---------- */
+.ratio-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:18px;align-items:stretch}
+.demo-panel,.rules-panel{
+  border:1px solid var(--line);border-radius:var(--rad);background:var(--panel);overflow:hidden;
+}
+.demo-panel{padding:22px 24px 20px;display:flex;flex-direction:column}
+.dp-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.dp-head .t{font-size:13px;font-weight:600;letter-spacing:.04em}
+.dp-head .v{font-family:var(--mono);font-size:11px;color:var(--dim)}
+#ratioCanvas{width:100%;height:300px;display:block;margin-top:8px}
+.readout{display:flex;align-items:center;gap:14px;margin-top:6px;padding:13px 16px;border-radius:10px;
+  background:rgba(63,212,240,.045);border:1px solid rgba(63,212,240,.16)}
+.readout .big{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--cyan);letter-spacing:-.03em}
+.readout .big small{font-size:11px;color:var(--mut);font-weight:400}
+.readout .sep{width:1px;height:30px;background:var(--line)}
+.readout .cn{font-size:13px}
+.readout .cn b{font-size:16px;color:var(--amber)}
+.readout .cn .sub{display:block;font-family:var(--mono);font-size:9.5px;color:var(--dim);margin-top:3px;letter-spacing:.06em}
+.slider-row{margin-top:16px}
+.slider-row input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:26px;background:transparent;cursor:pointer;
+}
+.slider-row input[type=range]::-webkit-slider-runnable-track{
+  height:4px;border-radius:2px;
+  background:linear-gradient(90deg,#2b6d85 0%,#3fd4f0 26%,#3fd4f0 40%,#ffb454 44%,#ffb454 71%,#a78bfa 75%,#a78bfa 100%);
+}
+.slider-row input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#eaf7fc;
+  border:2px solid var(--cyan);margin-top:-6px;box-shadow:0 0 10px rgba(63,212,240,.7);
+}
+.slider-row input[type=range]::-moz-range-track{
+  height:4px;border-radius:2px;
+  background:linear-gradient(90deg,#2b6d85 0%,#3fd4f0 26%,#3fd4f0 40%,#ffb454 44%,#ffb454 71%,#a78bfa 75%,#a78bfa 100%);
+}
+.slider-row input[type=range]::-moz-range-thumb{
+  width:14px;height:14px;border-radius:50%;background:#eaf7fc;border:2px solid var(--cyan);box-shadow:0 0 10px rgba(63,212,240,.7);
+}
+.ticks{display:flex;justify-content:space-between;margin-top:2px;font-family:var(--mono);font-size:8.5px;color:var(--dim);letter-spacing:.05em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+.chip{
+  font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:#b9c8da;cursor:pointer;
+  border:1px solid var(--line);border-radius:99px;padding:6px 11px;background:rgba(255,255,255,.015);
+  transition:all .2s;
+}
+.chip:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 12px rgba(63,212,240,.15)}
+.chip b{color:var(--cyan);font-weight:500}
+
+.rules-panel{padding:22px 24px 20px}
+.rules-panel h4{font-size:13px;font-weight:600;letter-spacing:.04em;margin-bottom:12px}
+table.ratio-t{width:100%;border-collapse:collapse;font-size:11px}
+table.ratio-t th{
+  text-align:left;font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;color:var(--dim);
+  padding:7px 8px;border-bottom:1px solid var(--line);font-weight:500;
+}
+table.ratio-t td{padding:8px;border-bottom:1px solid var(--line-soft);color:#b9c8da;line-height:1.5}
+table.ratio-t tr:hover td{background:rgba(63,212,240,.03)}
+table.ratio-t td.r{font-family:var(--mono);font-size:10px;color:var(--cyan);white-space:nowrap}
+table.ratio-t td.n{font-family:var(--mono);font-size:14px;color:#eef5fb;font-weight:600}
+table.ratio-t td .mini{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+table.ratio-t tr.cur td{background:rgba(255,180,84,.07)}
+.deriv{margin-top:16px;display:grid;gap:10px}
+.deriv .dv{
+  border:1px solid var(--line-soft);border-radius:10px;padding:12px 14px;background:rgba(255,255,255,.01);
+}
+.deriv .dv .h{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:var(--amber);margin-bottom:6px}
+.deriv .dv .f{font-family:var(--mono);font-size:12.5px;color:#dce9f5;letter-spacing:.02em}
+.deriv .dv p{margin-top:5px;font-size:10.5px;color:var(--mut);line-height:1.85}
+.note{margin-top:13px;font-size:10.5px;color:var(--dim);line-height:1.9;padding-left:10px;border-left:2px solid rgba(255,180,84,.35)}
+
+/* ---------- 页脚 ---------- */
+footer.site{margin-top:80px;border-top:1px solid var(--line-soft);padding:26px 0 34px}
+footer.site .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer.site p{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--dim);line-height:2}
+
+/* ---------- 降级提示 ---------- */
+#fallbackBanner{
+  position:fixed;top:0;left:0;right:0;z-index:99;display:none;align-items:center;gap:10px;
+  padding:9px 18px;font-size:12px;color:#ffd9a0;background:#2a1c08;border-bottom:1px solid rgba(255,180,84,.35);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+#fallbackBanner.show{display:flex}
+#fallbackBanner .ic{font-size:14px}
+.static-tag{
+  position:absolute;top:14px;left:16px;z-index:5;pointer-events:none;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:var(--amber);
+  display:flex;align-items:center;gap:7px;
+}
+.static-tag::before{content:'▣';font-size:11px}
+[data-static] .axw{display:none}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:1020px){
+  .pair-grid{grid-template-columns:1fr}
+  .ratio-grid{grid-template-columns:1fr}
+  .wrap{padding:0 20px}
+}
+@media (max-width:860px){
+  .story-notes{place-items:end center;padding-bottom:9vh}
+  .note{margin-right:0;width:min(560px,92vw)}
+  .legend{display:none}
+  .stage-data{display:none}
+  #heroCanvas{left:0;width:100%;opacity:.38;-webkit-mask-image:linear-gradient(180deg,transparent 50%,#000);mask-image:linear-gradient(180deg,transparent 50%,#000)}
+}
+@media (max-width:620px){
+  .stage{min-height:400px}
+  .cc-stage{height:320px}
+  header.site{padding-top:38px}
+  section.block{padding-top:52px}
+  .stage-hint{display:none}
+  .stage-badge{font-size:8px;letter-spacing:.12em}
+  .note{padding:16px 17px 13px}
+  .note h3{font-size:18px}
+  .note p{font-size:12px;line-height:1.85}
+  .scroll-hint{margin-top:26px}
+}
+</style>
+</head>
+<body>
+
+<div id="fallbackBanner"><span class="ic">⚠</span><span>WebGL2 is unavailable in this browser (unsupported or GPU context lost) — switched to <b>static structure diagrams</b> (no interaction). Use a recent Chrome / Edge / Firefox for the full 3D experience.</span></div>
+
+<header class="site">
+  <canvas id="heroCanvas"></canvas>
+  <div class="wrap hero-wrap">
+    <div class="kicker"><span>CRYSTALLOGRAPHY WORKBENCH · INTERACTIVE 3D LATTICES</span></div>
+    <h1 class="title">From Perovskite to Coordination Geometry</h1>
+    <p class="subtitle">
+      An interactive structure workbench: <b>SrTiO₃</b> · <b>NaCl</b> · <b>CsCl</b> —
+      bond lengths, coordination polyhedra, and the <b>radius-ratio rule</b> (<span class="mono">r₊/r₋ = 0.414 / 0.732</span>), live in 3D.
+    </p>
+    <div class="ops-hint">
+      <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3" stroke-linecap="round"/></svg>
+      DRAG rotate · WHEEL zoom · auto-orbit on idle
+    </div>
+  </div>
+  <div class="scroll-hint"><span></span>SCROLL · ENTER THE LATTICE</div>
+</header>
+
+<main>
+  <!-- ================= Main scene SrTiO3: scrollytelling ================= -->
+  <section class="story" id="perovskite">
+    <div class="stage story-stage" id="stage-sto">
+      <div class="cine" aria-hidden="true"><i class="cb cb-t"></i><i class="cb cb-b"></i><i class="cc cc-tr"></i><i class="cc cc-bl"></i><span class="ct">LATTICE VIEW · PM-3M (NO. 221) · 2×2×2 SUPERCELL</span></div>
+      <div class="stage-badge"><span class="dot"></span><span id="stoStageLabel">01 / CUBIC PHASE · 2×2×2 SUPERCELL</span></div>
+      <div class="stage-hint">DRAG rotate · SCROLL to continue</div>
+      <div class="legend">
+        <div class="lg-title">ATOMS</div>
+        <div class="lg"><span class="sw" style="background:#3ddc97;color:#3ddc97"></span>Sr²⁺ · A-site · corners</div>
+        <div class="lg"><span class="sw" style="background:#9aa3ad;color:#9aa3ad"></span>Ti⁴⁺ · B-site · body</div>
+        <div class="lg"><span class="sw" style="background:#ff6b6b;color:#ff6b6b"></span>O²⁻ · face centers</div>
+        <div class="lg"><span class="sw ring" style="border-color:rgba(63,212,240,.8);color:rgba(63,212,240,.8)"></span>TiO₆ octahedron</div>
+      </div>
+      <canvas class="axw" id="axSto"></canvas>
+      <div class="stage-data">
+        <div class="sd-title">CELL DATA</div>
+        <div class="sd-row"><i>Space group</i><b>Pm-3m <span>(No. 221)</span></b></div>
+        <div class="sd-row"><i>a</i><b>3.905 Å</b></div>
+        <div class="sd-row"><i>V<sub>cell</sub></i><b>59.55 Å³</b></div>
+        <div class="sd-row"><i>Z / ρ</i><b>1 / 5.11 g·cm⁻³</b></div>
+        <div class="sd-row"><i>CN</i><b>Sr[12] · Ti[6]</b></div>
+      </div>
+      <div class="story-notes">
+        <article class="note" data-stage="0">
+          <div class="note-k">STAGE 01 · Pm-3m</div>
+          <h3>Cubic Perovskite</h3>
+          <p><b>Sr²⁺</b> at the corners, <b>Ti⁴⁺</b> at the body center, <b>O²⁻</b> at the face centers — repeated into a 2×2×2 supercell.</p>
+          <div class="note-data"><span>a = 3.905 Å</span><span>40 atoms · 48 Ti–O bonds</span></div>
+        </article>
+        <article class="note" data-stage="1">
+          <div class="note-k">STAGE 02 · TiO₆</div>
+          <h3>Octahedral Coordination</h3>
+          <p>Each <b>Ti⁴⁺</b> sits inside a <b>TiO₆ octahedron</b> (Ti–O = <b>1.953 Å</b> = a/2); octahedra share corners into a 3D framework.</p>
+          <div class="note-data"><span>Ti–O = 1.953 Å</span><span>CN Sr[12] · Ti[6]</span></div>
+        </article>
+        <article class="note" data-stage="2">
+          <div class="note-k">STAGE 03 · 105 K</div>
+          <h3>Antiphase Rotation</h3>
+          <p>Below <b>~105 K</b> the TiO₆ octahedra tilt about c, <b>adjacent (001) layers in opposite sense</b> (a⁰a⁰c⁻) — symmetry drops to <b>I4/mcm</b>. Tilt exaggerated.</p>
+          <div class="note-data"><span>Pm-3m → I4/mcm</span><span>T_c ≈ 105 K</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NaCl / CsCl ================= -->
+  <section class="block" id="binary">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-kicker">SPECIMEN 02/03 · BINARY IONIC CRYSTALS</div>
+        <h2 class="sec-title"><span class="num">02</span>Why 6 or 8 nearest neighbors?</h2>
+        <p class="sec-lead">
+          Same 1:1 stoichiometry, different packing: NaCl is <b>6:6 octahedral</b>, CsCl is <b>8:8 cubic</b>.
+          One inverted polyhedron pair is highlighted in each structure.
+        </p>
+      </div>
+      <div class="pair-grid">
+        <article class="crystal-card">
+          <div class="cc-head">
+            <div><h3><span class="f">NaCl</span> · Rock Salt</h3><div class="sub">Fm-3m · face-centered cubic lattice</div></div>
+            <div class="badge">6 : 6 OCTAHEDRAL</div>
+          </div>
+          <div class="cc-stage" id="stage-nacl">
+            <div class="stage-hint">DRAG rotate · WHEEL zoom</div>
+            <div class="legend">
+              <div class="lg-title">ATOMS</div>
+              <div class="lg"><span class="sw" style="background:#4da3ff;color:#4da3ff"></span>Na⁺ (102 pm)</div>
+              <div class="lg"><span class="sw" style="background:#8fd460;color:#8fd460"></span>Cl⁻ (181 pm)</div>
+              <div class="lg"><span class="sw" style="background:rgba(63,212,240,.75);color:rgba(63,212,240,.75)"></span>Cl₆ around Na⁺</div>
+              <div class="lg"><span class="sw" style="background:rgba(255,180,84,.8);color:rgba(255,180,84,.8)"></span>Na₆ around Cl⁻</div>
+            </div>
+            <canvas class="axw" id="axNaCl"></canvas>
+          </div>
+          <div class="cc-body">
+            <p>Cl⁻ forms an <b>fcc close packing</b> with Na⁺ filling every octahedral void — each Na⁺ is wrapped by <b>6 Cl⁻</b> and vice versa (cyan ↔ amber).</p>
+            <div class="cc-data">
+              <span>a = <b>5.640 Å</b></span>
+              <span>Na–Cl = <b>2.820 Å</b></span>
+              <span>r₊/r₋ = <b>102/181 = 0.564</b></span>
+              <span>V<sub>cell</sub> = <b>179.4 Å³</b></span>
+              <span>Z = <b>4</b></span>
+              <span>ρ = <b>2.16 g·cm⁻³</b></span>
+              <span>Shannon radii · CN 6</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="crystal-card">
+          <div class="cc-head">
+            <div><h3><span class="f">CsCl</span> · Caesium Chloride</h3><div class="sub">Pm-3m · simple cubic lattice + 2-atom basis</div></div>
+            <div class="badge">8 : 8 CUBIC</div>
+          </div>
+          <div class="cc-stage" id="stage-cscl">
+            <div class="stage-hint">DRAG rotate · WHEEL zoom</div>
+            <div class="legend">
+              <div class="lg-title">ATOMS</div>
+              <div class="lg"><span class="sw" style="background:#ff9d45;color:#ff9d45"></span>Cs⁺ (174 pm)</div>
+              <div class="lg"><span class="sw" style="background:#8fd460;color:#8fd460"></span>Cl⁻ (188 pm)</div>
+              <div class="lg"><span class="sw" style="background:rgba(167,139,250,.85);color:rgba(167,139,250,.85)"></span>Cl₈ cube around Cs⁺</div>
+              <div class="lg"><span class="sw" style="background:rgba(255,180,84,.8);color:rgba(255,180,84,.8)"></span>Cs₈ cube around Cl⁻</div>
+            </div>
+            <canvas class="axw" id="axCsCl"></canvas>
+          </div>
+          <div class="cc-body">
+            <p>Cl⁻ sits on a <b>simple cubic</b> lattice, Cs⁺ fills the <b>cubic void</b> — 8:8 coordination (violet ↔ amber). Note: CsCl is <b>not bcc</b>; it is simple cubic with a two-atom basis.</p>
+            <div class="cc-data">
+              <span>a = <b>4.113 Å</b></span>
+              <span>Cs–Cl = <b>3.562 Å</b> <span style="color:var(--dim)">(a√3/2)</span></span>
+              <span>r₊/r₋ = <b>174/188 = 0.926</b></span>
+              <span>V<sub>cell</sub> = <b>69.58 Å³</b></span>
+              <span>Z = <b>1</b></span>
+              <span>ρ = <b>4.02 g·cm⁻³</b></span>
+              <span>Shannon radii · CN 8</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Radius-ratio rule ================= -->
+  <section class="block" id="ratio">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-kicker">SPECIMEN 03/03 · RADIUS-RATIO RULE</div>
+        <h2 class="sec-title"><span class="num">03</span>Void geometry sets the coordination number</h2>
+        <p class="sec-lead">
+          Treat ions as hard spheres: a stable packing needs <b>cation–anion contact with no anion–anion contact</b>.
+          The ratio r₊/r₋ decides which void the cation can prop open — <b>drag the slider</b> and watch the coordination number switch.
+        </p>
+      </div>
+      <div class="ratio-grid">
+        <div class="demo-panel">
+          <div class="dp-head"><span class="t">INTERACTIVE · HARD-SPHERE CONTACT GEOMETRY</span><span class="v">r₋ fixed · r₊ follows the slider</span></div>
+          <canvas id="ratioCanvas"></canvas>
+          <div class="readout">
+            <div class="big" id="ratioVal">0.560<small> r₊/r₋</small></div>
+            <div class="sep"></div>
+            <div class="cn"><b id="cnNum">6</b>-fold · <span id="cnName">octahedral</span>
+              <span class="sub" id="cnCond">0.414 ≤ r₊/r₋ &lt; 0.732</span></div>
+          </div>
+          <div class="slider-row">
+            <input type="range" id="ratioSlider" min="0.10" max="1.05" step="0.002" value="0.56">
+            <div class="ticks"><span>0.10</span><span>0.225</span><span>0.414</span><span>0.732</span><span>1.00</span></div>
+          </div>
+          <div class="chips">
+            <span style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:.1em;align-self:center">TRY →</span>
+            <button class="chip" data-r="0.40">ZnS <b>0.40</b></button>
+            <button class="chip" data-r="0.564">NaCl <b>0.564</b></button>
+            <button class="chip" data-r="0.926">CsCl <b>0.926</b></button>
+            <button class="chip" data-r="1.0">close-packed <b>1.00</b></button>
+          </div>
+        </div>
+
+        <div class="rules-panel">
+          <h4>Radius ratio → coordination number</h4>
+          <table class="ratio-t">
+            <thead><tr><th>r₊/r₋ range</th><th>CN</th><th>Polyhedron</th><th>Examples</th></tr></thead>
+            <tbody>
+              <tr data-key="2"><td class="r">&lt; 0.155</td><td class="n">2</td><td>linear (dumbbell)</td><td>extremely rare</td></tr>
+              <tr data-key="3"><td class="r">0.155 – 0.225</td><td class="n">3</td><td>trigonal planar</td><td>rare (some oxo-salts)</td></tr>
+              <tr data-key="4"><td class="r">0.225 – 0.414</td><td class="n">4</td><td><span class="mini" style="background:#3fd4f0"></span>tetrahedral</td><td>ZnS zinc blende (0.40)</td></tr>
+              <tr data-key="6"><td class="r">0.414 – 0.732</td><td class="n">6</td><td><span class="mini" style="background:#3fd4f0"></span>octahedral</td><td>NaCl (0.564) · rutile TiO₂</td></tr>
+              <tr data-key="8"><td class="r">0.732 – 1.00</td><td class="n">8</td><td><span class="mini" style="background:#ffb454"></span>cubic</td><td>CsCl (0.926) · fluorite CaF₂</td></tr>
+              <tr data-key="12"><td class="r">≈ 1.00</td><td class="n">12</td><td>cuboctahedral (close-packed)</td><td>Cu metal, alloys</td></tr>
+            </tbody>
+          </table>
+          <div class="deriv">
+            <div class="dv">
+              <div class="h">OCTAHEDRAL LIMIT · √2 − 1 ≈ 0.414</div>
+              <div class="f">r₊ + r₋ = √2 · r₋　⟹　r₊/r₋ = √2 − 1</div>
+              <p>Four anions touch in the equatorial plane; center-to-vertex is √2·r₋. Below this the cation rattles, the octahedron collapses, and CN drops to 4.</p>
+            </div>
+            <div class="dv">
+              <div class="h">CUBIC LIMIT · √3 − 1 ≈ 0.732</div>
+              <div class="f">r₊ + r₋ = √3 · r₋　⟹　r₊/r₋ = √3 − 1</div>
+              <p>Anions sit on the corners of a 2r₋ cube; body-center-to-vertex is √3·r₋. At r₊/r₋ ≥ 0.732 the cation touches all 8 corner anions at once.</p>
+            </div>
+          </div>
+          <p class="note">The radius-ratio rule is an <b>empirical</b> hard-sphere model; covalency and polarization cause exceptions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p>NATIVE WEBGL2 · ZERO DEPENDENCIES · WORKS OFFLINE</p>
+    <p>Data: Shannon (1976) ionic radii · For teaching</p>
+  </div>
+</footer>
+
+<script>
+'use strict';
+/* ============================================================
+   Engine: native WebGL2 (zero dependencies)
+   instanced ball-and-stick · procedural environment lighting · MSAA + HDR bloom · orbit control
+   ============================================================ */
+const Engine = (() => {
+
+/* ---------------- 数学 ---------------- */
+const V3 = {
+  sub:(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],
+  cross:(a,b)=>[a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]],
+  dot:(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2],
+  norm(a){const l=Math.hypot(a[0],a[1],a[2])||1;return [a[0]/l,a[1]/l,a[2]/l];},
+};
+const M4 = {
+  create(){const m=new Float32Array(16);m[0]=m[5]=m[10]=m[15]=1;return m;},
+  mul(o,a,b){
+    for(let c=0;c<4;c++){
+      const b0=b[c*4],b1=b[c*4+1],b2=b[c*4+2],b3=b[c*4+3];
+      o[c*4]  =a[0]*b0+a[4]*b1+a[8]*b2 +a[12]*b3;
+      o[c*4+1]=a[1]*b0+a[5]*b1+a[9]*b2 +a[13]*b3;
+      o[c*4+2]=a[2]*b0+a[6]*b1+a[10]*b2+a[14]*b3;
+      o[c*4+3]=a[3]*b0+a[7]*b1+a[11]*b2+a[15]*b3;
+    } return o;
+  },
+  perspective(o,fovy,asp,n,f){
+    const t=1/Math.tan(fovy/2), nf=1/(n-f);
+    o.fill(0); o[0]=t/asp; o[5]=t; o[10]=(f+n)*nf; o[11]=-1; o[14]=2*f*n*nf; return o;
+  },
+  lookAt(o,eye,c,up){
+    const z=V3.norm(V3.sub(eye,c)), x=V3.norm(V3.cross(up,z)), y=V3.cross(z,x);
+    o[0]=x[0];o[1]=y[0];o[2]=z[0];o[3]=0;
+    o[4]=x[1];o[5]=y[1];o[6]=z[1];o[7]=0;
+    o[8]=x[2];o[9]=y[2];o[10]=z[2];o[11]=0;
+    o[12]=-V3.dot(x,eye);o[13]=-V3.dot(y,eye);o[14]=-V3.dot(z,eye);o[15]=1;
+    return o;
+  },
+};
+/* 单位圆柱沿 +Y 放置：从 a 指向 b，半径 rad */
+function bondMatrix(o,a,b,rad){
+  const d=V3.norm(V3.sub(b,a));
+  let r=V3.dot([0,1,0],d), ax, ang;
+  if(r<-0.999999){ ax=V3.norm(V3.cross([0,1,0],Math.abs(d[0])<0.7?[1,0,0]:[0,0,1])); ang=Math.PI; }
+  else{ ax=V3.norm(V3.cross([0,1,0],d)); ang=Math.acos(Math.min(1,r)); }
+  // 轴角 → 旋转矩阵
+  const s=Math.sin(ang), c=Math.cos(ang), t=1-c, [x,y,z]=ax;
+  const m00=t*x*x+c,   m01=t*x*y-s*z, m02=t*x*z+s*y,
+        m10=t*x*y+s*z, m11=t*y*y+c,   m12=t*y*z-s*x,
+        m20=t*x*z-s*y, m21=t*y*z+s*x, m22=t*z*z+c;
+  const L=Math.hypot(b[0]-a[0],b[1]-a[1],b[2]-a[2])||1e-6;
+  o[0]=m00*rad; o[1]=m10*rad; o[2]=m20*rad; o[3]=0;
+  o[4]=m01*L;   o[5]=m11*L;   o[6]=m21*L;   o[7]=0;
+  o[8]=m02*rad; o[9]=m12*rad; o[10]=m22*rad; o[11]=0;
+  o[12]=(a[0]+b[0])/2; o[13]=(a[1]+b[1])/2; o[14]=(a[2]+b[2])/2; o[15]=1;
+  return o;
+}
+
+/* ---------------- 几何 ---------------- */
+function icosphere(n){
+  const t=(1+Math.sqrt(5))/2;
+  const vt=[-1,t,0, 1,t,0, -1,-t,0, 1,-t,0, 0,-1,t, 0,1,t, 0,-1,-t, 0,1,-t, t,0,-1, t,0,1, -t,0,-1, -t,0,1];
+  for(let i=0;i<vt.length;i+=3){
+    const l=Math.hypot(vt[i],vt[i+1],vt[i+2]); vt[i]/=l;vt[i+1]/=l;vt[i+2]/=l;
+  }
+  /* 底面表：20 个真三角面（两两均为棱长 1.0515），已验证全部外向 + 流形一致 */
+  let faces=[0,5,1, 0,1,7, 0,11,5, 0,7,10, 0,10,11, 1,5,9, 1,8,7, 1,9,8, 2,3,4, 2,6,3,
+             2,4,11, 2,10,6, 2,11,10, 3,9,4, 3,6,8, 3,8,9, 4,9,5, 4,5,11, 6,7,8, 6,10,7];
+  const cache=new Map();
+  const mid=(i,j)=>{
+    const key=i<j?i*100000+j:j*100000+i;
+    if(cache.has(key))return cache.get(key);
+    const a=[vt[i*3],vt[i*3+1],vt[i*3+2]], b=[vt[j*3],vt[j*3+1],vt[j*3+2]];
+    const m=V3.norm([(a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2]);
+    vt.push(m[0],m[1],m[2]); cache.set(key,vt.length/3-1); return vt.length/3-1;
+  };
+  for(let s=1;s<n;s++){
+    const nf=[];
+    for(let f=0;f<faces.length;f+=3){
+      const a=faces[f],b=faces[f+1],c=faces[f+2];
+      const ab=mid(a,b), bc=mid(b,c), ca=mid(c,a);
+      nf.push(a,ab,ca, b,bc,ab, c,ca,bc, ab,bc,ca);
+    }
+    faces=nf;
+  }
+  return {pos:new Float32Array(vt), idx:new Uint16Array(faces)};
+}
+function cylinderGeo(seg){
+  const pos=[],nor=[],idx=[];
+  for(let i=0;i<=seg;i++){
+    const a=i/seg*Math.PI*2, c=Math.cos(a), s=Math.sin(a);
+    pos.push(c,-0.5,s, c,0.5,s); nor.push(c,0,s, c,0,s);
+  }
+  for(let i=0;i<seg;i++){
+    const a=i*2;
+    idx.push(a,a+1,a+3, a,a+3,a+2);
+  }
+  return {pos:new Float32Array(pos),nor:new Float32Array(nor),idx:new Uint16Array(idx)};
+}
+function polyMesh(verts,faces){ /* 平面着色展开 */
+  const pos=[],nor=[];
+  for(let i=0;i<faces.length;i+=3){
+    const a=verts[faces[i]],b=verts[faces[i+1]],c=verts[faces[i+2]];
+    const n=V3.norm(V3.cross(V3.sub(b,a),V3.sub(c,a)));
+    pos.push(a[0],a[1],a[2],b[0],b[1],b[2],c[0],c[1],c[2]);
+    nor.push(n[0],n[1],n[2],n[0],n[1],n[2],n[0],n[1],n[2]);
+  }
+  return {pos:new Float32Array(pos),nor:new Float32Array(nor)};
+}
+function mulberry32(a){ /* 确定性随机（粒子布点可复现） */
+  return function(){
+    a|=0;a=a+0x6D2B79F5|0;
+    let t=Math.imul(a^a>>>15,1|a);
+    t=t+Math.imul(t^t>>>7,61|t)^t;
+    return((t^t>>>14)>>>0)/4294967296;
+  };
+}
+
+/* ---------------- GLSL ---------------- */
+/* 共享光照核（球/柱两套管线共用）；SPHERE_FS / CYL_FS 各自扩展边缘项 */
+const SHADE_GLSL=`#version 300 es
+precision highp float;
+in vec3 vN; in vec3 vW; in vec4 vCol; in vec4 vPar;
+uniform vec3 uCam;
+uniform float uTime;
+out vec4 frag;
+const float PI=3.141592653589793;
+float hash31(vec3 p){return fract(sin(dot(p,vec3(12.9898,78.233,37.719)))*43758.5453);}
+vec3 envColor(vec3 r){                    /* 程序化摄影棚环境 */
+  float up=clamp(r.y*0.5+0.5,0.0,1.0);
+  vec3 c=mix(vec3(0.006,0.010,0.020),vec3(0.050,0.080,0.125),pow(up,1.6));
+  c+=vec3(1.0,0.55,0.25)*pow(max(dot(r,normalize(vec3(-0.55,0.35,-0.55))),0.0),24.0)*0.70;
+  c+=vec3(0.25,0.60,1.00)*pow(max(dot(r,normalize(vec3(0.60,0.55,0.25))),0.0),20.0)*0.50;
+  c+=vec3(0.45,0.75,1.00)*pow(max(r.y,0.0),6.0)*0.13;
+  return c;
+}
+vec3 shade(vec3 N,vec3 V,vec3 albedo,float rough,float metal,float emis){
+  vec3 L=normalize(vec3(0.45,0.85,0.35));
+  vec3 H=normalize(L+V);
+  float ndl=max(dot(N,L),0.0);
+  float ndv=max(dot(N,V),1e-4);
+  float a=rough*rough;
+  float nh=max(dot(N,H),0.0);
+  float den=nh*nh*(a*a-1.0)+1.0;
+  float D=a*a/(PI*den*den);
+  vec3 F0=mix(vec3(0.04),albedo,metal);
+  vec3 F=F0+(1.0-F0)*pow(1.0-max(dot(H,V),0.0),5.0);
+  float k=(rough+1.0)*(rough+1.0)/8.0;
+  float G=(ndl/(ndl*(1.0-k)+k))*(ndv/(ndv*(1.0-k)+k));
+  vec3 spec=D*F*G/(4.0*ndv*ndl+1e-4)*ndl*vec3(1.0,0.96,0.88)*2.5;
+  vec3 hemi=mix(vec3(0.010,0.016,0.030),vec3(0.052,0.078,0.118),N.y*0.5+0.5);
+  vec3 col=albedo*(ndl*0.72+0.20)*mix(vec3(1.0,0.97,0.92),vec3(0.74,0.86,1.05),0.45)*(1.0-metal*0.55);
+  col+=hemi*albedo*(1.0-metal*0.5);
+  col+=spec*(1.0-rough*0.4);
+  col+=envColor(reflect(-V,N))*mix(F,vec3(1.0),metal*0.35)*(1.0-rough)*(0.32+metal*0.62);
+  float back=max(dot(N,normalize(vec3(-0.55,0.25,-0.65))),0.0);   /* 冷色轮廓补光 */
+  col+=albedo*back*vec3(0.10,0.23,0.32)*(0.55-rough*0.25);
+  col+=albedo*emis;
+  return col;
+}
+vec3 applyFog(vec3 col,vec3 W,vec3 cam){   /* 大气透视：远处沉入深蓝 */
+  float fd=length(cam-W);
+  return mix(col,vec3(0.010,0.024,0.046),1.0-exp(-0.00055*fd*fd));
+}`;
+const SPHERE_FS=SHADE_GLSL+`
+void main(){
+  vec3 N=normalize(vN);
+  vec3 V=normalize(uCam-vW);
+  float rough=clamp(vCol.a,0.045,1.0);
+  vec3 col=shade(N,V,vCol.rgb,rough,vPar.x,vPar.y);
+  /* 轮辋光：边缘泛出冷青，宝石质感 */
+  float fr=pow(1.0-max(dot(N,V),0.0),2.6);
+  col+=fr*mix(vCol.rgb,vec3(0.35,0.72,1.0),0.45)*(1.0-rough*0.35)*0.48;
+  /* 晶格呼吸：同物种原子同步微光 */
+  col+=vCol.rgb*(0.5+0.5*sin(uTime*1.7+hash31(vCol.rgb)*6.2832))*0.065;
+  frag=vec4(applyFog(col,vW,uCam),1.0);
+}`;
+const CYL_FS=SHADE_GLSL+`
+in float vAx;in float vPh;in float vPulse;   /* 键轴坐标 / 相位 / 脉冲振幅 */
+void main(){
+  vec3 N=normalize(vN);
+  vec3 V=normalize(uCam-vW);
+  float rough=clamp(vCol.a,0.045,1.0);
+  vec3 col=shade(N,V,vCol.rgb,rough,vPar.x,vPar.y);
+  /* 键内能量脉冲：亮带沿键流动 */
+  float band=exp(-pow((fract(vAx-uTime*0.62+vPh)-0.5)*7.5,2.0));
+  float band2=exp(-pow((fract(vAx+uTime*0.38+vPh*1.7)-0.5)*11.0,2.0));   /* 反向回流脉冲 */
+  col+=vec3(0.16,0.52,0.78)*band*vPulse*0.95+vec3(0.30,0.70,1.00)*band2*vPulse*0.40;
+  float fr=pow(1.0-max(dot(N,V),0.0),3.0);
+  col+=fr*vec3(0.20,0.50,0.75)*0.20*(1.0-rough*0.4);
+  frag=vec4(applyFog(col,vW,uCam),1.0);
+}`;
+const SPHERE_VS=`#version 300 es
+layout(location=0) in vec3 aPos;
+layout(location=1) in vec3 aNormal;
+layout(location=2) in vec4 iPosRad;
+layout(location=3) in vec4 iColor;
+layout(location=4) in vec4 iParams;
+layout(location=5) in vec4 iRot;          /* xyz=旋转中心 w=旋转符号(0=不转) */
+uniform mat4 uVP;uniform vec3 uDrift;uniform float uRot;
+out vec3 vN;out vec3 vW;out vec4 vCol;out vec4 vPar;
+void main(){
+  float rad=iPosRad.w*iParams.w;          /* iParams.w = 实例缩放 */
+  vec3 w=aPos*rad+iPosRad.xyz;
+  if(iRot.w!=0.0){
+    vec3 loc=w-iRot.xyz;
+    float ang=uRot*iRot.w;
+    float ca=cos(ang),sa=sin(ang);
+    loc=vec3(loc.x*ca-loc.y*sa,loc.x*sa+loc.y*ca,loc.z);
+    w=iRot.xyz+loc;
+  }
+  w+=uDrift;
+  vW=w;vN=aNormal;vCol=iColor;vPar=iParams;
+  gl_Position=uVP*vec4(w,1.0);
+}`;
+const CYL_VS=`#version 300 es
+layout(location=0) in vec3 aPos;
+layout(location=1) in vec3 aNormal;
+layout(location=2) in mat4 iMat;
+layout(location=6) in vec4 iColor;
+layout(location=7) in vec4 iParams;
+layout(location=8) in vec4 iRot;          /* xyz=旋转中心 w=旋转符号 */
+uniform mat4 uVP;uniform vec3 uDrift;uniform float uRot;
+out vec3 vN;out vec3 vW;out vec4 vCol;out vec4 vPar;
+out float vAx;out float vPh;out float vPulse;
+vec3 rotZ(vec3 p,vec3 c,float ang){
+  vec3 l=p-c;float ca=cos(ang),sa=sin(ang);
+  l=vec3(l.x*ca-l.y*sa,l.x*sa+l.y*ca,l.z);
+  return c+l;
+}
+void main(){
+  vec3 lp=aPos*vec3(iParams.w,1.0,iParams.w);   /* 径向缩放（局部 Y 为轴） */
+  vec4 w=iMat*vec4(lp,1.0);
+  vec3 n=aNormal;
+  if(iRot.w!=0.0){
+    float ang=uRot*iRot.w;
+    w.xyz=rotZ(w.xyz,iRot.xyz,ang);
+    n=rotZ(n,vec3(0.0),ang);
+  }
+  w.xyz+=uDrift;
+  vW=w.xyz;vN=n;vCol=iColor;vPar=iParams;
+  vAx=aPos.y+0.5;                                /* 沿键轴 0..1 */
+  vPh=fract(sin(dot(iMat[3].xz,vec2(12.98,78.23)))*43758.5453);   /* 按键中点散相 */
+  vPulse=iParams.z;
+  gl_Position=uVP*w;
+}`;
+const LINE_VS=`#version 300 es
+layout(location=0) in vec3 aPos;
+uniform mat4 uVP;
+out vec3 vW;
+void main(){vW=aPos;gl_Position=uVP*vec4(aPos,1.0);}`;
+const LINE_FS=`#version 300 es
+precision highp float;
+in vec3 vW;uniform vec4 uColor;uniform vec3 uCam;uniform float uFog;
+out vec4 frag;
+void main(){
+  float d=length(vW-uCam);
+  frag=vec4(uColor.rgb,uColor.a*exp(-uFog*d*d));
+}`;
+const POLY_VS=`#version 300 es
+layout(location=0) in vec3 aPos;
+layout(location=1) in vec3 aNormal;
+uniform mat4 uVP;uniform vec3 uDrift;
+uniform vec3 uRotC;uniform float uRot;uniform float uRotSign;
+out vec3 vN;out vec3 vW;
+void main(){
+  vec3 w=aPos;
+  if(uRot!=0.0&&uRotSign!=0.0){
+    vec3 l=w-uRotC;
+    float ang=uRot*uRotSign,ca=cos(ang),sa=sin(ang);
+    l=vec3(l.x*ca-l.y*sa,l.x*sa+l.y*ca,l.z);
+    w=uRotC+l;
+  }
+  w+=uDrift;vW=w;vN=aNormal;gl_Position=uVP*vec4(w,1.0);
+}`;
+const POLY_FS=`#version 300 es
+precision highp float;
+in vec3 vN;in vec3 vW;
+uniform vec3 uColor;uniform float uAlpha;uniform vec3 uCam;
+out vec4 frag;
+void main(){
+  vec3 N=normalize(vN);
+  vec3 V=normalize(uCam-vW);
+  float f=pow(1.0-abs(dot(N,V)),3.0);
+  vec3 col=uColor*(0.32+0.95*f)+vec3(1.0)*f*0.22;
+  float alpha=uAlpha*(0.6+1.3*f);
+  frag=vec4(col,alpha);
+}`;
+const SPRITE_VS=`#version 300 es
+layout(location=0) in vec2 aPos;
+layout(location=2) in vec4 iPosRad;
+layout(location=3) in vec4 iColor;
+layout(location=4) in vec4 iRot;
+uniform mat4 uVP;uniform mat4 uView;uniform vec3 uDrift;uniform float uRot;
+out vec2 vUV;out vec4 vCol;
+void main(){
+  vec3 c=iPosRad.xyz;
+  if(iRot.w!=0.0){
+    vec3 l=c-iRot.xyz;
+    float ang=uRot*iRot.w,ca=cos(ang),sa=sin(ang);
+    l=vec3(l.x*ca-l.y*sa,l.x*sa+l.y*ca,l.z);
+    c=iRot.xyz+l;
+  }
+  vec3 right=vec3(uView[0][0],uView[1][0],uView[2][0]);
+  vec3 up=vec3(uView[0][1],uView[1][1],uView[2][1]);
+  vec3 w=c+(right*aPos.x+up*aPos.y)*iPosRad.w+uDrift;
+  vUV=aPos;vCol=iColor;
+  gl_Position=uVP*vec4(w,1.0);
+}`;
+const SPRITE_FS=`#version 300 es
+precision highp float;
+in vec2 vUV;in vec4 vCol;
+out vec4 frag;
+void main(){
+  float d=length(vUV);
+  float a=exp(-d*d*5.5)*0.45+exp(-d*d*20.0)*0.55;
+  frag=vec4(vCol.rgb*a*vCol.a,1.0);
+}`;
+const FS_VS=`#version 300 es
+out vec2 vUV;
+void main(){
+  vec2 p=vec2(gl_VertexID==1?3.0:-1.0,gl_VertexID==2?3.0:-1.0);
+  vUV=p*0.5+0.5;gl_Position=vec4(p,0.0,1.0);
+}`;
+const BRIGHT_FS=`#version 300 es
+precision highp float;
+in vec2 vUV;uniform sampler2D uTex;uniform float uThresh;
+out vec4 frag;
+void main(){
+  vec3 c=texture(uTex,vUV).rgb;
+  float l=dot(c,vec3(0.2126,0.7152,0.0722));
+  frag=vec4(c*smoothstep(uThresh,uThresh+0.65,l),1.0);
+}`;
+const STREAK_FS=`#version 300 es
+precision highp float;
+in vec2 vUV;uniform sampler2D uTex;uniform float uTexel;
+out vec4 frag;
+/* 各向异性横向拉丝：模拟变形宽银幕镜头的蓝色水平辉光 */
+void main(){
+  vec3 c=texture(uTex,vUV).rgb*0.22;
+  float w=0.22;
+  for(int i=1;i<=6;i++){
+    float fi=float(i);
+    float o=uTexel*fi*fi*0.85;
+    float wi=0.55/(fi*0.75+1.0);
+    c+=(texture(uTex,vUV+vec2(o,0.0)).rgb+texture(uTex,vUV-vec2(o,0.0)).rgb)*wi;
+    w+=2.0*wi;
+  }
+  frag=vec4(c/w*vec3(0.50,0.72,1.0),1.0);
+}`;
+const BLUR_FS=`#version 300 es
+precision highp float;
+in vec2 vUV;uniform sampler2D uTex;uniform vec2 uDir;
+out vec4 frag;
+void main(){
+  vec3 c=texture(uTex,vUV).rgb*0.2270270270;
+  vec2 o1=uDir*1.3846153846,o2=uDir*3.2307692308;
+  c+=(texture(uTex,vUV+o1).rgb+texture(uTex,vUV-o1).rgb)*0.3162162162;
+  c+=(texture(uTex,vUV+o2).rgb+texture(uTex,vUV-o2).rgb)*0.0702702703;
+  frag=vec4(c,1.0);
+}`;
+const COMP_FS=`#version 300 es
+precision highp float;
+in vec2 vUV;
+uniform sampler2D uScene;uniform sampler2D uBloom;uniform sampler2D uStreak;
+uniform float uStrength;uniform float uExposure;uniform vec2 uRes;uniform float uTime;
+uniform float uStreakStr;uniform float uFlash;uniform float uTilt;
+out vec4 frag;
+vec3 aces(vec3 x){return clamp((x*(2.51*x+0.03))/(x*(2.43*x+0.59)+0.14),0.0,1.0);}
+float hash(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
+void main(){
+  vec2 px=1.0/uRes;
+  vec2 ca=(vUV-0.5)*0.0042;               /* 轻微色差 */
+  vec3 c;
+  c.r=texture(uScene,vUV+ca).r;
+  c.g=texture(uScene,vUV).g;
+  c.b=texture(uScene,vUV-ca).b;
+  /* 移轴景深：画面上下缘失焦，视觉焦点聚向结构（微缩模型感） */
+  float tb=smoothstep(0.15,0.47,abs(vUV.y-0.5))*uTilt;
+  if(tb>0.003){
+    vec2 o=px*(2.0+3.0*tb);
+    vec3 bl=(texture(uScene,vUV+vec2(o.x,o.y)).rgb+texture(uScene,vUV+vec2(-o.x,o.y)).rgb
+            +texture(uScene,vUV+vec2(o.x,-o.y)).rgb+texture(uScene,vUV-o).rgb)*0.25;
+    c=mix(c,bl,tb*0.55);
+  }
+  /* 反锐化掩模：结构边缘更锐利 */
+  vec3 lap=texture(uScene,vUV+vec2(1.4*px.x,0.0)).rgb+texture(uScene,vUV-vec2(1.4*px.x,0.0)).rgb
+          +texture(uScene,vUV+vec2(0.0,1.4*px.y)).rgb+texture(uScene,vUV-vec2(0.0,1.4*px.y)).rgb;
+  c+=(c*4.0-lap)*0.11;
+  c+=texture(uBloom,vUV).rgb*(uStrength+uFlash*0.55);
+  c+=texture(uStreak,vUV).rgb*uStreakStr*(1.0+uFlash*1.6);   /* 变形镜头横向拉丝 */
+  vec2 q=vUV-0.5;
+  c*=1.0-0.55*dot(q,q);
+  /* 分裂色调：阴影偏青、高光偏暖（电影感） */
+  float lum=dot(c,vec3(0.2126,0.7152,0.0722));
+  c+=vec3(0.005,0.018,0.028)*(1.0-smoothstep(0.0,0.55,lum));
+  c+=vec3(0.020,0.010,0.002)*smoothstep(0.55,1.15,lum);
+  c*=1.0+uFlash*0.16;
+  c=max(c-0.0045,0.0);                    /* 黑位压缩：更深的暗部 */
+  c=aces(c*uExposure);
+  /* 周期性全息扫描扫带（自下而上，带亮前缘） */
+  float sy=vUV.y-fract(uTime*0.055)*1.5+0.25;
+  float band=smoothstep(0.0,0.05,sy)*smoothstep(0.13,0.05,sy);
+  c+=vec3(0.016,0.085,0.115)*band;
+  c+=vec3(0.22,0.62,0.95)*exp(-pow((sy-0.055)*70.0,2.0))*0.30;
+  c*=0.986+0.014*sin(vUV.y*900.0+uTime*1.6);   /* 极淡全息扫描线 */
+  c=pow(c,vec3(1.0/2.2));
+  c+=(hash(vUV*uRes)-0.5)/255.0;
+  frag=vec4(c,1.0);
+}`;
+
+/* 程序化星云背景（全屏，先于场景绘制） */
+const BG_FS=`#version 300 es
+precision highp float;
+in vec2 vUV;
+uniform float uTime;uniform float uAspect;
+out vec4 frag;
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float noise(vec2 p){
+  vec2 i=floor(p),f=fract(p);
+  f=f*f*(3.0-2.0*f);
+  return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);
+}
+float fbm(vec2 p){
+  float v=0.0,a=0.5;
+  for(int i=0;i<4;i++){v+=a*noise(p);p*=2.03;a*=0.5;}
+  return v;
+}
+void main(){
+  vec2 p=vUV*vec2(uAspect,1.0);
+  float t=uTime*0.013;
+  float n1=fbm(p*2.1+vec2(t*0.7,-t*0.4));
+  float n2=fbm(p*4.3-vec2(t*0.25,t*0.55)+n1*0.9);
+  vec3 col=vec3(0.004,0.007,0.015);
+  col+=vec3(0.016,0.085,0.12)*pow(n1,2.5)*0.9;
+  col+=vec3(0.025,0.04,0.10)*pow(n2,3.2)*0.8;
+  vec2 q=vUV-0.5;
+  col*=1.0-0.5*dot(q,q);
+  frag=vec4(col,1.0);
+}`;
+
+/* 尘埃粒子（加色微光，顶点着色器内漂移） */
+const MOTE_VS=`#version 300 es
+layout(location=0) in vec2 aPos;
+layout(location=2) in vec4 iPosRad;
+layout(location=3) in vec4 iSeed;
+uniform mat4 uVP;uniform mat4 uView;uniform float uTime;
+out vec2 vUV;out float vA;
+void main(){
+  float s=iSeed.x;
+  vec3 c=iPosRad.xyz;
+  if(iSeed.z>0.0){   /* 环绕光点：绕结构慢速轨道（iSeed.z=轨道半径） */
+    float ang=uTime*0.11*iSeed.y+s*6.2832;
+    c+=vec3(cos(ang),sin(ang*0.63)*0.42,sin(ang))*iSeed.z;
+  }else{
+    c.x+=sin(uTime*iSeed.y+s*7.0)*0.55;
+    c.y+=sin(uTime*iSeed.y*0.7+s*13.0)*0.4;
+    c.z+=cos(uTime*iSeed.y*0.9+s*5.0)*0.55;
+  }
+  vec3 right=vec3(uView[0][0],uView[1][0],uView[2][0]);
+  vec3 up=vec3(uView[0][1],uView[1][1],uView[2][1]);
+  vec3 w=c+(right*aPos.x+up*aPos.y)*iPosRad.w;
+  vUV=aPos;vA=iSeed.w;
+  gl_Position=uVP*vec4(w,1.0);
+}`;
+const MOTE_FS=`#version 300 es
+precision highp float;
+in vec2 vUV;in float vA;
+out vec4 frag;
+void main(){
+  float d=length(vUV);
+  float a=exp(-d*d*7.0)*vA;
+  frag=vec4(vec3(0.32,0.82,1.0)*a,1.0);
+}`;
+
+/* ---------------- 工具 ---------------- */
+function makeProgram(gl,vs,fs){
+  const sh=(type,src)=>{
+    const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));
+    return s;
+  };
+  const p=gl.createProgram();
+  gl.attachShader(p,sh(gl.VERTEX_SHADER,vs));gl.attachShader(p,sh(gl.FRAGMENT_SHADER,fs));
+  gl.linkProgram(p);
+  if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(p));
+  const u={},n=gl.getProgramParameter(p,gl.ACTIVE_UNIFORMS);
+  for(let i=0;i<n;i++){
+    const info=gl.getActiveUniform(p,i);
+    u[info.name.replace('[0]','')]=gl.getUniformLocation(p,info.name);
+  }
+  return {p,u};
+}
+function makeBuf(gl,target,data,usage){
+  const b=gl.createBuffer();gl.bindBuffer(target,b);gl.bufferData(target,data,usage||gl.STATIC_DRAW);return b;
+}
+
+/* ---------------- 渲染器 ---------------- */
+class Renderer{
+  constructor(canvas,scene){
+    this.canvas=canvas;this.scene=scene;
+    const gl=canvas.getContext('webgl2',{antialias:false,alpha:false,powerPreference:'high-performance'});
+    if(!gl)throw new Error('NO_WEBGL2');
+    this.gl=gl;
+    this.destroyed=false;this.visible=true;this.lastT=0;
+    this.dpr=Math.min(window.devicePixelRatio||1,2);
+    /* 软件光栅（SwiftShader 等）显存/内存有限：限制缓冲区分辨率，避免 context lost */
+    this.maxPixels=3.2*1024*1024;
+    try{
+      const dbg=gl.getExtension('WEBGL_debug_renderer_info');
+      const rn=dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):'';
+      if(/swiftshader|software|llvmpipe/i.test(String(rn)))this.maxPixels=1.4*1024*1024;
+    }catch(e){}
+
+    this.pSphere=makeProgram(gl,SPHERE_VS,SPHERE_FS);
+    this.pCyl=makeProgram(gl,CYL_VS,CYL_FS);
+    this.pLine=makeProgram(gl,LINE_VS,LINE_FS);
+    this.pPoly=makeProgram(gl,POLY_VS,POLY_FS);
+    this.pSprite=makeProgram(gl,SPRITE_VS,SPRITE_FS);
+    this.pBright=makeProgram(gl,FS_VS,BRIGHT_FS);
+    this.pBlur=makeProgram(gl,FS_VS,BLUR_FS);
+    this.pStreak=makeProgram(gl,FS_VS,STREAK_FS);
+    this.pComp=makeProgram(gl,FS_VS,COMP_FS);
+    this.pBg=makeProgram(gl,FS_VS,BG_FS);
+    this.pMote=makeProgram(gl,MOTE_VS,MOTE_FS);
+
+    this.ico=icosphere(4);
+    this.cyl=cylinderGeo(24);
+    this.proj=M4.create();this.view=M4.create();this.projView=M4.create();
+    this.eye=[0,0,20];
+
+    this._buildScene();
+    this._initCam();
+    this._bindEvents();
+    this._setupRO();
+    this._resize(true);
+    canvas.addEventListener('webglcontextlost',e=>{
+      e.preventDefault();this.destroyed=true;
+      if(this.onLost)this.onLost();
+    });
+  }
+
+  /* ---- 场景网格 ---- */
+  _buildScene(){
+    const gl=this.gl,sc=this.scene;
+    /* 原子球（实例化） */
+    const n=sc.atoms.length;this.nAtoms=n;
+    const pr=new Float32Array(n*4),co=new Float32Array(n*4),pa=new Float32Array(n*4),ro=new Float32Array(n*4);
+    const sp=[];   /* 发光 sprite 实例 */
+    sc.atoms.forEach((a,i)=>{
+      const scl=a.scale!==undefined?a.scale:1;
+      pr.set([a.p[0],a.p[1],a.p[2],a.r*scl],i*4);
+      co.set([a.col[0],a.col[1],a.col[2],a.rough!==undefined?a.rough:0.3],i*4);
+      pa.set([a.metal||0,a.emis||0,0,scl],i*4);
+      const rc=a.rotC||[0,0,0];
+      ro.set([rc[0],rc[1],rc[2],a.rotSign||0],i*4);
+      if(a.glow&&scl>0.02)sp.push(a.p[0],a.p[1],a.p[2],a.r*(sc.glowScale||3.0)*scl,a.col[0],a.col[1],a.col[2],a.glow*scl,rc[0],rc[1],rc[2],a.rotSign||0);
+    });
+    this.vaoSphere=gl.createVertexArray();gl.bindVertexArray(this.vaoSphere);
+    makeBuf(gl,gl.ARRAY_BUFFER,this.ico.pos);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,3,gl.FLOAT,false,0,0);
+    makeBuf(gl,gl.ARRAY_BUFFER,this.ico.nor||this.ico.pos);gl.enableVertexAttribArray(1);gl.vertexAttribPointer(1,3,gl.FLOAT,false,0,0);
+    /* icosphere 法线 = 单位球位置，直接复用 pos 缓冲 */
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,makeBuf(gl,gl.ELEMENT_ARRAY_BUFFER,this.ico.idx));
+    const b1=makeBuf(gl,gl.ARRAY_BUFFER,pr);gl.enableVertexAttribArray(2);gl.vertexAttribPointer(2,4,gl.FLOAT,false,0,0);gl.vertexAttribDivisor(2,1);
+    const b2=makeBuf(gl,gl.ARRAY_BUFFER,co);gl.enableVertexAttribArray(3);gl.vertexAttribPointer(3,4,gl.FLOAT,false,0,0);gl.vertexAttribDivisor(3,1);
+    const b3=makeBuf(gl,gl.ARRAY_BUFFER,pa);gl.enableVertexAttribArray(4);gl.vertexAttribPointer(4,4,gl.FLOAT,false,0,0);gl.vertexAttribDivisor(4,1);
+    makeBuf(gl,gl.ARRAY_BUFFER,ro);gl.enableVertexAttribArray(5);gl.vertexAttribPointer(5,4,gl.FLOAT,false,0,0);gl.vertexAttribDivisor(5,1);
+    gl.bindVertexArray(null);
+    this.atomPrBuf=b1;this.atomPaBuf=b3;this.atomPr=pr;this.atomPa=pa;this._atomVer=-1;this._rodVer=-1;
+
+    /* 圆柱实例：键 + 晶格框 + 多面体棱 + 底座环 统一走一条管线 */
+    const mats=[],cols=[],pars=[],rrots=[];
+    const addRod=(a,b,rad,col,rough,metal,emis,scale,rotC,rotSign,pulse)=>{
+      const m=bondMatrix(M4.create(),a,b,rad);
+      mats.push(...m);cols.push(col[0],col[1],col[2],rough!==undefined?rough:0.35);
+      pars.push(metal||0,emis||0,pulse||0,scale===undefined?1:scale);
+      const rc=rotC||[0,0,0];
+      rrots.push(rc[0],rc[1],rc[2],rotSign||0);
+    };
+    (sc.bonds||[]).forEach(b=>addRod(sc.atoms[b.a].p,sc.atoms[b.b].p,b.rad||0.07,b.col||[0.62,0.68,0.75],b.rough,b.metal,b.emis,1,b.rotC,b.rotSign,1));
+    this._nBondInst=(sc.bonds||[]).length;
+    (sc.rods||[]).forEach(r=>addRod(r.a,r.b,r.rad||0.03,r.col||[0.6,0.75,0.85],r.rough,r.metal,r.emis,r.scale,r.rotC,r.rotSign));
+    (sc.polys||[]).forEach(p=>{ (p.edges||[]).forEach(e=>addRod(p.verts[e[0]],p.verts[e[1]],p.edgeR||0.028,p.edgeCol||p.col,0.3,0.1,p.edgeGlow!==undefined?p.edgeGlow:1.2)); });
+    this.nCyl=mats.length/16;
+    this.vaoCyl=gl.createVertexArray();gl.bindVertexArray(this.vaoCyl);
+    makeBuf(gl,gl.ARRAY_BUFFER,this.cyl.pos);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,3,gl.FLOAT,false,0,0);
+    makeBuf(gl,gl.ARRAY_BUFFER,this.cyl.nor);gl.enableVertexAttribArray(1);gl.vertexAttribPointer(1,3,gl.FLOAT,false,0,0);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,makeBuf(gl,gl.ELEMENT_ARRAY_BUFFER,this.cyl.idx));
+    if(this.nCyl){
+      this.rodMats=mats;
+      this.rodMatBuf=makeBuf(gl,gl.ARRAY_BUFFER,new Float32Array(mats));
+      for(let i=0;i<4;i++){gl.enableVertexAttribArray(2+i);gl.vertexAttribPointer(2+i,4,gl.FLOAT,false,64,i*16);gl.vertexAttribDivisor(2+i,1);}
+      makeBuf(gl,gl.ARRAY_BUFFER,new Float32Array(cols));gl.enableVertexAttribArray(6);gl.vertexAttribPointer(6,4,gl.FLOAT,false,0,0);gl.vertexAttribDivisor(6,1);
+      this.rodParBuf=makeBuf(gl,gl.ARRAY_BUFFER,new Float32Array(pars));this.rodPars=pars;
+      gl.enableVertexAttribArray(7);gl.vertexAttribPointer(7,4,gl.FLOAT,false,0,0);gl.vertexAttribDivisor(7,1);
+      makeBuf(gl,gl.ARRAY_BUFFER,new Float32Array(rrots));gl.enableVertexAttribArray(8);gl.vertexAttribPointer(8,4,gl.FLOAT,false,0,0);gl.vertexAttribDivisor(8,1);
+    }
+    gl.bindVertexArray(null);
+
+    /* 发光 sprite */
+    this.nSprites=sp.length/8;
+    this.vaoSprite=gl.createVertexArray();gl.bindVertexArray(this.vaoSprite);
+    makeBuf(gl,gl.ARRAY_BUFFER,new Float32Array([-1,-1, 1,-1, 1,1, -1,1]));gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,makeBuf(gl,gl.ELEMENT_ARRAY_BUFFER,new Uint16Array([0,1,2,0,2,3])));
+    if(this.nSprites){
+      this.spriteBuf=makeBuf(gl,gl.ARRAY_BUFFER,new Float32Array(sp));
+      gl.enableVertexAttribArray(2);gl.vertexAttribPointer(2,4,gl.FLOAT,false,48,0);gl.vertexAttribDivisor(2,1);
+      gl.enableVertexAttribArray(3);gl.vertexAttribPointer(3,4,gl.FLOAT,false,48,16);gl.vertexAttribDivisor(3,1);
+      gl.enableVertexAttribArray(4);gl.vertexAttribPointer(4,4,gl.FLOAT,false,48,32);gl.vertexAttribDivisor(4,1);
+    }
+    gl.bindVertexArray(null);
+
+    /* 尘埃粒子（漂浮微光） */
+    this.nMotes=0;
+    if(sc.motes&&sc.motes.n>0){
+      const m=sc.motes,rng=mulberry32(20261113);
+      const data=[];
+      const nOrb=Math.round(m.n*0.22);   /* 前 22% 为环绕光点 */
+      const ctr=[(m.min[0]+m.max[0])/2,(m.min[1]+m.max[1])/2,(m.min[2]+m.max[2])/2];
+      for(let i=0;i<m.n;i++){
+        let x,y,z,sz,s1,s2,s3,al;
+        if(i<nOrb){
+          x=ctr[0];y=ctr[1];z=ctr[2];
+          sz=(m.size||0.05)*(1.8+rng()*1.6);
+          s1=rng();s2=0.45+rng()*0.8;s3=1.1+2.9*rng();
+          al=(m.alpha||0.35)*1.5;
+        }else{
+          x=m.min[0]+(m.max[0]-m.min[0])*rng();
+          y=m.min[1]+(m.max[1]-m.min[1])*rng();
+          z=m.min[2]+(m.max[2]-m.min[2])*rng();
+          sz=(m.size||0.05)*(0.5+rng());
+          s1=rng();s2=0.25+0.55*rng();s3=0;
+          al=(m.alpha||0.35)*(0.4+0.6*rng());
+        }
+        data.push(x,y,z,sz, s1,s2,s3,al);
+      }
+      this.nMotes=m.n;
+      this.vaoMote=gl.createVertexArray();gl.bindVertexArray(this.vaoMote);
+      makeBuf(gl,gl.ARRAY_BUFFER,new Float32Array([-1,-1, 1,-1, 1,1, -1,1]));
+      gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,makeBuf(gl,gl.ELEMENT_ARRAY_BUFFER,new Uint16Array([0,1,2,0,2,3])));
+      makeBuf(gl,gl.ARRAY_BUFFER,new Float32Array(data));
+      gl.enableVertexAttribArray(2);gl.vertexAttribPointer(2,4,gl.FLOAT,false,32,0);gl.vertexAttribDivisor(2,1);
+      gl.enableVertexAttribArray(3);gl.vertexAttribPointer(3,4,gl.FLOAT,false,32,16);gl.vertexAttribDivisor(3,1);
+      gl.bindVertexArray(null);
+    }
+
+    /* 配位多面体面 */
+    this.polyDraws=[];
+    (sc.polys||[])?.forEach(p=>{
+      if(!p.faces||!p.faces.length)return;
+      const m=polyMesh(p.verts,p.faces);
+      const vao=gl.createVertexArray();gl.bindVertexArray(vao);
+      makeBuf(gl,gl.ARRAY_BUFFER,m.pos);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,3,gl.FLOAT,false,0,0);
+      makeBuf(gl,gl.ARRAY_BUFFER,m.nor);gl.enableVertexAttribArray(1);gl.vertexAttribPointer(1,3,gl.FLOAT,false,0,0);
+      gl.bindVertexArray(null);
+      this.polyDraws.push({vao,count:m.pos.length/3,col:p.col,alpha:p.alpha!==undefined?p.alpha:0.12});
+    });
+
+    /* 地面网格（GL 线） */
+    this.gridCount=0;
+    if(sc.grid){
+      const g=sc.grid,verts=[];
+      for(let i=-g.div;i<=g.div;i++){
+        const t=i*g.step;
+        verts.push(t,g.y,-g.div*g.step, t,g.y,g.div*g.step);
+        verts.push(-g.div*g.step,g.y,t, g.div*g.step,g.y,t);
+      }
+      this.gridVao=gl.createVertexArray();gl.bindVertexArray(this.gridVao);
+      makeBuf(gl,gl.ARRAY_BUFFER,new Float32Array(verts));gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,3,gl.FLOAT,false,0,0);
+      gl.bindVertexArray(null);
+      this.gridCount=verts.length/3;
+    }
+  }
+
+  /* 动态刷新：原子缩放（半径/精灵）与杆件缩放 */
+  flushAtoms(){
+    const gl=this.gl,sc=this.scene;
+    const pr=this.atomPr,pa=this.atomPa;
+    const it=this._introT;
+    const sp=[];
+    sc.atoms.forEach((a,i)=>{
+      let f=1;
+      if(it!==undefined){   /* 入场组装：逐球错峰长出（约 1s 内全部就位） */
+        const d=0.10+(i%29)*0.024;
+        const u=Math.min(1,Math.max(0,(it-d)/0.55));
+        f=u*u*(3-2*u);
+      }
+      const scl=(a.scale!==undefined?a.scale:1)*f;
+      pr[i*4+3]=a.r*scl;
+      pa[i*4+3]=scl;
+      if(a.glow&&scl>0.02){
+        const rc=a.rotC||[0,0,0];
+        sp.push(a.p[0],a.p[1],a.p[2],a.r*(sc.glowScale||3.0)*scl,a.col[0],a.col[1],a.col[2],a.glow*scl,rc[0],rc[1],rc[2],a.rotSign||0);
+      }
+    });
+    gl.bindBuffer(gl.ARRAY_BUFFER,this.atomPrBuf);gl.bufferSubData(gl.ARRAY_BUFFER,0,pr);
+    gl.bindBuffer(gl.ARRAY_BUFFER,this.atomPaBuf);gl.bufferSubData(gl.ARRAY_BUFFER,0,pa);
+    this.nSprites=sp.length/12;
+    if(this.nSprites){
+      const data=new Float32Array(sp);
+      if(!this.spriteBuf){
+        gl.bindVertexArray(this.vaoSprite);
+        this.spriteBuf=makeBuf(gl,gl.ARRAY_BUFFER,data);
+        gl.enableVertexAttribArray(2);gl.vertexAttribPointer(2,4,gl.FLOAT,false,48,0);gl.vertexAttribDivisor(2,1);
+        gl.enableVertexAttribArray(3);gl.vertexAttribPointer(3,4,gl.FLOAT,false,48,16);gl.vertexAttribDivisor(3,1);
+        gl.enableVertexAttribArray(4);gl.vertexAttribPointer(4,4,gl.FLOAT,false,48,32);gl.vertexAttribDivisor(4,1);
+        gl.bindVertexArray(null);
+      }else{
+        gl.bindBuffer(gl.ARRAY_BUFFER,this.spriteBuf);gl.bufferData(gl.ARRAY_BUFFER,data,gl.DYNAMIC_DRAW);
+      }
+    }
+  }
+  flushRods(){
+    const gl=this.gl,pars=this.rodPars,sc=this.scene;
+    for(let i=this._nBondInst;i<this.nCyl;i++){
+      const r=sc.rods[i-this._nBondInst];
+      pars[i*4+3]=r&&r.scale!==undefined?r.scale:1;
+      if(r&&r.dyn)pars[i*4+1]=r.emis||0;
+    }
+    gl.bindBuffer(gl.ARRAY_BUFFER,this.rodParBuf);gl.bufferSubData(gl.ARRAY_BUFFER,0,new Float32Array(pars));
+    /* 动态几何杆件（冲击波环）：位置每帧可变，整体重传矩阵 */
+    if(sc._rodGeoVer!==undefined&&sc._rodGeoVer!==this._rodGeoVer){
+      this._rodGeoVer=sc._rodGeoVer;
+      const m=this.rodMats,scratch=M4.create();
+      for(let i=this._nBondInst;i<this.nCyl;i++){
+        const r=sc.rods[i-this._nBondInst];
+        if(r&&r.dyn){bondMatrix(scratch,r.a,r.b,r.rad);for(let j=0;j<16;j++)m[i*16+j]=scratch[j];}
+      }
+      gl.bindBuffer(gl.ARRAY_BUFFER,this.rodMatBuf);gl.bufferSubData(gl.ARRAY_BUFFER,0,new Float32Array(m));
+    }
+  }
+
+  _initCam(){
+    const c=this.scene.cam||{};
+    const th=c.theta!==undefined?c.theta:0.75, ph=c.phi!==undefined?c.phi:1.12, di=c.dist||16;
+    const tgt=(c.target||[0,0,0]).slice();
+    /* 开场：从更远、更高、偏转的位置缓推到位 */
+    this.cam={theta:th-0.55,phi:Math.max(0.35,ph-0.22),dist:di*1.55,
+      tTheta:th,tPhi:ph,tDist:di,
+      target:tgt.slice(),tTarget:tgt.slice(),min:c.min||5,max:c.max||44,
+      lastInput:-1e5,auto:c.auto!==false};
+  }
+
+  _bindEvents(){
+    const cv=this.canvas;cv.style.touchAction='none';
+    const cam=this.cam;const ptrs=new Map();let pinch0=0,dist0=0;
+    const now=()=>performance.now();
+    cv.addEventListener('pointerdown',e=>{
+      cv.setPointerCapture(e.pointerId);
+      ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+      cam.lastInput=now();
+      if(ptrs.size===2){
+        const a=[...ptrs.values()];pinch0=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);dist0=cam.tDist;
+      }
+    });
+    cv.addEventListener('pointermove',e=>{
+      const p=ptrs.get(e.pointerId);if(!p)return;
+      cam.lastInput=now();
+      if(ptrs.size===1){
+        cam.tTheta-=(e.clientX-p.x)*0.0055;
+        cam.tPhi=Math.max(0.08,Math.min(Math.PI-0.08,cam.tPhi-(e.clientY-p.y)*0.0055));
+      }
+      p.x=e.clientX;p.y=e.clientY;
+      if(ptrs.size===2){
+        const a=[...ptrs.values()];
+        const d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);
+        if(pinch0>0)cam.tDist=Math.max(cam.min,Math.max(cam.max,dist0*pinch0/Math.max(20,d)));
+      }
+    });
+    const up=e=>{ptrs.delete(e.pointerId);};
+    cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+    cv.addEventListener('wheel',e=>{
+      if(this.wheelZoom===false)return;   /* 滚动叙事舞台：滚轮留给页面滚动 */
+      e.preventDefault();cam.lastInput=now();
+      cam.tDist=Math.max(cam.min,Math.min(cam.max,cam.tDist*Math.exp(e.deltaY*0.0011)));
+    },{passive:false});
+  }
+
+  _setupRO(){
+    if(typeof ResizeObserver!=='undefined'){
+      this.ro=new ResizeObserver(()=>this._resize());
+      this.ro.observe(this.canvas.parentElement||this.canvas);
+    }else{
+      window.addEventListener('resize',()=>this._resize());
+    }
+  }
+
+  _resize(force){
+    const cv=this.canvas;
+    const cw=Math.max(2,cv.clientWidth),ch=Math.max(2,cv.clientHeight);
+    let dpr=this.dpr;
+    if(cw*ch*dpr*dpr>this.maxPixels)dpr=Math.sqrt(this.maxPixels/(cw*ch));
+    const w=Math.max(2,Math.round(cw*dpr)),h=Math.max(2,Math.round(ch*dpr));
+    if(!force&&cv.width===w&&cv.height===h)return;
+    cv.width=w;cv.height=h;
+    this._initTargets();
+  }
+
+  _initTargets(){
+    const gl=this.gl;
+    if(this.tgt){ /* 重建前释放 */
+      gl.deleteFramebuffer(this.tgt.fbo);gl.deleteFramebuffer(this.tgt.resolveFbo);
+      gl.deleteTexture(this.tgt.tex);gl.deleteRenderbuffer(this.tgt.rb);gl.deleteRenderbuffer(this.tgt.rbDepth);
+      gl.deleteFramebuffer(this.tgt.aFbo);gl.deleteFramebuffer(this.tgt.bFbo);
+      gl.deleteTexture(this.tgt.aTex);gl.deleteTexture(this.tgt.bTex);
+      if(this.tgt.cFbo)gl.deleteFramebuffer(this.tgt.cFbo);
+      if(this.tgt.cTex)gl.deleteTexture(this.tgt.cTex);
+    }
+    const w=gl.drawingBufferWidth||2,h=gl.drawingBufferHeight||2;
+    this.tgt={w,h};
+    this.floatOK=!!gl.getExtension('EXT_color_buffer_float');
+    const sceneFmt=this.floatOK?gl.RGBA16F:gl.RGBA8;
+    const maxS=gl.getParameter(gl.MAX_SAMPLES)||0;
+    this.samples=Math.min(4,maxS);
+    /* 场景目标：MSAA renderbuffer + resolve 纹理 */
+    const tex=gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D,tex);
+    gl.texImage2D(gl.TEXTURE_2D,0,sceneFmt,w,h,0,gl.RGBA,this.floatOK?gl.HALF_FLOAT:gl.UNSIGNED_BYTE,null);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+    const resolveFbo=gl.createFramebuffer();
+    gl.bindFramebuffer(gl.FRAMEBUFFER,resolveFbo);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,tex,0);
+    let fbo,rb,rbDepth;
+    if(this.samples>0){
+      fbo=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,fbo);
+      rb=gl.createRenderbuffer();gl.bindRenderbuffer(gl.RENDERBUFFER,rb);
+      gl.renderbufferStorageMultisample(gl.RENDERBUFFER,this.samples,sceneFmt,w,h);
+      gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.RENDERBUFFER,rb);
+      rbDepth=gl.createRenderbuffer();gl.bindRenderbuffer(gl.RENDERBUFFER,rbDepth);
+      gl.renderbufferStorageMultisample(gl.RENDERBUFFER,this.samples,gl.DEPTH_COMPONENT24,w,h);
+      gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,rbDepth);
+    }else{
+      fbo=resolveFbo;
+      rbDepth=gl.createRenderbuffer();gl.bindRenderbuffer(gl.RENDERBUFFER,rbDepth);
+      gl.renderbufferStorage(gl.RENDERBUFFER,gl.DEPTH_COMPONENT24,w,h);
+      gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,rbDepth);
+    }
+    Object.assign(this.tgt,{fbo,resolveFbo,tex,rb,rbDepth,ms:this.samples>0});
+    /* 半分辨率 bloom 目标 ×2 */
+    const hw=Math.max(2,w>>1),hh=Math.max(2,h>>1);
+    const mk=()=>{
+      const t=gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D,t);
+      gl.texImage2D(gl.TEXTURE_2D,0,this.floatOK?gl.RGBA16F:gl.RGBA8,hw,hh,0,gl.RGBA,this.floatOK?gl.HALF_FLOAT:gl.UNSIGNED_BYTE,null);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+      const f=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,f);
+      gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,t,0);
+      return {fbo:f,tex:t};
+    };
+    const A=mk(),B=mk(),C=mk();
+    Object.assign(this.tgt,{aFbo:A.fbo,aTex:A.tex,bFbo:B.fbo,bTex:B.tex,cFbo:C.fbo,cTex:C.tex,hw,hh});
+    gl.bindFramebuffer(gl.FRAMEBUFFER,null);
+  }
+
+  _camUpdate(dt,t){
+    const c=this.cam;
+    let k=1-Math.pow(0.002,Math.min(dt,0.1));
+    if(c.cineT>0){ /* 舞台转场：更慢更电影化的阻尼 */
+      c.cineT-=dt;
+      k=1-Math.pow(0.030,Math.min(dt,0.1));
+    }
+    c.theta+=(c.tTheta-c.theta)*k;
+    c.phi+=(c.tPhi-c.phi)*k;
+    c.dist+=(c.tDist-c.dist)*k;
+    for(let i=0;i<3;i++)c.target[i]+=(c.tTarget[i]-c.target[i])*k;
+    if(c.auto&&t-c.lastInput>2600)c.tTheta+=dt*0.17;
+    const [tx,ty,tz]=c.target;
+    const sp=Math.sin(c.phi);
+    this.eye=[tx+c.dist*sp*Math.sin(c.theta), ty+c.dist*Math.cos(c.phi), tz+c.dist*sp*Math.cos(c.theta)];
+    M4.lookAt(this.view,this.eye,c.target,[0,1,0]);
+    const asp=this.gl.drawingBufferWidth/Math.max(1,this.gl.drawingBufferHeight);
+    M4.perspective(this.proj,38*Math.PI/180,asp,0.1,160);
+    M4.mul(this.projView,this.proj,this.view);
+  }
+
+  render(){
+    const gl=this.gl,sc=this.scene,t=this.tgt;
+    if(!t)return;
+    if(sc._atomVer!==this._atomVer){this._atomVer=sc._atomVer;this.flushAtoms();}
+    if(sc._rodVer!==this._rodVer){this._rodVer=sc._rodVer;this.flushRods();}
+    this._camUpdate(this._dt||0.016,this._t||0);
+    this._flash=Math.max(0,(this._flash||0)-(this._dt||0)*1.6);   /* 转场曝光脉冲衰减 */
+    const bg=sc.bg||[0.003,0.005,0.012];
+    /* 结构整体悬浮微动（全息感） */
+    const drift=Math.sin((this._t||0)*0.0012)*0.075;
+    this._drift=drift;
+    /* --- 场景 pass --- */
+    gl.bindFramebuffer(gl.FRAMEBUFFER,t.fbo);
+    gl.viewport(0,0,t.w,t.h);
+    gl.clearColor(bg[0],bg[1],bg[2],1);
+    gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);
+    gl.enable(gl.CULL_FACE);gl.cullFace(gl.BACK);
+    gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+    /* 程序化星云背景（不写深度） */
+    gl.useProgram(this.pBg.p);
+    gl.disable(gl.DEPTH_TEST);gl.depthMask(false);
+    gl.uniform1f(this.pBg.u.uTime,(this._t||0)/1000);
+    gl.uniform1f(this.pBg.u.uAspect,t.w/Math.max(1,t.h));
+    gl.bindVertexArray(null);
+    gl.drawArrays(gl.TRIANGLES,0,3);
+    gl.enable(gl.DEPTH_TEST);gl.depthMask(true);
+    /* 地面网格 */
+    if(this.gridCount){
+      gl.useProgram(this.pLine.p);
+      gl.uniformMatrix4fv(this.pLine.u.uVP,false,this.projView);
+      gl.uniform3fv(this.pLine.u.uCam,this.eye);
+      gl.uniform4fv(this.pLine.u.uColor,sc.grid.col||[0.25,0.7,0.9,0.07]);
+      gl.uniform1f(this.pLine.u.uFog,sc.grid.fog||0.0030);
+      gl.bindVertexArray(this.gridVao);
+      gl.drawArrays(gl.LINES,0,this.gridCount);
+    }
+    const rot=sc._rot||0;
+    /* 圆柱（键 / 框 / 棱 / 底座环） */
+    if(this.nCyl){
+      gl.useProgram(this.pCyl.p);
+      gl.uniformMatrix4fv(this.pCyl.u.uVP,false,this.projView);
+      gl.uniform3fv(this.pCyl.u.uCam,this.eye);
+      gl.uniform3f(this.pCyl.u.uDrift,0,drift,0);
+      gl.uniform1f(this.pCyl.u.uRot,rot);
+      gl.uniform1f(this.pCyl.u.uTime,(this._t||0)/1000);
+      gl.bindVertexArray(this.vaoCyl);
+      gl.drawElementsInstanced(gl.TRIANGLES,this.cyl.idx.length,gl.UNSIGNED_SHORT,0,this.nCyl);
+    }
+    /* 原子球 */
+    gl.useProgram(this.pSphere.p);
+    gl.uniformMatrix4fv(this.pSphere.u.uVP,false,this.projView);
+    gl.uniform3fv(this.pSphere.u.uCam,this.eye);
+    gl.uniform3f(this.pSphere.u.uDrift,0,drift,0);
+    gl.uniform1f(this.pSphere.u.uRot,rot);
+    gl.uniform1f(this.pSphere.u.uTime,(this._t||0)/1000);
+    gl.bindVertexArray(this.vaoSphere);
+    gl.drawElementsInstanced(gl.TRIANGLES,this.ico.idx.length,gl.UNSIGNED_SHORT,0,this.nAtoms);
+    /* 配位多面体（半透明） */
+    if(this.polyDraws.length){
+      gl.useProgram(this.pPoly.p);
+      gl.uniformMatrix4fv(this.pPoly.u.uVP,false,this.projView);
+      gl.uniform3fv(this.pPoly.u.uCam,this.eye);
+      gl.uniform3f(this.pPoly.u.uDrift,0,drift,0);
+      gl.uniform1f(this.pPoly.u.uRot,rot);
+      gl.disable(gl.CULL_FACE);
+      gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+      gl.depthMask(false);
+      for(const d of this.polyDraws){
+        gl.uniform3fv(this.pPoly.u.uColor,d.col);
+        gl.uniform1f(this.pPoly.u.uAlpha,d.alpha*(sc._polyBreath||1));
+        gl.uniform3fv(this.pPoly.u.uRotC,d.rotC||[0,0,0]);
+        gl.uniform1f(this.pPoly.u.uRotSign,d.rotSign||0);
+        gl.bindVertexArray(d.vao);
+        gl.drawArrays(gl.TRIANGLES,0,d.count);
+      }
+      gl.depthMask(true);gl.disable(gl.BLEND);gl.enable(gl.CULL_FACE);
+    }
+    /* 辉光 sprite（加色） */
+    if(this.nSprites){
+      gl.useProgram(this.pSprite.p);
+      gl.uniformMatrix4fv(this.pSprite.u.uVP,false,this.projView);
+      gl.uniformMatrix4fv(this.pSprite.u.uView,false,this.view);
+      gl.uniform3f(this.pSprite.u.uDrift,0,drift,0);
+      gl.uniform1f(this.pSprite.u.uRot,rot);
+      gl.bindVertexArray(this.vaoSprite);
+      gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE);
+      gl.depthMask(false);
+      gl.drawElementsInstanced(gl.TRIANGLES,6,gl.UNSIGNED_SHORT,0,this.nSprites);
+      gl.depthMask(true);gl.disable(gl.BLEND);
+    }
+    /* 尘埃粒子（加色） */
+    if(this.nMotes){
+      gl.useProgram(this.pMote.p);
+      gl.uniformMatrix4fv(this.pMote.u.uVP,false,this.projView);
+      gl.uniformMatrix4fv(this.pMote.u.uView,false,this.view);
+      gl.uniform1f(this.pMote.u.uTime,(this._t||0)/1000);
+      gl.bindVertexArray(this.vaoMote);
+      gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE);
+      gl.depthMask(false);
+      gl.drawElementsInstanced(gl.TRIANGLES,6,gl.UNSIGNED_SHORT,0,this.nMotes);
+      gl.depthMask(true);gl.disable(gl.BLEND);
+    }
+    gl.bindVertexArray(null);
+    /* --- MSAA resolve --- */
+    if(t.ms){
+      gl.bindFramebuffer(gl.READ_FRAMEBUFFER,t.fbo);
+      gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER,t.resolveFbo);
+      gl.blitFramebuffer(0,0,t.w,t.h,0,0,t.w,t.h,gl.COLOR_BUFFER_BIT,gl.LINEAR);
+    }
+    /* --- Bloom --- */
+    gl.bindFramebuffer(gl.FRAMEBUFFER,t.aFbo);
+    gl.viewport(0,0,t.hw,t.hh);
+    gl.disable(gl.DEPTH_TEST);
+    gl.useProgram(this.pBright.p);
+    gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,t.tex);
+    gl.uniform1i(this.pBright.u.uTex,0);
+    gl.uniform1f(this.pBright.u.uThresh,sc.bloom!==undefined?sc.bloom.thresh:0.55);
+    gl.bindVertexArray(this.emptyVAO||(this.emptyVAO=gl.createVertexArray()));
+    gl.drawArrays(gl.TRIANGLES,0,3);
+    /* 各向异性横向拉丝（从亮部直接取源，保持锐利） */
+    gl.bindFramebuffer(gl.FRAMEBUFFER,t.cFbo);
+    gl.viewport(0,0,t.hw,t.hh);
+    gl.useProgram(this.pStreak.p);
+    gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,t.aTex);
+    gl.uniform1i(this.pStreak.u.uTex,0);
+    gl.uniform1f(this.pStreak.u.uTexel,1.7/t.hw);
+    gl.drawArrays(gl.TRIANGLES,0,3);
+    /* 模糊 H → V（两轮） */
+    gl.useProgram(this.pBlur.p);
+    gl.uniform1i(this.pBlur.u.uTex,0);
+    for(let i=0;i<2;i++){
+      gl.bindFramebuffer(gl.FRAMEBUFFER,t.bFbo);
+      gl.bindTexture(gl.TEXTURE_2D,t.aTex);
+      gl.uniform2f(this.pBlur.u.uDir,1.25/t.hw,0);
+      gl.drawArrays(gl.TRIANGLES,0,3);
+      gl.bindFramebuffer(gl.FRAMEBUFFER,t.aFbo);
+      gl.bindTexture(gl.TEXTURE_2D,t.bTex);
+      gl.uniform2f(this.pBlur.u.uDir,0,1.25/t.hh);
+      gl.drawArrays(gl.TRIANGLES,0,3);
+    }
+    /* --- 合成 --- */
+    gl.bindFramebuffer(gl.FRAMEBUFFER,null);
+    gl.viewport(0,0,t.w,t.h);
+    gl.useProgram(this.pComp.p);
+    gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,t.tex);
+    gl.uniform1i(this.pComp.u.uScene,0);
+    gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,t.aTex);
+    gl.uniform1i(this.pComp.u.uBloom,1);
+    gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,t.cTex);
+    gl.uniform1i(this.pComp.u.uStreak,2);
+    gl.uniform1f(this.pComp.u.uStrength,sc.bloom!==undefined?sc.bloom.strength:0.55);
+    gl.uniform1f(this.pComp.u.uExposure,sc.bloom!==undefined?sc.bloom.exposure:0.82);
+    gl.uniform1f(this.pComp.u.uStreakStr,sc.streak!==undefined?sc.streak:0.5);
+    gl.uniform1f(this.pComp.u.uTilt,sc.tilt!==undefined?sc.tilt:0.35);
+    gl.uniform1f(this.pComp.u.uFlash,Math.min(1,this._flash||0));
+    gl.uniform2f(this.pComp.u.uRes,t.w,t.h);
+    gl.uniform1f(this.pComp.u.uTime,(this._t||0)/1000);
+    gl.drawArrays(gl.TRIANGLES,0,3);
+    this._updateLabels();
+  }
+
+  _updateLabels(){
+    const labels=this.scene.labels;if(!labels||!labels.length)return;
+    const cv=this.canvas,W=cv.clientWidth,H=cv.clientHeight;
+    const vp=this.projView;
+    for(const lb of labels){
+      if(!lb.el){
+        lb.el=document.createElement('div');
+        lb.el.className='tag3d'+(lb.cls?' '+lb.cls:'');
+        lb.el.innerHTML='<span class="td">◈</span>'+lb.text;
+        cv.parentElement.appendChild(lb.el);
+      }
+      if(lb.stages&&this.scene._stage!==undefined&&lb.stages.indexOf(this.scene._stage)<0){
+        lb.el.style.display='none';continue;
+      }
+      const p=lb.p,dy=this._drift||0;
+      const cw=vp[3]*p[0]+vp[7]*(p[1]+dy)+vp[11]*p[2]+vp[15];
+      if(cw<=0.1){lb.el.style.display='none';continue;}
+      const cx=(vp[0]*p[0]+vp[4]*(p[1]+dy)+vp[8]*p[2]+vp[12])/cw;
+      const cy=(vp[1]*p[0]+vp[5]*(p[1]+dy)+vp[9]*p[2]+vp[13])/cw;
+      lb.el.style.display='block';
+      lb.el.style.left=((cx*0.5+0.5)*W)+'px';
+      lb.el.style.top=((1-(cy*0.5+0.5))*H)+'px';
+      lb.el.style.opacity=Math.min(1,Math.max(0.25,(cw-3)/8));
+    }
+  }
+
+  tick(t){
+    if(this.destroyed||!this.visible)return;
+    const dt=Math.min(0.06,Math.max(0.001,(t-(this.lastT||t))/1000));
+    this.lastT=t;this._dt=dt;this._t=t;
+    if(this._born===undefined)this._born=t;
+    const introT=(t-this._born)/1000;
+    if(introT<2.8){this._introT=introT;this.flushAtoms();}
+    else if(this._introT!==undefined){this._introT=undefined;this.flushAtoms();}
+    if(this.scene.tick)this.scene.tick(t/1000,dt);
+    this.render();
+  }
+}
+
+/* ---------------- 2D 静态降级（等轴测球棍图） ---------------- */
+function paintStatic(canvas,scene){
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  const W=Math.max(2,canvas.clientWidth),H=Math.max(2,canvas.clientHeight);
+  canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);
+  const ctx=canvas.getContext('2d');
+  if(!ctx)return;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.fillStyle='#050a14';ctx.fillRect(0,0,W,H);
+  /* 自动居中：场景包围盒中心 */
+  const mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];
+  const acc=p=>{for(let i=0;i<3;i++){if(p[i]<mn[i])mn[i]=p[i];if(p[i]>mx[i])mx[i]=p[i];}};
+  scene.atoms.forEach(a=>acc(a.p));
+  (scene.rods||[]).forEach(r=>{acc(r.a);acc(r.b);});
+  (scene.polys||[]).forEach(p=>(p.verts||[]).forEach(acc));
+  const ctr=[(mn[0]+mx[0])/2,(mn[1]+mx[1])/2,(mn[2]+mx[2])/2];
+  const cy1=Math.cos(0.60),sy1=Math.sin(0.60),cx1=Math.cos(0.42),sx1=Math.sin(0.42);
+  const proj=p=>{
+    const x=(p[0]-ctr[0]),y=(p[1]-ctr[1]),z=(p[2]-ctr[2]);
+    const x1=x*cy1+z*sy1,z1=-x*sy1+z*cy1;
+    return {x:W/2+x1*scene.iso, y:H*0.52-(y*cx1-z1*sx1)*scene.iso, z:y*sx1+z1*cx1};
+  };
+  /* 排序绘制：晶格框 → 网格 → 键 → 多面体面 → 原子（按深度） */
+  const line=(a,b,col,wd)=>{
+    const A=proj(a),B=proj(b);
+    ctx.strokeStyle=col;ctx.lineWidth=wd||1;
+    ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.stroke();
+  };
+  if(scene.grid){
+    const g=scene.grid;ctx.globalAlpha=0.5;
+    for(let i=-g.div;i<=g.div;i++){
+      const t=i*g.step;
+      line([t,g.y,-g.div*g.step],[t,g.y,g.div*g.step],'rgba(63,150,190,0.10)',1);
+      line([-g.div*g.step,g.y,t],[g.div*g.step,g.y,t],'rgba(63,150,190,0.10)',1);
+    }
+    ctx.globalAlpha=1;
+  }
+  (scene.rods||[]).forEach(r=>line(r.a,r.b,'rgba(110,150,180,0.35)',r.rad*scene.iso*1.4||1.2));
+  (scene.bonds||[]).forEach(b=>{
+    const A=scene.atoms[b.a].p,B=scene.atoms[b.b].p;
+    line(A,B,'rgba(150,170,190,0.75)',(b.rad||0.06)*scene.iso*1.6);
+  });
+  /* 多面体 */
+  (scene.polys||[]).forEach(p=>{
+    if(p.faces)for(let i=0;i<p.faces.length;i+=3){
+      const a=proj(p.verts[p.faces[i]]),b=proj(p.verts[p.faces[i+1]]),c=proj(p.verts[p.faces[i+2]]);
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.lineTo(c.x,c.y);ctx.closePath();
+      const cc=p.col.map(v=>Math.round(v*255));
+      ctx.fillStyle=`rgba(${cc[0]},${cc[1]},${cc[2]},${(p.alpha||0.12)*1.4})`;
+      ctx.fill();
+      ctx.strokeStyle=`rgba(${cc[0]},${cc[1]},${cc[2]},0.7)`;ctx.lineWidth=1.2;ctx.stroke();
+    }
+  });
+  /* 原子（远→近） */
+  const atoms=scene.atoms.map((a,i)=>{
+    const q=proj(a.p);return {a,q,i};
+  }).sort((u,v)=>u.q.z-v.q.z);
+  for(const {a,q} of atoms){
+    const r=Math.max(2.5,a.r*scene.iso);
+    const g=ctx.createRadialGradient(q.x-r*0.35,q.y-r*0.35,r*0.1,q.x,q.y,r);
+    const c=a.col.map(v=>Math.round(v*255));
+    g.addColorStop(0,`rgba(${Math.min(255,c[0]+90)},${Math.min(255,c[1]+90)},${Math.min(255,c[2]+90)},1)`);
+    g.addColorStop(0.55,`rgba(${c[0]},${c[1]},${c[2]},1)`);
+    g.addColorStop(1,`rgba(${Math.round(c[0]*0.28)},${Math.round(c[1]*0.28)},${Math.round(c[0]*0.3+c[2]*0.28)},1)`);
+    ctx.fillStyle=g;
+    ctx.beginPath();ctx.arc(q.x,q.y,r,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.16)';ctx.lineWidth=1;ctx.stroke();
+  }
+}
+
+function webgl2Available(){
+  try{return !!(document.createElement('canvas').getContext('webgl2'));}
+  catch(e){return false;}
+}
+function createRenderer(canvas,scene){
+  try{return new Renderer(canvas,scene);}
+  catch(e){console.warn('WebGL2 init failed:',e&&e.message);return null;}
+}
+
+return {createRenderer,webgl2Available,paintStatic};
+})();
+</script>
+<script>
+'use strict';
+/* ============================================================
+   Scene data + init + radius-ratio interaction
+   ============================================================ */
+
+/* ---------- 多面体 ---------- */
+function makeOcta(center,R){ /* 正八面体：6 顶点 / 8 面 / 12 棱 */
+  const D=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]];
+  const verts=D.map(d=>[center[0]+d[0]*R,center[1]+d[1]*R,center[2]+d[2]*R]);
+  const faces=[0,2,4, 2,1,4, 1,3,4, 3,0,4, 2,0,5, 1,2,5, 3,1,5, 0,3,5];
+  const edges=[];
+  for(let i=0;i<6;i++)for(let j=i+1;j<6;j++)
+    if(!((i===0&&j===1)||(i===2&&j===3)||(i===4&&j===5)))edges.push([i,j]);
+  return {verts,faces,edges};
+}
+function makeCube(center,h){ /* 立方体：8 顶点 / 12 三角面 / 12 棱 */
+  const verts=[];
+  for(const z of [-1,1])for(const y of [-1,1])for(const x of [-1,1])
+    verts.push([center[0]+x*h,center[1]+y*h,center[2]+z*h]);
+  /* 顶点序：z,-y,-x → 0..7（x,y,z ∈ {-1,1}，索引 bit2=z,bit1=y,bit0=x） */
+  const I=(x,y,z)=>((z+1)/2*4+(y+1)/2*2+(x+1)/2);
+  const faces=[];
+  for(const s of [-1,1]){
+    const a=I(-1,-1,s),b=I(1,-1,s),c=I(1,1,s),d=I(-1,1,s);
+    faces.push(a,b,c, a,c,d);
+    const e=I(s,-1,-1),f=I(s,1,-1),g=I(s,1,1),hh=I(s,-1,1);
+    faces.push(e,f,g, e,g,hh);
+    const j=I(-1,s,-1),k=I(1,s,-1),l=I(1,s,1),m=I(-1,s,1);
+    faces.push(j,k,l, j,l,m);
+  }
+  const edges=[
+    [I(-1,-1,-1),I(1,-1,-1)],[I(1,-1,-1),I(1,1,-1)],[I(1,1,-1),I(-1,1,-1)],[I(-1,1,-1),I(-1,-1,-1)],
+    [I(-1,-1,1),I(1,-1,1)],[I(1,-1,1),I(1,1,1)],[I(1,1,1),I(-1,1,1)],[I(-1,1,1),I(-1,-1,1)],
+    [I(-1,-1,-1),I(-1,-1,1)],[I(1,-1,-1),I(1,-1,1)],[I(1,1,-1),I(1,1,1)],[I(-1,1,-1),I(-1,1,1)]
+  ];
+  return {verts,faces,edges};
+}
+
+/* ---------- 全息底座环 ---------- */
+function holoBase(rods,y,cx,cz,R,col){
+  const seg=96,rad=0.016;
+  const ring=(RR,em)=>{
+    for(let i=0;i<seg;i++){
+      const a1=i/seg*Math.PI*2,a2=(i+1)/seg*Math.PI*2;
+      rods.push({a:[cx+Math.cos(a1)*RR,y,cz+Math.sin(a1)*RR],
+                 b:[cx+Math.cos(a2)*RR,y,cz+Math.sin(a2)*RR],
+                 rad,col,rough:0.3,metal:0.2,emis:em});
+    }
+  };
+  ring(R,1.6);ring(R*0.66,0.55);ring(R*1.14,0.30);   /* 主环 + 内环 + 淡外环 */
+  for(let i=0;i<4;i++){
+    const a=i*Math.PI/2+Math.PI/4,r1=R*0.70,r2=R*0.96;
+    rods.push({a:[cx+Math.cos(a)*r1,y,cz+Math.sin(a)*r1],b:[cx+Math.cos(a)*r2,y,cz+Math.sin(a)*r2],
+      rad:rad*0.8,col,rough:0.3,metal:0.2,emis:1.0});
+  }
+  /* 细刻度环（每 5° 一格，跳过主刻度位） */
+  for(let i=0;i<72;i++){
+    if(i%6===0)continue;
+    const a=i/72*Math.PI*2;
+    rods.push({a:[cx+Math.cos(a)*R*0.985,y,cz+Math.sin(a)*R*0.985],
+               b:[cx+Math.cos(a)*R*0.94,y,cz+Math.sin(a)*R*0.94],
+               rad:rad*0.5,col,rough:0.3,metal:0.2,emis:0.55});
+  }
+  /* 三段虚线弧（半径 0.8R，每段 60°） */
+  for(let k=0;k<3;k++){
+    const a0=k*Math.PI*2/3+0.4;
+    for(let i=0;i<14;i++){
+      const a1=a0+i/14*Math.PI/3,a2=a0+(i+1)/14*Math.PI/3;
+      rods.push({a:[cx+Math.cos(a1)*R*0.80,y,cz+Math.sin(a1)*R*0.80],
+                 b:[cx+Math.cos(a2)*R*0.80,y,cz+Math.sin(a2)*R*0.80],
+                 rad:rad*0.85,col,rough:0.3,metal:0.2,emis:1.0});
+    }
+  }
+}
+
+/* ---------- 场景 1：SrTiO₃ 钙钛矿 2×2×2 超胞（滚动叙事） ---------- */
+function buildSrTiO3(){
+  const a=3.905;
+  const atoms=[];
+  const SR={r:0.58,col:[0.24,0.86,0.59],rough:0.22,metal:0.06,glow:0.15};
+  const TI={r:0.40,col:[0.60,0.65,0.72],rough:0.32,metal:0.90,glow:0.06};
+  const O ={r:0.36,col:[1.00,0.30,0.30],rough:0.28,metal:0.00,glow:0.11};
+  const add=(x,y,z,def)=>{atoms.push(Object.assign({p:[x,y,z],scale:1},def));return atoms.length-1;};
+  /* Sr：8 个顶点（A 位） */
+  const srIdx=[];
+  for(let i=0;i<2;i++)for(let j=0;j<2;j++)for(let k=0;k<2;k++)
+    srIdx.push(add(i*a,j*a,k*a,SR));
+  /* Ti：8 个体心（B 位）+ 共享 O（面心）；a⁰a⁰c⁻ 旋转符号沿 c 轴（k 奇偶）反相 */
+  const oMap=new Map();
+  const oKey=p=>p.map(v=>v.toFixed(3)).join('|');
+  const tis=[],bonds=[];
+  for(let i=0;i<2;i++)for(let j=0;j<2;j++)for(let k=0;k<2;k++){
+    const c=[(i+.5)*a,(j+.5)*a,(k+.5)*a];
+    const sign=(k%2===0)?1:-1;
+    const ti=add(c[0],c[1],c[2],Object.assign({},TI,{rotC:c.slice(),rotSign:sign}));
+    tis.push(ti);
+    for(const d of [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]]){
+      const p=[c[0]+d[0]*a/2,c[1]+d[1]*a/2,c[2]+d[2]*a/2];
+      const key=oKey(p);
+      let oi=oMap.get(key);
+      if(oi===undefined){oi=add(p[0],p[1],p[2],O);oMap.set(key,oi);}
+      bonds.push({a:ti,b:oi,rad:0.068,col:[0.32,0.39,0.49],rough:0.50,metal:0.50,
+                  rotC:c.slice(),rotSign:sign,d:d.slice()});
+    }
+  }
+  const oSharedIdx=[...oMap.values()];
+  /* 每个 TiO₆ 独立一份 O（旋转阶段显示；rot=0 时与共享 O 位置重合，无缝切换）。
+     负方向键的副本半径略小：相邻八面体共享同一 O 位置时两球面不重合，避免 z-fighting */
+  const o2Start=atoms.length;
+  for(const b of bonds){
+    const p=atoms[b.b].p;
+    const small=(b.d[0]<0||b.d[1]<0||b.d[2]<0)?0.353:0.36;
+    add(p[0],p[1],p[2],Object.assign({},O,{r:small,scale:0,rotC:b.rotC.slice(),rotSign:b.rotSign}));
+  }
+  /* 晶格框：外框 12 条 + 3 条体中线 + 全息底座环 */
+  const S=2*a,rods=[];
+  const bright={col:[0.30,0.55,0.68],rough:0.35,metal:0.2,emis:0.28};
+  const dim={col:[0.16,0.24,0.33],rough:0.5,metal:0.1,emis:0.04};
+  const corner=(x,y,z)=>[x?S:0,y?S:0,z?S:0];
+  const E=(p,q)=>({a:p,b:q,rad:0.030,...bright});
+  for(let i=0;i<8;i++){
+    const x=i&1,y=(i>>1)&1,z=(i>>2)&1;
+    const p=corner(x,y,z);
+    rods.push(E(p,corner(x^1,y,z)),E(p,corner(x,y^1,z)),E(p,corner(x,y,z^1)));
+  }
+  rods.push({a:[a,0,a],b:[a,S,a],rad:0.015,...dim},
+            {a:[a,a,0],b:[a,a,S],rad:0.015,...dim},
+            {a:[0,a,a],b:[S,a,a],rad:0.015,...dim});
+  holoBase(rods,-4.55,a,a,7.6,[0.10,0.50,0.62]);
+  /* 冲击波环 ×2：舞台切换时自全息底座向外扩散（dyn 几何，逐帧重建半径） */
+  const shockSegs=[];
+  for(let k=0;k<2;k++)for(let i=0;i<40;i++){
+    const th0=i/40*Math.PI*2, th1=(i+0.78)/40*Math.PI*2;
+    rods.push({a:[a+Math.cos(th0)*0.01,-4.42,a+Math.sin(th0)*0.01],b:[a+Math.cos(th1)*0.01,-4.42,a+Math.sin(th1)*0.01],
+      rad:0.06,col:[0.35,0.85,1.0],rough:0.3,metal:0.1,emis:0,scale:0.0001,dyn:1,ring:k,th0,th1});
+    shockSegs.push(rods.length-1);
+  }
+  /* 8 个 TiO₆ 线框（rad 随舞台缩放，随旋转相位转动） */
+  for(const ti of tis){
+    const c=atoms[ti].p,sign=atoms[ti].rotSign;
+    const oct=makeOcta(c,a/2);
+    for(const e of oct.edges)
+      rods.push({a:oct.verts[e[0]],b:oct.verts[e[1]],rad:0.028,
+        col:[0.35,0.95,1.00],rough:0.3,metal:0.1,emis:0.8,
+        rotC:c.slice(),rotSign:sign,scale:0.55});
+  }
+  /* 8 个半透明八面体面 */
+  const polys=tis.map(ti=>{
+    const c=atoms[ti].p,sign=atoms[ti].rotSign;
+    const oct=makeOcta(c,a/2);
+    return {verts:oct.verts,faces:oct.faces,col:[0.10,0.85,1.00],
+            alpha:0.11,rotC:c.slice(),rotSign:sign};
+  });
+  const scn={
+    atoms,bonds,rods,polys,
+    grid:{y:-4.6,step:1.5,div:7,col:[0.25,0.68,0.88,0.065],fog:0.0036},
+    glowScale:2.9,bg:[0.002,0.004,0.010],
+    motes:{n:150,min:[-3,-4.5,-3],max:[11,10,11],size:0.055,alpha:0.42},
+    bloom:{thresh:0.58,strength:0.85,exposure:0.81},streak:0.64,tilt:0.6,
+    cam:{theta:0.72,phi:1.10,dist:15.5,target:[a,a,a],min:4,max:34},
+    iso:34,
+    labels:[
+      {p:[a/2,a/2+a/4,a/2],text:'Ti–O 1.953 Å',cls:'measure',stages:[0,1]},
+      {p:[a/4,a/4,-0.5],text:'Sr–O 2.761 Å',cls:'measure',stages:[0]},
+      {p:[a+1.5,a+1.5,a/2],text:'rotate about c · antiphase layers',cls:'measure',stages:[2]}
+    ]
+  };
+  /* ---- 滚动叙事舞台状态 ----
+     stage 0：超胞全景（Sr + 共享 O，八面体线框细）
+     stage 1：Sr 淡出，推近单个 TiO₆（呼吸高亮）
+     stage 2：a⁰a⁰c⁻ 反相旋转动画（105 K 相变示意） */
+  const st={stage:0,fade:0,fadeT:0,rot:0,edge:0.55,edgeT:0.55,faceA:0.11,faceAT:0.11,shock:0};
+  scn._atomVer=0;scn._rodVer=0;scn._stage=0;
+  scn.tick=(t,dt)=>{
+    const k=1-Math.pow(0.002,Math.min(dt,0.1));
+    st.fade+=(st.fadeT-st.fade)*k;
+    st.edge+=(st.edgeT-st.edge)*k;
+    st.faceA+=(st.faceAT-st.faceA)*k;
+    const rt=st.stage===2?(0.17+0.06*Math.sin(t*2.1)):0;
+    st.rot+=(rt-st.rot)*k;
+    scn._rot=st.rot;
+    scn._polyBreath=(st.stage>=1)?(0.80+0.35*Math.sin(t*2.4)):1;
+    /* 冲击波环：自底座向外扩散并熄灭，双环错相 */
+    if(st.shock>0){
+      st.shock=Math.max(0,st.shock-dt*0.8);
+      const ph=1-st.shock;
+      for(const ri of shockSegs){
+        const r=rods[ri];
+        const pk=Math.min(1,Math.max(0,ph*1.3-r.ring*0.22));
+        const R=2.0+pk*pk*11.5;
+        r.a=[a+Math.cos(r.th0)*R,-4.42,a+Math.sin(r.th0)*R];
+        r.b=[a+Math.cos(r.th1)*R,-4.42,a+Math.sin(r.th1)*R];
+        r.emis=Math.max(0,2.8*(1-pk));
+        r.scale=pk>=1?0.0001:1;
+      }
+      scn._rodVer++;scn._rodGeoVer=(scn._rodGeoVer||0)+1;
+    }
+    let dirty=false;
+    const srS=1-st.fade,oShS=1-st.fade,oDupS=st.fade;
+    for(const i of srIdx){if(atoms[i].scale!==srS){atoms[i].scale=srS;dirty=true;}}
+    for(const i of oSharedIdx){if(atoms[i].scale!==oShS){atoms[i].scale=oShS;dirty=true;}}
+    for(let i=o2Start;i<atoms.length;i++){if(atoms[i].scale!==oDupS){atoms[i].scale=oDupS;dirty=true;}}
+    if(dirty)scn._atomVer++;
+    let rdirty=false;
+    for(const r of rods){
+      if(r.rotC&&r.scale!==undefined&&r.scale!==st.edge){r.scale=st.edge;rdirty=true;}
+    }
+    if(rdirty)scn._rodVer++;
+  };
+  scn.setStage=(s,r)=>{
+    if(s===st.stage)return;
+    st.stage=s;scn._stage=s;
+    st.fadeT=s===0?0:1;
+    st.edgeT=s===0?0.55:1.0;
+    st.faceAT=s===0?0.11:0.14;
+    st.shock=1;                        /* 冲击波环扩散 */
+    if(!r)return;
+    const cam=r.cam;
+    cam.cineT=1.5;                    /* 电影化飞行时长 */
+    if(s===0){cam.tTheta=0.72;cam.tPhi=1.10;cam.tDist=15.5;cam.tTarget=[a,a,a];}
+    else if(s===1){cam.tTheta=1.06;cam.tPhi=1.16;cam.tDist=7.8;cam.tTarget=[a/2,a/2,a/2];}
+    else{cam.tTheta=1.32;cam.tPhi=1.02;cam.tDist=12.5;cam.tTarget=[a,a,a];}
+    cam.lastInput=performance.now();   /* 舞台切换后暂停自动巡航一会 */
+  };
+  return scn;
+}
+
+/* ---------- 场景 2：NaCl 岩盐 2×2×2 超胞 ---------- */
+function buildNaCl(){
+  const a=5.640,h=a/2;
+  const atoms=[],map=new Map();
+  const K=(x,y,z)=>x.toFixed(3)+'|'+y.toFixed(3)+'|'+z.toFixed(3);
+  const add=(x,y,z,def)=>{
+    const k=K(x,y,z);
+    if(map.has(k))return map.get(k);
+    atoms.push(Object.assign({p:[x,y,z]},def));map.set(k,atoms.length-1);return atoms.length-1;
+  };
+  const NA={r:0.40,col:[0.30,0.64,1.00],rough:0.25,metal:0.10,glow:0.14};
+  const CL={r:0.53,col:[0.56,0.84,0.38],rough:0.30,metal:0.05,glow:0.10};
+  const idx=[];
+  for(let i=0;i<4;i++)for(let j=0;j<4;j++)for(let k=0;k<4;k++)
+    idx.push(add(i*h,j*h,k*h,(i+j+k)%2===0?NA:CL));       /* a/2 棋盘格：偶 Na⁺，奇 Cl⁻ */
+  const bonds=[];
+  for(let i=0;i<4;i++)for(let j=0;j<4;j++)for(let k=0;k<4;k++){
+    const me=idx[i*16+j*4+k];
+    for(const d of [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]]){
+      const p=[(i+d[0])*h,(j+d[1])*h,(k+d[2])*h];
+      bonds.push({a:me,b:add(p[0],p[1],p[2],(i+d[0]+j+d[1]+k+d[2])%2===0?NA:CL),
+                  rad:0.036,col:[0.30,0.37,0.47],rough:0.50,metal:0.35,emis:0.03});
+    }
+  }
+  /* 高亮：Na⁺(a,a,a) 的 Cl₆ 八面体 + Cl⁻(½a,a,a) 的 Na₆ 八面体 */
+  const p1=Object.assign(makeOcta([a,a,a],h),{
+    col:[0.10,0.85,1.00],alpha:0.13,edgeCol:[0.35,0.95,1.00],edgeR:0.030,edgeGlow:1.15});
+  const p2=Object.assign(makeOcta([h,a,a],h),{
+    col:[1.00,0.65,0.16],alpha:0.13,edgeCol:[1.00,0.72,0.25],edgeR:0.030,edgeGlow:1.15});
+  /* 晶格框 */
+  const S=2*a,rods=[];
+  const E=(p,q)=>({a:p,b:q,rad:0.030,col:[0.30,0.55,0.68],rough:0.35,metal:0.2,emis:0.26});
+  const corner=(x,y,z)=>[x?S:0,y?S:0,z?S:0];
+  for(let i=0;i<8;i++){
+    const x=i&1,y=(i>>1)&1,z=(i>>2)&1,p=corner(x,y,z);
+    rods.push(E(p,corner(x^1,y,z)),E(p,corner(x,y^1,z)),E(p,corner(x,y,z^1)));
+  }
+  const dim={col:[0.16,0.24,0.33],rough:0.5,metal:0.1,emis:0.04};
+  rods.push({a:[a,0,a],b:[a,S,a],rad:0.014,...dim},{a:[a,a,0],b:[a,a,S],rad:0.014,...dim},{a:[0,a,a],b:[S,a,a],rad:0.014,...dim});
+  holoBase(rods,-6.55,a,a,11.2,[0.10,0.50,0.62]);
+  return {
+    atoms,bonds,rods,polys:[p1,p2],
+    grid:{y:-6.6,step:2,div:6,col:[0.25,0.68,0.88,0.065],fog:0.0028},
+    glowScale:2.2,bg:[0.002,0.004,0.010],
+    motes:{n:130,min:[-1.5,-3,-1.5],max:[13,11,13],size:0.06,alpha:0.35},
+    bloom:{thresh:0.54,strength:0.82,exposure:0.80},streak:0.52,tilt:0.35,
+    cam:{theta:0.65,phi:1.08,dist:21.5,target:[a,a,a],min:11,max:46},
+    iso:22,
+    labels:[{p:[a,a+1.7,a],text:'Na⁺ · 6 Cl⁻'},{p:[h,a-1.7,a],text:'Cl⁻ · 6 Na⁺'},
+            {p:[a+h/2+0.9,a-0.6,a],text:'Na–Cl 2.820 Å',cls:'measure'}]
+  };
+}
+
+/* ---------- 场景 3：CsCl 3×3×3 超胞 ---------- */
+function buildCsCl(){
+  const a=4.113;
+  const atoms=[],map=new Map();
+  const K=(x,y,z)=>x.toFixed(3)+'|'+y.toFixed(3)+'|'+z.toFixed(3);
+  const add=(x,y,z,def)=>{
+    const k=K(x,y,z);
+    if(map.has(k))return map.get(k);
+    atoms.push(Object.assign({p:[x,y,z]},def));map.set(k,atoms.length-1);return atoms.length-1;
+  };
+  const CS={r:0.55,col:[1.00,0.62,0.20],rough:0.24,metal:0.15,glow:0.15};
+  const CL={r:0.50,col:[0.56,0.84,0.38],rough:0.30,metal:0.05,glow:0.10};
+  for(let i=0;i<3;i++)for(let j=0;j<3;j++)for(let k=0;k<3;k++)
+    add(i*a,j*a,k*a,CL);                                    /* Cl⁻：简单立方顶点 */
+  const csIdx=[];
+  for(let i=0;i<3;i++)for(let j=0;j<3;j++)for(let k=0;k<3;k++)
+    csIdx.push(add((i+.5)*a,(j+.5)*a,(k+.5)*a,CS));         /* Cs⁺：体心 */
+  const bonds=[];
+  for(let i=0;i<3;i++)for(let j=0;j<3;j++)for(let k=0;k<3;k++){
+    const me=csIdx[i*9+j*3+k];
+    for(const dx of [0,1])for(const dy of [0,1])for(const dz of [0,1])
+      bonds.push({a:me,b:add((i+dx)*a,(j+dy)*a,(k+dz)*a,CL),rad:0.034,col:[0.30,0.37,0.47],rough:0.50,metal:0.35,emis:0.03});
+  }
+  /* 高亮：Cs⁺(1.5a) 的 Cl₈ 立方体 + Cl⁻(a,a,a) 的 Cs₈ 立方体 */
+  const c=[1.5*a,1.5*a,1.5*a];
+  const p1=Object.assign(makeCube(c,a/2),{
+    col:[0.62,0.48,1.00],alpha:0.13,edgeCol:[0.70,0.58,1.00],edgeR:0.030,edgeGlow:1.15});
+  const p2=Object.assign(makeCube([a,a,a],a/2),{
+    col:[1.00,0.65,0.16],alpha:0.13,edgeCol:[1.00,0.72,0.25],edgeR:0.030,edgeGlow:1.15});
+  /* 晶格框 */
+  const S=3*a,rods=[];
+  const E=(p,q)=>({a:p,b:q,rad:0.030,col:[0.30,0.55,0.68],rough:0.35,metal:0.2,emis:0.26});
+  const corner=(x,y,z)=>[x?S:0,y?S:0,z?S:0];
+  for(let i=0;i<8;i++){
+    const x=i&1,y=(i>>1)&1,z=(i>>2)&1,p=corner(x,y,z);
+    rods.push(E(p,corner(x^1,y,z)),E(p,corner(x,y^1,z)),E(p,corner(x,y,z^1)));
+  }
+  const dim={col:[0.16,0.24,0.33],rough:0.5,metal:0.1,emis:0.04};
+  for(const m of [a,2*a])
+    rods.push({a:[m,0,a],b:[m,S,a],rad:0.014,...dim},{a:[m,a,0],b:[m,a,S],rad:0.014,...dim},
+              {a:[0,m,a],b:[S,m,a],rad:0.014,...dim},{a:[m,a,0],b:[m,a,S],rad:0.014,...dim},
+              {a:[0,a,m],b:[S,a,m],rad:0.014,...dim},{a:[a,0,m],b:[a,S,m],rad:0.014,...dim});
+  holoBase(rods,-6.95,1.5*a,1.5*a,12.0,[0.10,0.50,0.62]);
+  return {
+    atoms,bonds,rods,polys:[p1,p2],
+    grid:{y:-7.0,step:2,div:6,col:[0.25,0.68,0.88,0.065],fog:0.0028},
+    glowScale:2.2,bg:[0.002,0.004,0.010],
+    motes:{n:130,min:[-1.5,-3,-1.5],max:[14,11.5,14],size:0.06,alpha:0.35},
+    bloom:{thresh:0.54,strength:0.82,exposure:0.80},streak:0.52,tilt:0.35,
+    cam:{theta:0.68,phi:1.06,dist:23,target:[c[0],c[1],c[2]],min:12,max:48},
+    iso:19,
+    labels:[{p:[c[0],c[1]+1.7,c[2]],text:'Cs⁺ · 8 Cl⁻'},{p:[a,a-1.7,a],text:'Cl⁻ · 8 Cs⁺'},
+            {p:[1.75*a,1.75*a+0.45,1.75*a-0.35],text:'Cs–Cl 3.562 Å',cls:'measure'}]
+  };
+}
+
+/* ---------- 初始化三个舞台（含降级） ---------- */
+const renderers=[];
+let degraded=false;
+function applyFallback(holder,canvas,scene){
+  if(holder.dataset.static)return;
+  holder.dataset.static='1';
+  degraded=true;
+  document.getElementById('fallbackBanner').classList.add('show');
+  holder.querySelectorAll('.stage-badge,.stage-hint').forEach(el=>el.style.display='none');
+  holder.querySelectorAll('.tag3d').forEach(el=>el.remove());   /* 残留的 3D 标签 */
+  const tag=document.createElement('div');
+  tag.className='static-tag';
+  tag.textContent='STATIC DIAGRAM · WEBGL2 UNAVAILABLE';
+  holder.appendChild(tag);
+  /* canvas 若已持有 webgl2 上下文，getContext('2d') 会返回 null —— 必须换新 canvas */
+  const fresh=document.createElement('canvas');
+  canvas.replaceWith(fresh);
+  const paint=()=>Engine.paintStatic(fresh,scene);
+  paint();
+  if(window.ResizeObserver)new ResizeObserver(paint).observe(holder);
+  else window.addEventListener('resize',paint);
+}
+function initStage(id,scene){
+  const holder=document.getElementById(id);
+  const canvas=document.createElement('canvas');
+  holder.insertBefore(canvas,holder.firstChild);
+  let r=null;
+  if(Engine.webgl2Available())r=Engine.createRenderer(canvas,scene);
+  if(r){
+    renderers.push(r);
+    r.onLost=()=>applyFallback(holder,canvas,scene);
+  }else applyFallback(holder,canvas,scene);
+  return r;
+}
+/* 头部背景：装饰性自转 TiO₆ */
+function buildHeroIcon(){
+  const atoms=[{p:[0,0,0],r:0.42,col:[0.60,0.65,0.72],rough:0.32,metal:0.90,glow:0.06}];
+  const R=1.18;
+  for(const d of [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]])
+    atoms.push({p:[d[0]*R,d[1]*R,d[2]*R],r:0.36,col:[1.00,0.30,0.30],rough:0.28,metal:0.00,glow:0.13});
+  const oct=makeOcta([0,0,0],R);
+  const rods=[];
+  for(const e of oct.edges)
+    rods.push({a:oct.verts[e[0]],b:oct.verts[e[1]],rad:0.028,col:[0.35,0.95,1.00],rough:0.3,metal:0.1,emis:1.15});
+  holoBase(rods,-2.1,0,0,3.2,[0.10,0.50,0.62]);
+  return {
+    atoms,bonds:[],rods,polys:[],
+    glowScale:2.4,bg:[0.001,0.002,0.006],
+    motes:{n:70,min:[-3.5,-3.2,-3.5],max:[3.5,3.2,3.5],size:0.045,alpha:0.5},
+    bloom:{thresh:0.51,strength:1.06,exposure:0.86},streak:0.66,tilt:0.5,
+    cam:{theta:0.55,phi:1.22,dist:4.6,target:[0,0,0],min:3.2,max:7},
+    iso:0
+  };
+}
+initStage('stage-sto',buildSrTiO3());
+initStage('stage-nacl',buildNaCl());
+initStage('stage-cscl',buildCsCl());
+const heroR=(Engine.webgl2Available()&&document.getElementById('heroCanvas'))?Engine.createRenderer(document.getElementById('heroCanvas'),buildHeroIcon()):null;
+if(heroR)renderers.push(heroR);
+
+/* ---------- 晶轴指示罗盘：a/b/c 轴随视角实时投影 ---------- */
+function makeAxesWidget(cv,r){
+  const ctx=cv.getContext('2d');
+  if(!ctx)return;
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  const AX=[['a',1,0,0,'#ff7d92'],['b',0,1,0,'#7de8a8'],['c',0,0,1,'#5cc8ff']];
+  function draw(){
+    const W=cv.clientWidth,H=cv.clientHeight;
+    if(!W||!H)return;
+    const pw=Math.round(W*dpr),ph=Math.round(H*dpr);
+    if(cv.width!==pw||cv.height!==ph){cv.width=pw;cv.height=ph;}
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,W,H);
+    const v=r.view,cx=W/2,cy=H/2,L=W*0.33;
+    ctx.lineCap='round';
+    ctx.font='bold 8.5px ui-monospace,SFMono-Regular,monospace';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    for(const [nm,dx,dy,dz,col] of AX){
+      const x=v[0]*dx+v[4]*dy+v[8]*dz,y=v[1]*dx+v[5]*dy+v[9]*dz;
+      const z=Math.abs(v[2]*dx+v[6]*dy+v[10]*dz);   /* 1=指向/背离屏幕 */
+      const ex=cx+x*L,ey=cy-y*L;
+      ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.globalAlpha=.55+.45*(1-z);
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(ex,ey);ctx.stroke();
+      ctx.globalAlpha=1;ctx.fillStyle=col;
+      ctx.fillText(nm,ex+x*6.5,ey-y*6.5);
+    }
+  }
+  (function loop(){draw();requestAnimationFrame(loop);})();
+}
+for(const [cid,pid] of [['axSto','stage-sto'],['axNaCl','stage-nacl'],['axCsCl','stage-cscl']]){
+  const cv=document.getElementById(cid);
+  const rr=cv&&renderers.find(r=>r.canvas&&r.canvas.parentElement&&r.canvas.parentElement.id===pid);
+  if(rr)makeAxesWidget(cv,rr);
+}
+/* 不可见的场景暂停渲染 */
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{
+    for(const e of es){
+      const r=renderers.find(r=>r.canvas===e.target);
+      if(r)r.visible=e.isIntersecting;
+    }
+  },{rootMargin:'120px'});
+  renderers.forEach(r=>io.observe(r.canvas));
+}
+(function loop(t){
+  for(const r of renderers)r.tick(t||0);
+  requestAnimationFrame(loop);
+})(0);
+
+/* ---------- SrTiO3 滚动叙事舞台管理 ---------- */
+(function(){
+  const sec=document.getElementById('perovskite');
+  const stoR=renderers.find(r=>r.canvas&&r.canvas.parentElement&&r.canvas.parentElement.id==='stage-sto');
+  if(!sec||!stoR||!stoR.scene.setStage)return;
+  const notes=[...sec.querySelectorAll('.note')];
+  const label=document.getElementById('stoStageLabel');
+  stoR.wheelZoom=false;               /* 滚轮用于翻页 */
+  stoR.canvas.style.touchAction='pan-y'; /* 触屏竖向滑动滚动页面，横向拖拽旋转 */
+  const LABELS=['01 / 03 · CUBIC PHASE · 2×2×2 SUPERCELL','02 / 03 · TiO₆ OCTAHEDRA','03 / 03 · OCTAHEDRAL ROTATION · 105 K'];
+  let cur=-1;
+  function update(){
+    const rect=sec.getBoundingClientRect();
+    const total=Math.max(1,rect.height-window.innerHeight);
+    const p=Math.min(1,Math.max(0,-rect.top/total));
+    const s=p<0.34?0:p<0.67?1:2;
+    if(s!==cur){
+      cur=s;
+      notes.forEach(n=>n.classList.toggle('active',+n.dataset.stage===s));
+      if(label)label.textContent=LABELS[s];
+      stoR.scene.setStage(s,stoR);
+      stoR._flash=0.85;               /* 转场曝光脉冲 */
+    }
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',update);
+  update();
+})();
+
+/* ---------- 半径比交互演示 ---------- */
+(function(){
+  const rc=document.getElementById('ratioCanvas');
+  const slider=document.getElementById('ratioSlider');
+  const rctx=rc.getContext('2d');
+  const S2=Math.sqrt(2),S3=Math.sqrt(3),S6=Math.sqrt(6);
+  const DEFS=[
+    {cn:2,name:'linear',cond:'r₊/r₋ < 0.155',K:1.0,max:0.155,
+     verts:[[1,0,0],[-1,0,0]]},
+    {cn:3,name:'trigonal planar',cond:'0.155 ≤ r₊/r₋ < 0.225',K:2/S3,max:0.225,
+     verts:[[1,0,0],[-0.5,S3/2,0],[-0.5,-S3/2,0]]},
+    {cn:4,name:'tetrahedral',cond:'0.225 ≤ r₊/r₋ < 0.414',K:S6/2,max:0.414,
+     verts:[[1,1,1],[1,-1,-1],[-1,1,-1],[-1,-1,1]].map(v=>v.map(x=>x/S3))},
+    {cn:6,name:'octahedral',cond:'0.414 ≤ r₊/r₋ < 0.732',K:S2,max:0.732,
+     verts:[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]]},
+    {cn:8,name:'cubic',cond:'0.732 ≤ r₊/r₋ < 1.00',K:S3,max:1.0,
+     verts:[[-1,-1,-1],[1,-1,-1],[-1,1,-1],[1,1,-1],[-1,-1,1],[1,-1,1],[-1,1,1],[1,1,1]].map(v=>v.map(x=>x/S3))},
+    {cn:12,name:'cuboctahedral',cond:'r₊/r₋ ≈ 1.00',K:2,max:2,
+     verts:[[1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0],[1,0,1],[-1,0,1],[1,0,-1],[-1,0,-1],[0,1,1],[0,-1,1],[0,1,-1],[0,-1,-1]].map(v=>v.map(x=>x/S2))},
+  ];
+  const pick=r=>r<0.155?DEFS[0]:r<0.225?DEFS[1]:r<0.414?DEFS[2]:r<0.732?DEFS[3]:r<1.0?DEFS[4]:DEFS[5];
+  /* 程序化棱：3D 距离最短的对 */
+  function edgesOf(verts){
+    let mn=1e9;const d=[];
+    for(let i=0;i<verts.length;i++)for(let j=i+1;j<verts.length;j++){
+      const dd=Math.hypot(verts[i][0]-verts[j][0],verts[i][1]-verts[j][1],verts[i][2]-verts[j][2]);
+      d.push([i,j,dd]);mn=Math.min(mn,dd);
+    }
+    return d.filter(x=>x[2]<mn*1.05);
+  }
+  const ANION=[255,110,110],CATION=[90,170,255];
+  function ball(ctx,x,y,r,col,z){
+    const g=ctx.createRadialGradient(x-r*0.35,y-r*0.35,r*0.1,x,y,r);
+    g.addColorStop(0,`rgba(${Math.min(255,col[0]+95)},${Math.min(255,col[1]+95)},${Math.min(255,col[2]+95)},1)`);
+    g.addColorStop(0.55,`rgba(${col[0]},${col[1]},${col[2]},1)`);
+    g.addColorStop(1,`rgba(${Math.round(col[0]*0.25)},${Math.round(col[1]*0.25)},${Math.round(col[2]*0.35)},1)`);
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.18)';ctx.lineWidth=1;ctx.stroke();
+  }
+  function draw(){
+    const dpr=Math.min(2,window.devicePixelRatio||1);
+    const W=Math.max(2,rc.clientWidth),H=Math.max(2,rc.clientHeight);
+    rc.width=Math.round(W*dpr);rc.height=Math.round(H*dpr);
+    rctx.setTransform(dpr,0,0,dpr,0,0);
+    rctx.clearRect(0,0,W,H);
+    const ratio=parseFloat(slider.value);
+    const def=pick(ratio);
+    const rpx=Math.max(20,Math.min(40,Math.min(W,H)*0.105));
+    const R=Math.max(1+ratio,def.K)*rpx;
+    const cx=W*0.48,cy=H*0.47;
+    const ry=0.55,rx=0.33,Cy=Math.cos(ry),Sy=Math.sin(ry),Cx=Math.cos(rx),Sx=Math.sin(rx);
+    const proj=v=>{
+      const x1=v[0]*Cy+v[2]*Sy,z1=-v[0]*Sy+v[2]*Cy;
+      return {x:cx+x1*R,y:cy-(v[1]*Cx-z1*Sx)*R,z:v[1]*Sx+z1*Cx};
+    };
+    const vs=def.verts.map(proj);
+    const es=edgesOf(def.verts);
+    /* 棱（远淡近亮） */
+    for(const [i,j] of es){
+      const a=vs[i],b=vs[j],z=(a.z+b.z)/2;
+      rctx.strokeStyle=`rgba(90,210,240,${0.28+0.4*(z+1)/2})`;
+      rctx.lineWidth=z>0?2.2:1.3;
+      rctx.beginPath();rctx.moveTo(a.x,a.y);rctx.lineTo(b.x,b.y);rctx.stroke();
+    }
+    /* 球（按深度） */
+    const items=vs.map(q=>({q,z:q.z,r:rpx,col:ANION}));
+    items.push({q:{x:cx,y:cy,z:0},r:Math.max(3.5,ratio*rpx),col:CATION,plus:true});
+    items.sort((a,b)=>a.z-b.z);
+    for(const it of items)ball(rctx,it.q.x,it.q.y,it.r,it.col);
+    /* 接触状态 */
+    /* 接触状态：K = 负离子相切时的外接半径比；正负接触要求 (1+ratio) ≥ K */
+    const touch=ratio>=def.K-1.002;
+    /* 引导线：中心 → 第一个顶点 */
+    const v0=vs[0];
+    rctx.setLineDash([4,4]);
+    rctx.strokeStyle=touch?'rgba(255,180,84,0.55)':'rgba(255,110,110,0.45)';
+    rctx.lineWidth=1;
+    rctx.beginPath();rctx.moveTo(cx,cy);rctx.lineTo(v0.x,v0.y);rctx.stroke();
+    rctx.setLineDash([]);
+    /* 接触点标记 */
+    if(touch){
+      const t=(ratio*rpx)/((1+ratio)*rpx); /* 中心到正离子表面 */
+      const mx=cx+(v0.x-cx)*t,my=cy+(v0.y-cy)*t;
+      rctx.strokeStyle='rgba(255,220,150,0.9)';
+      rctx.beginPath();rctx.arc(mx,my,4,0,Math.PI*2);rctx.stroke();
+    }
+    /* 文字：状态 */
+    rctx.font='11px Inter, Segoe UI, sans-serif';
+    rctx.textAlign='left';
+    rctx.fillStyle=touch?'#7ddba8':'#ff9d7a';
+    rctx.fillText(touch?'● CATION–ANION CONTACT · STABLE':'△ CATION RATTLES · CONFIG UNSTABLE',14,H-14);
+    rctx.fillStyle='rgba(160,185,210,0.75)';
+    rctx.font='9.5px JetBrains Mono, Consolas, monospace';
+    rctx.fillText(def.cond,14,H-34);
+    /* 右上角小图例 */
+    const lx=W-118,ly=18;
+    ball(rctx,lx+8,ly+6,7,ANION);
+    rctx.fillStyle='rgba(160,185,210,0.85)';rctx.font='10px Inter, Segoe UI, sans-serif';
+    rctx.fillText('anion r₋',lx+20,ly+10);
+    ball(rctx,lx+8,ly+28,Math.max(3,7*ratio),CATION);
+    rctx.fillText('cation r₊',lx+20,ly+32);
+    /* readout */
+    document.getElementById('ratioVal').innerHTML=ratio.toFixed(3)+' <small>r₊/r₋</small>';
+    document.getElementById('cnNum').textContent=def.cn;
+    document.getElementById('cnName').textContent=def.cn===12?'cuboctahedral (close-packed)':def.name;
+    document.getElementById('cnCond').textContent=def.cond;
+    document.querySelectorAll('table.ratio-t tr[data-key]').forEach(tr=>{
+      tr.classList.toggle('cur',tr.dataset.key===String(def.cn));
+    });
+  }
+  slider.addEventListener('input',draw);
+  document.querySelectorAll('.chip[data-r]').forEach(ch=>{
+    ch.addEventListener('click',()=>{slider.value=ch.dataset.r;draw();});
+  });
+  slider.value='0.564';
+  draw();
+  if(window.ResizeObserver)new ResizeObserver(draw).observe(rc.parentElement);
+})();
+</script>
+</body>
+</html>

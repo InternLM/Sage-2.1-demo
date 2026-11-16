@@ -1030,7 +1030,7 @@ const sageArticle = {
         ]
       },
       {
-        "title": "科研软件分析",
+        "title": "科研分析",
         "description": "",
         "src": "/cases/sage/microscopy.mp4",
         "medias": [
@@ -1044,11 +1044,11 @@ const sageArticle = {
           },
           {
             "type": "video",
-            "src": "/cases/sage/eeg.mp4",
+            "src": "/cases/sage/eeg-v2.mp4",
             "label": "脑电信号处理",
             "description": "在 EEGLAB 中结合独立成分的时间曲线、头皮分布与频谱特征，识别并移除眨眼相关成分。模型在同一时间窗、同一幅值尺度下比较处理前后的波形，复查其他片段，并保存处理后的数据、成分记录与对比图。",
             "caption": "在 EEGLAB 中识别并移除眨眼相关成分，对比验证伪迹减弱效果，并保存可复核的处理结果。",
-            "poster": "/cases/sage/thumbnails/eeg.jpg"
+            "poster": "/cases/sage/thumbnails/eeg-v2.jpg"
           },
           {
             "type": "video",
@@ -1057,16 +1057,43 @@ const sageArticle = {
             "description": "在 QGIS 中对照两期卫星影像，利用多光谱数据提取鄱阳湖候选水域，将结果叠回原图检查浅水、湿滩与岸线边界。模型在共同有效的研究区内统计水域面积变化，导出变化地图、面积表和可重新打开的 QGIS 工程。",
             "caption": "对比两期鄱阳湖卫星影像，在 QGIS 中定位水域变化、提取并复核水体边界，导出变化地图与面积统计。",
             "poster": "/cases/sage/thumbnails/satellite.jpg"
+          },
+          {
+            "type": "video",
+            "src": "/cases/sage/scientific-understanding.mp4",
+            "poster": "/cases/sage/thumbnails/scientific-understanding.jpg",
+            "label": "科学多模态理解",
+            "description": "从 RNA 序列与晶体结构出发，模型结合自然语言问题提取科学特征，识别 RNA 类型并解释其生物学作用，依据原子的空间排布估计晶体形成能，展示从科学数据中寻找依据的推理过程。",
+            "caption": "结合 RNA 序列与晶体结构回答科学问题，展示序列识别与形成能预测的推理过程。"
           }
         ]
       },
       {
-        "title": "光的记忆",
-        "description": "围绕晶体量子存储中的效率损失，模型检索原始文献、提取实验参数，并通过参数扫描比较腔耦合、原子失步与损耗的影响。交互页面可调节反射率、吸收强度和存储时间，观察光脉冲与回波的变化，并追溯对应的文献与研究记录。",
-        "label": "交互演示｜光的记忆",
+        "title": "科学交互可视化",
+        "description": "",
         "src": "/cases/sage/light-memory.html",
-        "type": "iframe",
-        "caption": "将腔增强原子频率梳量子存储的科学deep research问题转化为可交互的html页面，交互过程中显示机制来源文献"
+        "medias": [
+          {
+            "description": "围绕晶体量子存储中的效率损失，模型检索原始文献、提取实验参数，并通过参数扫描比较腔耦合、原子失步与损耗的影响。交互页面可调节反射率、吸收强度和存储时间，观察光脉冲与回波的变化，并追溯对应的文献与研究记录。",
+            "label": "光的记忆",
+            "src": "/cases/sage/light-memory.html",
+            "type": "iframe",
+            "caption": "将腔增强原子频率梳量子存储的科学deep research问题转化为可交互的html页面，交互过程中显示机制来源文献",
+            "poster": "/cases/sage/thumbnails/light-memory.jpg",
+            "designW": 1280,
+            "designH": 850
+          },
+          {
+            "type": "iframe",
+            "src": "/cases/sage/crystal-structures.html",
+            "label": "晶体结构可视化",
+            "poster": "/cases/sage/thumbnails/crystal-structures.jpg",
+            "designW": 1280,
+            "designH": 850,
+            "description": "模型从化学式出发，结合晶体学知识推演空间群、计算原子坐标并构建配位多面体，生成可旋转、缩放的三维交互页面。通过材质、辉光和滚动叙事呈现结构细节，让候选晶体从数据条目变成可直观探索的立体对象，帮助研究者理解和筛选新材料。",
+            "caption": "将科学描述转为可交互的三维晶体，帮助研究者直观理解和筛选 AI 预测的候选材料。"
+          }
+        ]
       }
     ],
     "ending": [
@@ -1124,7 +1151,7 @@ const sageArticle = {
         ]
       },
       {
-        "title": "Scientific Software Analysis",
+        "title": "Scientific Analysis",
         "description": "",
         "src": "/cases/sage/microscopy.mp4",
         "medias": [
@@ -1138,11 +1165,11 @@ const sageArticle = {
           },
           {
             "type": "video",
-            "src": "/cases/sage/eeg.mp4",
+            "src": "/cases/sage/eeg-v2.mp4",
             "label": "EEG Signal Processing",
             "description": "In EEGLAB, the model combines independent-component time courses, scalp distributions and spectral features to identify and remove blink-related components. It compares waveforms before and after processing within the same time window and amplitude scale, reviews additional segments, and saves the processed data, component records and comparison figures.",
             "caption": "Identify and remove blink-related components in EEGLAB, compare the results to verify artifact reduction, and save reviewable outputs.",
-            "poster": "/cases/sage/thumbnails/eeg.jpg"
+            "poster": "/cases/sage/thumbnails/eeg-v2.jpg"
           },
           {
             "type": "video",
@@ -1151,16 +1178,43 @@ const sageArticle = {
             "description": "In QGIS, the model compares two satellite observations and extracts candidate water regions of Poyang Lake from multispectral data. It overlays the results on the original imagery to inspect shallow water, wet sediment and shoreline boundaries. Within the study area valid in both observations, it measures changes in water area and exports a change map, an area table and a QGIS project that can be reopened.",
             "caption": "Compare two satellite observations of Poyang Lake in QGIS, locate changes in water area, extract and review water boundaries, and export a change map and area statistics.",
             "poster": "/cases/sage/thumbnails/satellite.jpg"
+          },
+          {
+            "type": "video",
+            "src": "/cases/sage/scientific-understanding.mp4",
+            "poster": "/cases/sage/thumbnails/scientific-understanding.jpg",
+            "label": "Scientific Multimodal Understanding",
+            "description": "Given RNA sequences and crystal structures, the model combines scientific features with natural-language questions. It identifies the RNA type and explains its biological role, then estimates crystal formation energy from atomic arrangements, showing how scientific data informs its reasoning.",
+            "caption": "Answer scientific questions from RNA sequences and crystal structures, illustrating reasoning for sequence identification and formation-energy prediction."
           }
         ]
       },
       {
-        "title": "The Memory of Light",
-        "description": "The model investigates efficiency losses in crystal quantum memories by reviewing primary papers, extracting experimental parameters and comparing cavity coupling, atomic dephasing and losses through parameter sweeps. The interactive page lets visitors adjust reflectivity, absorption and storage time, observe pulses and echoes, and trace the evidence to papers and research records.",
-        "label": "Interactive Demo | The Memory of Light",
+        "title": "Interactive Scientific Visualization",
+        "description": "",
         "src": "/cases/sage/light-memory.html",
-        "type": "iframe",
-        "caption": "Turn a scientific deep research question about cavity-enhanced atomic frequency comb quantum memory into an interactive HTML page that presents source literature during exploration."
+        "medias": [
+          {
+            "description": "The model investigates efficiency losses in crystal quantum memories by reviewing primary papers, extracting experimental parameters and comparing cavity coupling, atomic dephasing and losses through parameter sweeps. The interactive page lets visitors adjust reflectivity, absorption and storage time, observe pulses and echoes, and trace the evidence to papers and research records.",
+            "label": "The Memory of Light",
+            "src": "/cases/sage/light-memory.html",
+            "type": "iframe",
+            "caption": "Turn a scientific deep research question about cavity-enhanced atomic frequency comb quantum memory into an interactive HTML page that presents source literature during exploration.",
+            "poster": "/cases/sage/thumbnails/light-memory.jpg",
+            "designW": 1280,
+            "designH": 850
+          },
+          {
+            "type": "iframe",
+            "src": "/cases/sage/crystal-structures.html",
+            "label": "Crystal Structure Visualization",
+            "poster": "/cases/sage/thumbnails/crystal-structures.jpg",
+            "designW": 1280,
+            "designH": 850,
+            "description": "Starting from a chemical formula, the model uses crystallographic knowledge to infer space groups, calculate atomic coordinates and construct coordination polyhedra. It creates an interactive 3D page with rotation, zoom, physical materials, glow and scroll-driven views, turning candidate crystals into structures that researchers can explore and assess.",
+            "caption": "Turn scientific descriptions into interactive 3D crystals, helping researchers understand and assess AI-predicted candidate materials."
+          }
+        ]
       }
     ],
     "ending": [
@@ -1169,18 +1223,19 @@ const sageArticle = {
     ],
     "api": "Try the Sage 2.1 Flash API →"
   }
-};
+}
+;
 function SageCase({entry:c,id}){
  const [selected,setSelected]=q.useState(0);const host=q.useRef(null);const tabs=q.useRef([]);
- const media=c.medias?c.medias[selected]:{...c,type:c.type||'video',designW:1280,designH:850};
+ const media={designW:1280,designH:850,...(c.medias?c.medias[selected]:{...c,type:c.type||'video'})};
  const select=index=>{host.current?.querySelectorAll('video').forEach(v=>v.pause());setSelected(index);};
  const onKey=(event,index)=>{let next;if(event.key==='ArrowRight')next=(index+1)%c.medias.length;else if(event.key==='ArrowLeft')next=(index+c.medias.length-1)%c.medias.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=c.medias.length-1;else return;event.preventDefault();select(next);tabs.current[next]?.focus();};
  return x.jsxs('article',{className:'sage-source-case',id,ref:host,children:[
   x.jsxs('div',{className:'read',children:[x.jsx('h3',{className:'h case__title',children:c.title}),x.jsx('p',{className:'p',children:c.description||media.description})]}),
   x.jsxs('figure',{className:'sage-source-media',children:[
-   x.jsx('div',{id:id+'-panel',role:c.medias?'tabpanel':undefined,'aria-labelledby':c.medias?id+'-tab-'+selected:undefined,children:media.type==='video'?x.jsx('video',{className:'case__video',src:media.src,poster:media.poster,controls:true,preload:'metadata',playsInline:true,muted:true,'aria-label':media.label||c.title},media.src):x.jsx(oc,{media,title:c.title},media.src)}),
+   x.jsx('div',{id:id+'-panel',role:c.medias?'tabpanel':undefined,'aria-labelledby':c.medias?id+'-tab-'+selected:undefined,children:media.type==='video'?x.jsx('video',{className:'case__video',src:media.src,poster:media.poster,controls:true,preload:'metadata',playsInline:true,muted:true,'aria-label':media.label||c.title},media.src):x.jsx(oc,{media,title:media.label||c.title},media.src)}),
    x.jsx('figcaption',{className:'sage-source-caption',children:media.caption}),
-   c.medias&&x.jsx('div',{className:'sage-thumbnail-tabs',role:'tablist','aria-label':c.title,children:c.medias.map((m,i)=>x.jsxs('button',{id:id+'-tab-'+i,ref:el=>tabs.current[i]=el,type:'button',role:'tab',tabIndex:selected===i?0:-1,'aria-selected':selected===i,'aria-controls':id+'-panel',className:'sage-thumbnail-tab '+(selected===i?'is-active':''),onClick:()=>select(i),onKeyDown:e=>onKey(e,i),children:[x.jsx('img',{src:m.poster,alt:'',width:640,height:360,loading:'lazy'}),x.jsx('span',{children:m.label})]},m.src))})
+   c.medias&&x.jsx('div',{className:'sage-thumbnail-tabs',style:{'--sage-tab-count':c.medias.length},role:'tablist','aria-label':c.title,children:c.medias.map((m,i)=>x.jsxs('button',{id:id+'-tab-'+i,ref:el=>tabs.current[i]=el,type:'button',role:'tab',tabIndex:selected===i?0:-1,'aria-selected':selected===i,'aria-controls':id+'-panel',className:'sage-thumbnail-tab '+(selected===i?'is-active':''),onClick:()=>select(i),onKeyDown:e=>onKey(e,i),children:[x.jsx('img',{src:m.poster,alt:'',width:640,height:360,loading:'lazy'}),x.jsx('span',{children:m.label})]},m.src))})
   ]})
  ]});
 }
@@ -1900,19 +1955,21 @@ overview:
 - [航天发动机](/cases/sage/engine.mp4)
 - [汽车底盘](/cases/sage/chassis.mp4)
 
-### 科研软件分析
+### 科研分析
 
 从荧光显微图出发，在 Fiji 中调整分割阈值、分离粘连细胞核，将轮廓叠回原图检查，并导出 ROI 与测量结果，便于复核和后续分析。
 
 - [显微图分析](/cases/sage/microscopy.mp4)
-- [脑电信号处理](/cases/sage/eeg.mp4)
+- [脑电信号处理](/cases/sage/eeg-v2.mp4)
 - [卫星影像分析](/cases/sage/satellite.mp4)
+- [科学多模态理解](/cases/sage/scientific-understanding.mp4)
 
-### 光的记忆
+### 科学交互可视化
 
 围绕晶体量子存储中的效率损失，模型检索原始文献、提取实验参数，并通过参数扫描比较腔耦合、原子失步与损耗的影响。交互页面可调节反射率、吸收强度和存储时间，观察光脉冲与回波的变化，并追溯对应的文献与研究记录。
 
-- [交互演示｜光的记忆](/cases/sage/light-memory.html)
+- [光的记忆](/cases/sage/light-memory.html)
+- [晶体结构可视化](/cases/sage/crystal-structures.html)
 
 Sage 2.1 Flash 面向科学推理与智能体任务执行，支持结合科学数据、检索、编程与专业软件开展分析。
 
@@ -1920,7 +1977,7 @@ Sage 2.1 Flash 面向科学推理与智能体任务执行，支持结合科学�
 
 [试用 Sage 2.1 Flash API →](https://discovery.intern-ai.org.cn/)`,En=Wv(Hv);function Qv({content=En}){return x.jsxs(x.Fragment,{children:[x.jsx(Xg,{links:content.hero.links}),x.jsx(Zg,{}),x.jsx(P0,{hero:content.hero}),x.jsx(SageArticle,{})]})}
 const siteLanguageStart = true;
-const siteEnglishContent = Wv("---\nbrand: Sage 2.1 Flash\nhero:\n  links:\n    - label: \"GitHub\"\n      href: \"https://github.com/namespace-ERI/sage-2.1-demo\"\n    - label: \"Hugging Face\"\n      href: \"\"\n    - label: \"Try the API\"\n      href: \"https://discovery.intern-ai.org.cn/\"\n    - label: \"Intern AI\"\n      href: \"https://intern-ai.org.cn/home\"\noverview:\n  title: \"\"\n  lede: \"\"\n  body: []\n---\n\n# Sage 2.1 Flash | Explore through reasoning. Verify through action.\n\nToday, we introduce **Sage 2.1 Flash**, a frontier scientific multimodal agent model for demanding scientific research. Built on a **320-billion-parameter MoE architecture**, it combines scientific multimodal understanding with general agent capabilities, supporting scientific deep research, scientific programming and the operation of professional research software.\n\nSage 2.1 Flash incorporates more than ten types of scientific input into a unified model, including molecular graphs, crystal structures, protein sequences and three-dimensional structures, DNA and RNA sequences, spectra, mass spectra, X-ray diffraction, electrocardiograms, electroencephalograms and light curves. Large-scale training in verifiable environments strengthens its capabilities in search, programming, tool use and multistep task execution. Through visual feedback, the model can check its judgments against software states and intermediate results, adjust its strategy and advance complex tasks in professional research environments.\n\n![](/cases/sage/benchmarks.svg)\n\nScientific research requires repeated analysis, operation and inspection across data, code and professional tools. The following demonstrations show how Sage 2.1 Flash processes scientific data, operates professional software and uses intermediate results to adjust its execution, producing outputs that researchers can review.\n\n## Demo\n\n### CT Reconstruction\n\nFrom 12,487 CT images with mixed sources, shuffled order and inconsistent orientations, the model identifies 139 slices from a single scan, corrects their orientation and restores the sequence. It revises its ordering strategy based on consistency checks, reconstructs three-dimensional bony structures in 3D Slicer, and returns to the source slices to verify local details.\n\n- [Video Demo | CT Reconstruction](/cases/sage/ct.mp4)\n\n### 3D Modeling\n\nUsing reference images, the model builds architectural, aerospace engine and truck chassis models in Blender and CAD software. It reviews the results through render previews or assembly checks and delivers editable models and presentation videos.\n\n- [Architecture](/cases/sage/architecture.mp4)\n- [Aerospace Engine](/cases/sage/engine.mp4)\n- [Truck Chassis](/cases/sage/chassis.mp4)\n\n### Scientific Software Analysis\n\nStarting from a fluorescence microscopy image, the model adjusts segmentation thresholds in Fiji, separates touching nuclei and overlays the contours on the source image for inspection. It exports ROIs and measurements for review and further analysis.\n\n- [Microscopy Analysis](/cases/sage/microscopy.mp4)\n- [EEG Signal Processing](/cases/sage/eeg.mp4)\n- [Satellite Imagery Analysis](/cases/sage/satellite.mp4)\n\n### The Memory of Light\n\nThe model investigates efficiency losses in crystal quantum memories by reviewing primary papers, extracting experimental parameters and comparing cavity coupling, atomic dephasing and losses through parameter sweeps. The interactive page lets visitors adjust reflectivity, absorption and storage time, observe pulses and echoes, and trace the evidence to papers and research records.\n\n- [Interactive Demo | The Memory of Light](/cases/sage/light-memory.html)\n\nSage 2.1 Flash is designed for scientific reasoning and agentic task execution, supporting analysis that combines scientific data, retrieval, programming and professional software.\n\nTry the model through its API and explore its applications in research data processing, professional software operation and multistep task execution.\n\n[Try the Sage 2.1 Flash API →](https://discovery.intern-ai.org.cn/)");
+const siteEnglishContent = Wv("---\nbrand: Sage 2.1 Flash\nhero:\n  links:\n    - label: \"GitHub\"\n      href: \"https://github.com/namespace-ERI/sage-2.1-demo\"\n    - label: \"Hugging Face\"\n      href: \"\"\n    - label: \"Try the API\"\n      href: \"https://discovery.intern-ai.org.cn/\"\n    - label: \"Intern AI\"\n      href: \"https://intern-ai.org.cn/home\"\noverview:\n  title: \"\"\n  lede: \"\"\n  body: []\n---\n\n# Sage 2.1 Flash | Explore through reasoning. Verify through action.\n\nToday, we introduce **Sage 2.1 Flash**, a frontier scientific multimodal agent model for demanding scientific research. Built on a **320-billion-parameter MoE architecture**, it combines scientific multimodal understanding with general agent capabilities, supporting scientific deep research, scientific programming and the operation of professional research software.\n\nSage 2.1 Flash incorporates more than ten types of scientific input into a unified model, including molecular graphs, crystal structures, protein sequences and three-dimensional structures, DNA and RNA sequences, spectra, mass spectra, X-ray diffraction, electrocardiograms, electroencephalograms and light curves. Large-scale training in verifiable environments strengthens its capabilities in search, programming, tool use and multistep task execution. Through visual feedback, the model can check its judgments against software states and intermediate results, adjust its strategy and advance complex tasks in professional research environments.\n\n![](/cases/sage/benchmarks.svg)\n\nScientific research requires repeated analysis, operation and inspection across data, code and professional tools. The following demonstrations show how Sage 2.1 Flash processes scientific data, operates professional software and uses intermediate results to adjust its execution, producing outputs that researchers can review.\n\n## Demo\n\n### CT Reconstruction\n\nFrom 12,487 CT images with mixed sources, shuffled order and inconsistent orientations, the model identifies 139 slices from a single scan, corrects their orientation and restores the sequence. It revises its ordering strategy based on consistency checks, reconstructs three-dimensional bony structures in 3D Slicer, and returns to the source slices to verify local details.\n\n- [Video Demo | CT Reconstruction](/cases/sage/ct.mp4)\n\n### 3D Modeling\n\nUsing reference images, the model builds architectural, aerospace engine and truck chassis models in Blender and CAD software. It reviews the results through render previews or assembly checks and delivers editable models and presentation videos.\n\n- [Architecture](/cases/sage/architecture.mp4)\n- [Aerospace Engine](/cases/sage/engine.mp4)\n- [Truck Chassis](/cases/sage/chassis.mp4)\n\n### Scientific Analysis\n\nStarting from a fluorescence microscopy image, the model adjusts segmentation thresholds in Fiji, separates touching nuclei and overlays the contours on the source image for inspection. It exports ROIs and measurements for review and further analysis.\n\n- [Microscopy Analysis](/cases/sage/microscopy.mp4)\n- [EEG Signal Processing](/cases/sage/eeg-v2.mp4)\n- [Satellite Imagery Analysis](/cases/sage/satellite.mp4)\n- [Scientific Multimodal Understanding](/cases/sage/scientific-understanding.mp4)\n\n### Interactive Scientific Visualization\n\nThe model investigates efficiency losses in crystal quantum memories by reviewing primary papers, extracting experimental parameters and comparing cavity coupling, atomic dephasing and losses through parameter sweeps. The interactive page lets visitors adjust reflectivity, absorption and storage time, observe pulses and echoes, and trace the evidence to papers and research records.\n\n- [The Memory of Light](/cases/sage/light-memory.html)\n- [Crystal Structure Visualization](/cases/sage/crystal-structures.html)\n\nSage 2.1 Flash is designed for scientific reasoning and agentic task execution, supporting analysis that combines scientific data, retrieval, programming and professional software.\n\nTry the model through its API and explore its applications in research data processing, professional software operation and multistep task execution.\n\n[Try the Sage 2.1 Flash API →](https://discovery.intern-ai.org.cn/)");
 const siteCitationBibtex = "% Citation will be added with the technical report release.";
 const SiteLanguageContext = q.createContext(null);
 const siteMessages = {
