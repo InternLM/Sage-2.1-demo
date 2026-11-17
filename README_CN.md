@@ -2,7 +2,7 @@
 
 **书生 S2.1 Flash 科学多模态大模型**
 
-[**官网**](https://internlm.github.io/Sage-S2.1-Flash/) · [**模型介绍**](#模型介绍) · [**模型下载**](#模型下载) · [**评估结果**](#评估结果) · [**部署方式**](#部署方式) · [**许可证**](#许可证)
+[**官网**](https://internlm.github.io/Sage-S2.1-Flash/) · [**模型介绍**](#模型介绍) · [**模型下载**](#模型下载) · [**评估结果**](#评估结果) · [**部署方式**](#部署方式) · [**用户交流群**](#用户交流群) · [**许可证**](#许可证)
 
 ## 模型介绍
 
@@ -388,6 +388,14 @@ projector, config = load_projector(
 <https://huggingface.co/internlm/Sage-S2.1-Flash/blob/main/deployment_guide.md>
 
 <https://huggingface.co/internlm/Sage-S2.1-Flash-FP8/blob/main/deployment_guide.md>
+
+## 用户交流群
+
+扫描下方二维码，加入书生 S2.1 Flash 微信用户交流群。
+
+<p align="center">
+  <img src="assets/wechat-user-group.png" alt="书生 S2.1 Flash 微信用户交流群二维码" width="360" />
+</p>
 
 ## 许可证
 
